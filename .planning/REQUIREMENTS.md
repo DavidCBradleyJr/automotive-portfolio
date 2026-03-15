@@ -17,11 +17,11 @@
 
 ### Navigation
 
-- [ ] **NAV-01**: Sticky navigation header visible at all scroll positions
-- [ ] **NAV-02**: Nav links scroll smoothly to each section (Hero, Gallery, Video, About, BTS, Contact)
-- [ ] **NAV-03**: Active section highlighted in nav via Intersection Observer scroll-spy
-- [ ] **NAV-04**: Mobile hamburger menu with animated open/close, full-screen overlay
-- [ ] **NAV-05**: "David Bradley" wordmark/logo in nav header
+- [x] **NAV-01**: Sticky navigation header visible at all scroll positions
+- [x] **NAV-02**: Nav links scroll smoothly to each section (Hero, Gallery, Video, About, BTS, Contact)
+- [x] **NAV-03**: Active section highlighted in nav via Intersection Observer scroll-spy
+- [x] **NAV-04**: Mobile hamburger menu with animated open/close, full-screen overlay
+- [x] **NAV-05**: "David Bradley" wordmark/logo in nav header
 
 ### Hero
 
