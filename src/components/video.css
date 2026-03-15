@@ -1,0 +1,40 @@
+/* ==========================================================================
+ * Video Section
+ * ========================================================================== */
+
+.video__description {
+  font-family: var(--font-body);
+  color: var(--color-text-muted);
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto var(--space-lg);
+  font-size: var(--text-lg);
+  line-height: 1.6;
+}
+
+.video__container {
+  max-width: 800px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.video__container lite-youtube {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 767px) {
+  .video__container {
+    max-width: 100%;
+    border-radius: 0;
+  }
+
+  .video__description {
+    padding: 0 var(--space-sm);
+  }
+}
