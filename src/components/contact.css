@@ -1,0 +1,202 @@
+/* ==========================================================================
+ * Contact Section — Form, Info Sidebar, Toast Notifications
+ * ========================================================================== */
+
+/* Layout: two-column on desktop, stacked on mobile */
+.contact__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+  .contact__content {
+    flex-direction: row;
+    gap: var(--space-xl);
+  }
+
+  .contact__form {
+    flex: 0 0 60%;
+  }
+
+  .contact__info {
+    flex: 1;
+  }
+}
+
+/* Form */
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Field wrapper */
+.contact__field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Label */
+.contact__label {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+/* Shared input styles */
+.contact__input {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  border: 1px solid var(--color-text-muted);
+  border-radius: 4px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact__input:focus {
+  border-color: var(--color-accent);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-accent-glow);
+}
+
+/* Error state */
+.contact__input--error {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+}
+
+.contact__input--error:focus {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3);
+}
+
+/* Select dropdown */
+.contact__select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239CA3AF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-md) center;
+  padding-right: calc(var(--space-md) + 20px);
+}
+
+/* Textarea */
+.contact__textarea {
+  resize: vertical;
+}
+
+/* Validation error message */
+.contact__error {
+  font-size: 0.8rem;
+  color: #dc2626;
+  margin-top: 4px;
+  min-height: 1.2em;
+}
+
+/* Submit button */
+.contact__submit {
+  align-self: flex-start;
+  font-size: var(--text-base);
+}
+
+/* Info sidebar */
+.contact__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding-top: var(--space-sm);
+}
+
+.contact__alt {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-xs);
+}
+
+.contact__email {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-size: var(--text-lg);
+  transition: color 0.2s ease;
+}
+
+.contact__email:hover {
+  text-decoration: underline;
+}
+
+.contact__socials {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-md);
+}
+
+.contact__social-link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: var(--text-base);
+  transition: color 0.2s ease;
+}
+
+.contact__social-link:hover {
+  color: var(--color-accent);
+}
+
+/* ==========================================================================
+ * Toast Notifications
+ * ========================================================================== */
+
+.toast {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: 8px;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  transform: translateX(120%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  max-width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.toast--visible {
+  transform: translateX(0);
+}
+
+.toast--success {
+  background: #16a34a;
+}
+
+.toast--error {
+  background: #dc2626;
+}
+
+/* Mobile: full-width toast at bottom */
+@media (max-width: 767px) {
+  .toast {
+    left: var(--space-sm);
+    right: var(--space-sm);
+    max-width: none;
+  }
+
+  .contact__submit {
+    align-self: stretch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition: none;
+  }
+}

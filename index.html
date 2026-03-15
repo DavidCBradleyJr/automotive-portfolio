@@ -176,8 +176,94 @@
       </div>
     </section>
 
-    <section class="section" id="contact">
+    <section class="section contact" id="contact">
       <h2 class="section__heading">Contact</h2>
+      <div class="contact__content">
+        <form id="contact-form" class="contact__form" novalidate>
+          <div class="contact__field">
+            <label class="contact__label" for="contact-name">Name</label>
+            <input
+              type="text"
+              id="contact-name"
+              name="name"
+              class="contact__input"
+              required
+            />
+            <span class="contact__error" aria-live="polite"></span>
+          </div>
+
+          <div class="contact__field">
+            <label class="contact__label" for="contact-email">Email</label>
+            <input
+              type="email"
+              id="contact-email"
+              name="email"
+              class="contact__input"
+              required
+            />
+            <span class="contact__error" aria-live="polite"></span>
+          </div>
+
+          <div class="contact__field">
+            <label class="contact__label" for="contact-event-type">Event Type</label>
+            <select
+              id="contact-event-type"
+              name="event-type"
+              class="contact__input contact__select"
+              required
+            >
+              <option value="">Select event type...</option>
+              <option value="car-show">Car Show</option>
+              <option value="track-day">Track Day</option>
+              <option value="private-collection">Private Collection</option>
+              <option value="editorial-magazine">Editorial/Magazine</option>
+              <option value="dealership">Dealership</option>
+              <option value="other">Other</option>
+            </select>
+            <span class="contact__error" aria-live="polite"></span>
+          </div>
+
+          <div class="contact__field">
+            <label class="contact__label" for="contact-date">Tentative Date</label>
+            <input
+              type="date"
+              id="contact-date"
+              name="date"
+              class="contact__input"
+              required
+            />
+            <span class="contact__error" aria-live="polite"></span>
+          </div>
+
+          <div class="contact__field">
+            <label class="contact__label" for="contact-message">Message</label>
+            <textarea
+              id="contact-message"
+              name="message"
+              class="contact__input contact__textarea"
+              rows="4"
+              required
+            ></textarea>
+            <span class="contact__error" aria-live="polite"></span>
+          </div>
+
+          <button type="submit" class="btn btn--primary contact__submit">Send Inquiry</button>
+        </form>
+
+        <div class="contact__info">
+          <div>
+            <p class="contact__alt">Or reach out directly:</p>
+            <a href="mailto:hello@davidbradley.com" class="contact__email">hello@davidbradley.com</a>
+          </div>
+          <div>
+            <p class="contact__alt">Follow along:</p>
+            <div class="contact__socials">
+              <a href="https://instagram.com/davidbradley" target="_blank" rel="noopener" class="contact__social-link">Instagram</a>
+              <a href="https://tiktok.com/@davidbradley" target="_blank" rel="noopener" class="contact__social-link">TikTok</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <script type="module" src="/src/main.js"></script>
