@@ -17,10 +17,12 @@ export function initHero() {
     // Make content visible immediately without animation
     hero.classList.add('hero--loaded');
   } else {
-    // Short delay so the browser paints the initial state first,
-    // then triggers the CSS transition
+    // Double-rAF: first rAF lets the browser paint the initial hidden state,
+    // second rAF adds the class AFTER that paint is committed
     requestAnimationFrame(() => {
-      hero.classList.add('hero--loaded');
+      requestAnimationFrame(() => {
+        hero.classList.add('hero--loaded');
+      });
     });
   }
 }
