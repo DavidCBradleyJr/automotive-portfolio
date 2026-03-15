@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 01-03-PLAN.md
-last_updated: "2026-03-15T01:53:10.286Z"
-last_activity: 2026-03-14 -- Completed 01-03 navigation
+stopped_at: Completed 01-04-PLAN.md
+last_updated: "2026-03-15T02:18:19.785Z"
+last_activity: 2026-03-14 -- Completed 01-04 hero gap closure
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 5
+  completed_plans: 5
   percent: 100
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 ## Current Position
 
 Phase: 1 of 4 (Foundation, Hero, and Navigation) -- COMPLETE
-Plan: 3 of 3 in current phase -- COMPLETE
-Status: Phase Complete
-Last activity: 2026-03-14 -- Completed 01-03 navigation
+Plan: 4 of 4 in current phase -- COMPLETE
+Status: Phase Complete (including gap closure)
+Last activity: 2026-03-14 -- Completed 01-04 hero gap closure
 
 Progress: [██████████] 100%
 
@@ -52,6 +52,7 @@ Progress: [██████████] 100%
 *Updated after each plan completion*
 | Phase 01 P02 | 2min | 2 tasks | 3 files |
 | Phase 01 P03 | 2min | 2 tasks | 3 files |
+| Phase 01 P04 | 1min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,8 @@ Recent decisions affecting current work:
 - [Phase 01-03]: Focus trapping in mobile overlay with Tab/Shift+Tab cycling
 - [Phase 01]: Dual IntersectionObservers: one for hero frosted glass, one for sections scroll-spy
 - [Phase 01]: Focus trapping in mobile overlay with Tab/Shift+Tab cycling
+- [Phase 01-04]: Overlay opacity reduced from 0.85 to 0.6 for hero image visibility
+- [Phase 01-04]: Double-rAF pattern for reliable CSS transition triggering
 
 ### Pending Todos
 
@@ -82,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T01:49:16.633Z
-Stopped at: Completed 01-03-PLAN.md
+Last session: 2026-03-15T02:18:19.783Z
+Stopped at: Completed 01-04-PLAN.md
 Resume file: None
