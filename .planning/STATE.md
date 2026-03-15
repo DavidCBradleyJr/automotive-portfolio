@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-03-15T05:23:54.146Z"
-last_activity: 2026-03-15 -- Completed 02-01 image pipeline
+stopped_at: Completed 02-02-PLAN.md
+last_updated: "2026-03-15T05:27:28.363Z"
+last_activity: 2026-03-15 -- Completed 02-02 gallery UI
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 8
-  completed_plans: 6
-  percent: 75
+  completed_plans: 7
+  percent: 88
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 ## Current Position
 
 Phase: 2 of 4 (Gallery and Image Pipeline)
-Plan: 1 of 3 in current phase -- COMPLETE
+Plan: 2 of 3 in current phase -- COMPLETE
 Status: In Progress
-Last activity: 2026-03-15 -- Completed 02-01 image pipeline
+Last activity: 2026-03-15 -- Completed 02-02 gallery UI
 
-Progress: [████████░░] 75%
+Progress: [█████████░] 88%
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Progress: [████████░░] 75%
 | Phase 01 P04 | 1min | 2 tasks | 3 files |
 | Phase 01 P05 | 1min | 2 tasks | 3 files |
 | Phase 02 P01 | 3min | 2 tasks | 4 files |
+| Phase 02 P02 | 2min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -79,6 +80,9 @@ Recent decisions affecting current work:
 - [Phase 01-05]: position:fixed + negative top offset for iOS-safe scroll lock (overflow:hidden alone insufficient on Safari)
 - [Phase 02]: Adaptive WebP quality (82->40) to stay under 400KB per file
 - [Phase 02]: 50 gallery entries: 29 real + 21 placeholders, 10 per category
+- [Phase 02]: CSS columns for masonry instead of CSS grid (better browser support, natural flow)
+- [Phase 02]: IntersectionObserver with 200px rootMargin for preloading before viewport
+- [Phase 02]: Staggered enter animation with 30ms delay per item for premium feel
 
 ### Pending Todos
 
@@ -90,6 +94,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T05:23:54.145Z
-Stopped at: Completed 02-01-PLAN.md
+Last session: 2026-03-15T05:27:28.362Z
+Stopped at: Completed 02-02-PLAN.md
 Resume file: None
