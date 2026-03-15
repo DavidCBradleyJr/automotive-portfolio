@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-03-15T01:42:25.973Z"
-last_activity: 2026-03-14 -- Completed 01-01 foundation scaffold
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-03-15T01:45:46.850Z"
+last_activity: 2026-03-14 -- Completed 01-02 hero styling
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
-  percent: 33
+  completed_plans: 2
+  percent: 67
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 ## Current Position
 
 Phase: 1 of 4 (Foundation, Hero, and Navigation)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: Executing
-Last activity: 2026-03-14 -- Completed 01-01 foundation scaffold
+Last activity: 2026-03-14 -- Completed 01-02 hero styling
 
-Progress: [███░░░░░░░] 33%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
@@ -50,6 +50,7 @@ Progress: [███░░░░░░░] 33%
 - Trend: Starting
 
 *Updated after each plan completion*
+| Phase 01 P02 | 2min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -63,6 +64,8 @@ Recent decisions affecting current work:
 - Roadmap: Animations deferred to Phase 4 (layer on working sections, not debug through transforms)
 - 01-01: Pinned Vite to ^6.0.0 (create-vite@latest scaffolds 8.x by default)
 - 01-01: Hero placeholder is dark gradient WebP (4.6KB) -- swap for real photo later
+- [Phase 01-02]: Entrance animations use CSS transitions + JS class toggle for controlled stagger
+- [Phase 01-02]: requestAnimationFrame used for paint-sync animation trigger instead of setTimeout
 
 ### Pending Todos
 
@@ -74,6 +77,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T01:42:25.971Z
-Stopped at: Completed 01-01-PLAN.md
+Last session: 2026-03-15T01:45:46.848Z
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None

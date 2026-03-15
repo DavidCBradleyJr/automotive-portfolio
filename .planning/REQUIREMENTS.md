@@ -25,11 +25,11 @@
 
 ### Hero
 
-- [ ] **HERO-01**: Full-viewport hero section with cinematic full-bleed background image (placeholder)
-- [ ] **HERO-02**: David Bradley name rendered in Orbitron with entrance animation on page load
-- [ ] **HERO-03**: Tagline text below name (e.g. "Automotive Photography")
-- [ ] **HERO-04**: Primary CTA button scrolling to Gallery section
-- [ ] **HERO-05**: Hero image treated as LCP element (never lazy-loaded, fetchpriority="high", under 200KB)
+- [x] **HERO-01**: Full-viewport hero section with cinematic full-bleed background image (placeholder)
+- [x] **HERO-02**: David Bradley name rendered in Orbitron with entrance animation on page load
+- [x] **HERO-03**: Tagline text below name (e.g. "Automotive Photography")
+- [x] **HERO-04**: Primary CTA button scrolling to Gallery section
+- [x] **HERO-05**: Hero image treated as LCP element (never lazy-loaded, fetchpriority="high", under 200KB)
 
 ### Gallery
 
