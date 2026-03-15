@@ -36,8 +36,8 @@
 - [ ] **GAL-01**: Photo gallery section with CSS Grid layout, responsive across all screen sizes
 - [ ] **GAL-02**: Category filter buttons for JDM, Euro, Supercar, American Muscle, Track/Motorsport
 - [ ] **GAL-03**: Filter transitions animate smoothly (fade + scale) without page reload
-- [ ] **GAL-04**: 8–12 placeholder images per category (40–60 total placeholders)
-- [ ] **GAL-05**: All gallery images lazy-loaded with LQIP (Low Quality Image Placeholder) blur-up effect
+- [x] **GAL-04**: 8–12 placeholder images per category (40–60 total placeholders)
+- [x] **GAL-05**: All gallery images lazy-loaded with LQIP (Low Quality Image Placeholder) blur-up effect
 - [ ] **GAL-06**: PhotoSwipe 5.4 lightbox on image click — keyboard navigation, swipe on mobile, pinch-to-zoom
 - [ ] **GAL-07**: Gallery mobile layout uses full-width single-column (landscape automotive images must not be cropped)
 - [ ] **GAL-08**: CTA button after gallery ("Book a Shoot") scrolling to contact section

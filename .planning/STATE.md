@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Phase 2 context gathered
-last_updated: "2026-03-15T04:50:15.367Z"
-last_activity: 2026-03-14 -- Completed 01-05 overlay scroll lock gap closure
+status: executing
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-03-15T05:23:54.146Z"
+last_activity: 2026-03-15 -- Completed 02-01 image pipeline
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 5
-  completed_plans: 5
-  percent: 100
+  total_plans: 8
+  completed_plans: 6
+  percent: 75
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** The portfolio must make David's photography the hero -- every design decision serves the images, and visitors should feel the craft and passion before they ever contact him.
-**Current focus:** Phase 1: Foundation, Hero, and Navigation
+**Current focus:** Phase 2: Gallery and Image Pipeline
 
 ## Current Position
 
-Phase: 1 of 4 (Foundation, Hero, and Navigation) -- COMPLETE
-Plan: 5 of 5 in current phase -- COMPLETE
-Status: Phase Complete (all gap closures done)
-Last activity: 2026-03-14 -- Completed 01-05 overlay scroll lock gap closure
+Phase: 2 of 4 (Gallery and Image Pipeline)
+Plan: 1 of 3 in current phase -- COMPLETE
+Status: In Progress
+Last activity: 2026-03-15 -- Completed 02-01 image pipeline
 
-Progress: [##########] 100%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Progress: [##########] 100%
 | Phase 01 P03 | 2min | 2 tasks | 3 files |
 | Phase 01 P04 | 1min | 2 tasks | 3 files |
 | Phase 01 P05 | 1min | 2 tasks | 3 files |
+| Phase 02 P01 | 3min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,8 @@ Recent decisions affecting current work:
 - [Phase 01-04]: Overlay opacity reduced from 0.85 to 0.6 for hero image visibility
 - [Phase 01-04]: Double-rAF pattern for reliable CSS transition triggering
 - [Phase 01-05]: position:fixed + negative top offset for iOS-safe scroll lock (overflow:hidden alone insufficient on Safari)
+- [Phase 02]: Adaptive WebP quality (82->40) to stay under 400KB per file
+- [Phase 02]: 50 gallery entries: 29 real + 21 placeholders, 10 per category
 
 ### Pending Todos
 
@@ -87,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T04:50:15.361Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-gallery-and-image-pipeline/02-CONTEXT.md
+Last session: 2026-03-15T05:23:54.145Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: None
