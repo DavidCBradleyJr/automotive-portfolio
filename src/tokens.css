@@ -1,0 +1,70 @@
+/* ==========================================================================
+ * Design Tokens — Three-Tier CSS Custom Property System
+ *
+ * Tier 1 (Primitives): Raw values — colors, fonts, spacing, typography scale
+ * Tier 2 (Semantic): Meaning-based aliases — what a token IS
+ * Tier 3 (Component): Scoped to specific UI elements
+ *
+ * WCAG Note: Purple (#7C3AED) on #0F0F0F = 3.36:1 contrast.
+ *   FAILS AA for normal text (needs 4.5:1).
+ *   PASSES AA for large text (needs 3:1).
+ *   Only use as: large text color, filled button bg, borders, or glows.
+ *   Body text MUST use #E0E0E0 (14.52:1 ratio).
+ * ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------
+   * Tier 1: Primitives
+   * ------------------------------------------------------------------ */
+
+  /* Colors */
+  --color-black-950: #0F0F0F;
+  --color-violet-500: #7C3AED;
+  --color-violet-500-30: rgba(124, 58, 237, 0.3);
+  --color-violet-500-40: rgba(124, 58, 237, 0.4);
+  --color-gray-200: #E0E0E0;
+  --color-gray-400: #9CA3AF;
+  --color-white: #FFFFFF;
+
+  /* Typography — Families */
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+
+  /* Typography — Scale */
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 3rem;
+  --text-hero: clamp(3rem, 8vw, 6.25rem);
+
+  /* Spacing Scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+  --space-2xl: 8rem;
+
+  /* ------------------------------------------------------------------
+   * Tier 2: Semantic
+   * ------------------------------------------------------------------ */
+  --color-bg: var(--color-black-950);
+  --color-text: var(--color-gray-200);
+  --color-text-muted: var(--color-gray-400);
+  --color-accent: var(--color-violet-500);
+  --color-accent-glow: var(--color-violet-500-30);
+  --color-border: var(--color-violet-500-40);
+
+  /* ------------------------------------------------------------------
+   * Tier 3: Component
+   * ------------------------------------------------------------------ */
+  --nav-bg: rgba(15, 15, 15, 0.85);
+  --nav-blur: 12px;
+  --nav-height: 4rem;
+  --hero-overlay: linear-gradient(to top, rgba(15, 15, 15, 0.85) 0%, transparent 60%);
+  --btn-primary-bg: var(--color-accent);
+  --btn-primary-text: var(--color-white);
+}
