@@ -141,23 +141,23 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | FOUND-01 through FOUND-07 | Phase 1 | Pending |
-| NAV-01 through NAV-05 | Phase 2 | Pending |
-| HERO-01 through HERO-05 | Phase 2 | Pending |
-| GAL-01 through GAL-08 | Phase 3 | Pending |
-| VID-01 through VID-04 | Phase 4 | Pending |
-| ABOUT-01 through ABOUT-04 | Phase 4 | Pending |
-| BTS-01 through BTS-03 | Phase 4 | Pending |
-| CONT-01 through CONT-07 | Phase 5 | Pending |
-| SOCIAL-01 through SOCIAL-02 | Phase 5 | Pending |
-| ANIM-01 through ANIM-05 | Phase 6 | Pending |
-| FOOT-01 through FOOT-02 | Phase 6 | Pending |
-| PERF-01 through PERF-08 | Phase 7 | Pending |
+| NAV-01 through NAV-05 | Phase 1 | Pending |
+| HERO-01 through HERO-05 | Phase 1 | Pending |
+| GAL-01 through GAL-08 | Phase 2 | Pending |
+| VID-01 through VID-04 | Phase 3 | Pending |
+| ABOUT-01 through ABOUT-04 | Phase 3 | Pending |
+| BTS-01 through BTS-03 | Phase 3 | Pending |
+| CONT-01 through CONT-07 | Phase 3 | Pending |
+| SOCIAL-01 through SOCIAL-02 | Phase 3 | Pending |
+| ANIM-01 through ANIM-05 | Phase 4 | Pending |
+| FOOT-01 through FOOT-02 | Phase 4 | Pending |
+| PERF-01 through PERF-08 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 56 total
 - Mapped to phases: 56
-- Unmapped: 0 ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-14*
-*Last updated: 2026-03-14 after initial definition*
+*Last updated: 2026-03-14 after roadmap creation (coarse granularity: 4 phases)*
