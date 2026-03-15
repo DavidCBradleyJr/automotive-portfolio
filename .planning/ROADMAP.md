@@ -65,12 +65,11 @@ Plans:
   3. A behind-the-scenes section shows a grid of BTS images with captions describing gear, locations, or process
   4. Submitting the booking form (Name, Email, Event Type, Tentative Date, Brief Message) delivers an email via Formspree, with client-side validation, success/error states, and no page reload
   5. Social media links (Instagram, YouTube/TikTok) are accessible, and a social wall section displays a curated static grid of social-style images
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
-- [ ] 03-03: TBD
+- [ ] 03-01-PLAN.md — Video reel, about section, and behind-the-scenes grid
+- [ ] 03-02-PLAN.md — Contact form with Formspree integration and social wall grid
 
 ### Phase 4: Animations, Polish, and Launch
 **Goal**: The site feels alive with tasteful scroll animations, has proper SEO and performance, and is deployed and accessible on the public internet
@@ -97,5 +96,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Foundation, Hero, and Navigation | 5/5 | Complete | 2026-03-14 |
 | 2. Gallery and Image Pipeline | 3/3 | Complete   | 2026-03-15 |
-| 3. Content Sections and Contact | 0/3 | Not started | - |
+| 3. Content Sections and Contact | 0/2 | Not started | - |
 | 4. Animations, Polish, and Launch | 0/2 | Not started | - |
