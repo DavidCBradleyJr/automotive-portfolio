@@ -7,13 +7,13 @@
 
 ### Foundation & Theme
 
-- [ ] **FOUND-01**: Project scaffolded with Vite 6.x, vanilla HTML/CSS/JS, optimized build output
-- [ ] **FOUND-02**: CSS custom properties define the full design token system (colors, typography, spacing, motion)
-- [ ] **FOUND-03**: Dark theme implemented with off-black background (#121212–#1A1A1A) and purple accent color verified at WCAG AA contrast ratio
-- [ ] **FOUND-04**: Orbitron (headings) and Space Grotesk (body) fonts loaded via Google Fonts with performance-safe loading strategy
-- [ ] **FOUND-05**: Global responsive breakpoints established (mobile-first, 320px–1440px+)
-- [ ] **FOUND-06**: Image sizing conventions and performance budget documented and enforced (max 2000px wide, under 400KB per image, WebP format)
-- [ ] **FOUND-07**: Smooth single-page scroll behavior with section anchor IDs
+- [x] **FOUND-01**: Project scaffolded with Vite 6.x, vanilla HTML/CSS/JS, optimized build output
+- [x] **FOUND-02**: CSS custom properties define the full design token system (colors, typography, spacing, motion)
+- [x] **FOUND-03**: Dark theme implemented with off-black background (#121212–#1A1A1A) and purple accent color verified at WCAG AA contrast ratio
+- [x] **FOUND-04**: Orbitron (headings) and Space Grotesk (body) fonts loaded via Google Fonts with performance-safe loading strategy
+- [x] **FOUND-05**: Global responsive breakpoints established (mobile-first, 320px–1440px+)
+- [x] **FOUND-06**: Image sizing conventions and performance budget documented and enforced (max 2000px wide, under 400KB per image, WebP format)
+- [x] **FOUND-07**: Smooth single-page scroll behavior with section anchor IDs
 
 ### Navigation
 
