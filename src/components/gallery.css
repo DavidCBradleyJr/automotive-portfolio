@@ -199,7 +199,26 @@
 }
 
 /* --------------------------------------------------------------------------
- * 11. prefers-reduced-motion
+ * 11. PhotoSwipe lightbox overrides
+ * -------------------------------------------------------------------------- */
+
+.pswp {
+  --pswp-bg: #0F0F0F;
+}
+
+.pswp__counter {
+  display: none;
+}
+
+.pswp__dynamic-caption {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+ * 12. prefers-reduced-motion
  * -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {

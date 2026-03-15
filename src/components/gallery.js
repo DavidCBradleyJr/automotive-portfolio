@@ -5,10 +5,16 @@
  * smooth animations, and implements LQIP lazy loading with blur-up effect.
  */
 
+import PhotoSwipeLightbox from 'photoswipe/lightbox';
+import PhotoSwipeDynamicCaption from 'photoswipe-dynamic-caption-plugin';
+import 'photoswipe/style.css';
+import 'photoswipe-dynamic-caption-plugin/photoswipe-dynamic-caption-plugin.css';
+
 import { galleryImages, categories } from '../data/gallery-images.js';
 
 let activeCategory = 'all';
 let lazyObserver = null;
+let lightbox = null;
 
 /**
  * Build a category label lookup from the categories array.
@@ -187,13 +193,47 @@ function filterGallery(category) {
 
       // Re-observe any newly visible images that haven't loaded
       reobserveUnloaded();
+
+      // Reinitialize PhotoSwipe so navigation is scoped to visible items
+      initLightbox();
     });
   }, 250);
 }
 
 /**
+ * Initialize (or reinitialize) PhotoSwipe lightbox.
+ * Reinitializing on filter change scopes navigation to visible items only.
+ */
+function initLightbox() {
+  if (lightbox) {
+    lightbox.destroy();
+    lightbox = null;
+  }
+
+  lightbox = new PhotoSwipeLightbox({
+    gallery: '#gallery-grid',
+    children:
+      '.gallery__item:not(.gallery__item--hidden):not(.gallery__item--placeholder) a',
+    pswpModule: () => import('photoswipe'),
+    bgOpacity: 0.95,
+    loop: true,
+    counterEl: false,
+    padding: { top: 20, bottom: 40, left: 0, right: 0 },
+  });
+
+  // Dynamic captions showing "Car Name -- Category"
+  new PhotoSwipeDynamicCaption(lightbox, {
+    type: 'below',
+    captionContent: (slide) => {
+      return slide.data.element?.dataset.caption || '';
+    },
+  });
+
+  lightbox.init();
+}
+
+/**
  * Get the currently active filter category.
- * Exported for PhotoSwipe integration (Plan 03).
  */
 export function getActiveCategory() {
   return activeCategory;
@@ -206,4 +246,5 @@ export function initGallery() {
   renderFilters();
   renderGalleryItems();
   initLazyLoading();
+  initLightbox();
 }

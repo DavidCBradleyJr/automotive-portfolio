@@ -13,5 +13,9 @@
   "devDependencies": {
     "sharp": "^0.34.5",
     "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "photoswipe": "^5.4.4",
+    "photoswipe-dynamic-caption-plugin": "^1.2.7"
   }
 }
