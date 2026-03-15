@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 01-04-PLAN.md
-last_updated: "2026-03-15T02:18:19.785Z"
-last_activity: 2026-03-14 -- Completed 01-04 hero gap closure
+stopped_at: Completed 01-05-PLAN.md
+last_updated: "2026-03-15T02:17:10Z"
+last_activity: 2026-03-14 -- Completed 01-05 overlay scroll lock gap closure
 progress:
   total_phases: 4
   completed_phases: 1
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-14)
 ## Current Position
 
 Phase: 1 of 4 (Foundation, Hero, and Navigation) -- COMPLETE
-Plan: 4 of 4 in current phase -- COMPLETE
-Status: Phase Complete (including gap closure)
-Last activity: 2026-03-14 -- Completed 01-04 hero gap closure
+Plan: 5 of 5 in current phase -- COMPLETE
+Status: Phase Complete (all gap closures done)
+Last activity: 2026-03-14 -- Completed 01-05 overlay scroll lock gap closure
 
-Progress: [██████████] 100%
+Progress: [##########] 100%
 
 ## Performance Metrics
 
@@ -53,6 +53,7 @@ Progress: [██████████] 100%
 | Phase 01 P02 | 2min | 2 tasks | 3 files |
 | Phase 01 P03 | 2min | 2 tasks | 3 files |
 | Phase 01 P04 | 1min | 2 tasks | 3 files |
+| Phase 01 P05 | 1min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,7 @@ Recent decisions affecting current work:
 - [Phase 01]: Focus trapping in mobile overlay with Tab/Shift+Tab cycling
 - [Phase 01-04]: Overlay opacity reduced from 0.85 to 0.6 for hero image visibility
 - [Phase 01-04]: Double-rAF pattern for reliable CSS transition triggering
+- [Phase 01-05]: position:fixed + negative top offset for iOS-safe scroll lock (overflow:hidden alone insufficient on Safari)
 
 ### Pending Todos
 
@@ -85,6 +87,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T02:18:19.783Z
-Stopped at: Completed 01-04-PLAN.md
+Last session: 2026-03-15T02:17:10Z
+Stopped at: Completed 01-05-PLAN.md
 Resume file: None
