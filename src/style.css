@@ -134,6 +134,9 @@ h2 {
 
 .no-scroll {
   overflow: hidden;
+  position: fixed;
+  width: 100%;
+  /* top is set dynamically by JS to preserve scroll position */
 }
 
 /* ==========================================================================

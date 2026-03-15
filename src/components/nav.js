@@ -73,10 +73,14 @@ export function initNav() {
 
   if (!hamburger || !overlay) return;
 
+  let savedScrollY = 0;
+
   function openOverlay() {
+    savedScrollY = window.scrollY;
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.classList.add('no-scroll');
     hamburger.classList.add('nav__hamburger--open');
     overlay.classList.add('nav__overlay--open');
-    document.body.classList.add('no-scroll');
     hamburger.setAttribute('aria-expanded', 'true');
 
     // Focus first overlay link after transition
@@ -90,6 +94,8 @@ export function initNav() {
     hamburger.classList.remove('nav__hamburger--open');
     overlay.classList.remove('nav__overlay--open');
     document.body.classList.remove('no-scroll');
+    document.body.style.top = '';
+    window.scrollTo(0, savedScrollY);
     hamburger.setAttribute('aria-expanded', 'false');
 
     // Return focus to hamburger
