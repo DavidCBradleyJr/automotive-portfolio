@@ -64,18 +64,18 @@
 
 ### Contact & Booking
 
-- [ ] **CONT-01**: Booking inquiry form with exactly 5 fields: Name, Email, Event Type (dropdown), Tentative Date, Brief Message
-- [ ] **CONT-02**: Form integrated with Formspree — submissions delivered to David's email
-- [ ] **CONT-03**: Client-side validation with inline error messages before submission
-- [ ] **CONT-04**: Success state shown after submission (no page reload)
-- [ ] **CONT-05**: Error state shown if submission fails, with retry guidance
-- [ ] **CONT-06**: Alternative contact method visible (email address displayed directly)
-- [ ] **CONT-07**: Phone number field is optional — not required
+- [x] **CONT-01**: Booking inquiry form with exactly 5 fields: Name, Email, Event Type (dropdown), Tentative Date, Brief Message
+- [x] **CONT-02**: Form integrated with Formspree — submissions delivered to David's email
+- [x] **CONT-03**: Client-side validation with inline error messages before submission
+- [x] **CONT-04**: Success state shown after submission (no page reload)
+- [x] **CONT-05**: Error state shown if submission fails, with retry guidance
+- [x] **CONT-06**: Alternative contact method visible (email address displayed directly)
+- [x] **CONT-07**: Phone number field is optional — not required
 
 ### Social Media
 
-- [ ] **SOCIAL-01**: Social media links in navigation and/or footer (Instagram, potentially YouTube/TikTok)
-- [ ] **SOCIAL-02**: Social wall section with curated static grid of social-style images (Instagram-style layout) — static images used instead of live API to avoid Instagram API instability
+- [x] **SOCIAL-01**: Social media links in navigation and/or footer (Instagram, potentially YouTube/TikTok)
+- [x] **SOCIAL-02**: Social wall section with curated static grid of social-style images (Instagram-style layout) — static images used instead of live API to avoid Instagram API instability
 
 ### Animations & Polish
 
