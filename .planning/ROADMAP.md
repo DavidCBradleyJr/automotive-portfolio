@@ -29,12 +29,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Clicking nav links smoothly scrolls to the corresponding section anchor; on mobile, a hamburger menu opens a full-screen overlay with the same links
   4. The site is responsive from 320px to 1440px+ and the hero image loads fast (fetchpriority high, under 200KB, never lazy-loaded)
   5. CSS custom properties define all design tokens (colors, typography, spacing) and the dark theme passes WCAG AA contrast requirements
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
-- [ ] 01-03: TBD
+- [ ] 01-01-PLAN.md — Scaffold Vite project, design tokens, global styles, HTML skeleton
+- [ ] 01-02-PLAN.md — Hero section styling with Ken Burns animation and entrance effects
+- [ ] 01-03-PLAN.md — Sticky frosted-glass navigation with scroll-spy and mobile hamburger
 
 ### Phase 2: Gallery and Image Pipeline
 **Goal**: Visitors can browse David's portfolio by automotive category with smooth filtering and a full-featured lightbox viewer
