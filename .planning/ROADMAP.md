@@ -13,7 +13,7 @@ This roadmap delivers a single-page automotive photography portfolio from founda
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: Foundation, Hero, and Navigation** - Theme system, visual identity, cinematic hero opener, and sticky navigation with scroll-spy
-- [ ] **Phase 2: Gallery and Image Pipeline** - Category-filtered photo grid with progressive loading and lightbox viewer
+- [x] **Phase 2: Gallery and Image Pipeline** - Category-filtered photo grid with progressive loading and lightbox viewer (completed 2026-03-15)
 - [ ] **Phase 3: Content Sections and Contact** - Video reel, about, behind-the-scenes, social wall, and booking inquiry form
 - [ ] **Phase 4: Animations, Polish, and Launch** - Scroll animations, footer, SEO, performance audit, and Netlify deployment
 
@@ -48,7 +48,7 @@ Plans:
   3. Clicking any gallery image opens a PhotoSwipe lightbox with keyboard navigation, mobile swipe, and pinch-to-zoom
   4. Gallery images lazy-load with LQIP blur-up effect, and on mobile the layout uses full-width single-column so landscape automotive images are never cropped
   5. A "Book a Shoot" CTA button appears after the gallery, scrolling to the contact section
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 
 Plans:
 - [ ] 02-01-PLAN.md — Image processing pipeline with sharp and gallery data file
@@ -96,6 +96,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation, Hero, and Navigation | 5/5 | Complete | 2026-03-14 |
-| 2. Gallery and Image Pipeline | 0/3 | Not started | - |
+| 2. Gallery and Image Pipeline | 3/3 | Complete   | 2026-03-15 |
 | 3. Content Sections and Contact | 0/3 | Not started | - |
 | 4. Animations, Polish, and Launch | 0/2 | Not started | - |

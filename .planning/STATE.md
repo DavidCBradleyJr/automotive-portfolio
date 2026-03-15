@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-02-PLAN.md
-last_updated: "2026-03-15T05:27:28.363Z"
-last_activity: 2026-03-15 -- Completed 02-02 gallery UI
+stopped_at: Completed 02-03-PLAN.md
+last_updated: "2026-03-15T05:34:07.443Z"
+last_activity: 2026-03-15 -- Completed 02-03 PhotoSwipe lightbox
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 8
-  completed_plans: 7
-  percent: 88
+  completed_plans: 8
+  percent: 100
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** The portfolio must make David's photography the hero -- every design decision serves the images, and visitors should feel the craft and passion before they ever contact him.
-**Current focus:** Phase 2: Gallery and Image Pipeline
+**Current focus:** Phase 2: Gallery and Image Pipeline -- COMPLETE
 
 ## Current Position
 
-Phase: 2 of 4 (Gallery and Image Pipeline)
-Plan: 2 of 3 in current phase -- COMPLETE
-Status: In Progress
-Last activity: 2026-03-15 -- Completed 02-02 gallery UI
+Phase: 2 of 4 (Gallery and Image Pipeline) -- COMPLETE
+Plan: 3 of 3 in current phase -- COMPLETE
+Status: Phase 2 Complete
+Last activity: 2026-03-15 -- Completed 02-03 PhotoSwipe lightbox
 
-Progress: [█████████░] 88%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -56,6 +56,7 @@ Progress: [█████████░] 88%
 | Phase 01 P05 | 1min | 2 tasks | 3 files |
 | Phase 02 P01 | 3min | 2 tasks | 4 files |
 | Phase 02 P02 | 2min | 2 tasks | 4 files |
+| Phase 02 P03 | 2min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -83,6 +84,8 @@ Recent decisions affecting current work:
 - [Phase 02]: CSS columns for masonry instead of CSS grid (better browser support, natural flow)
 - [Phase 02]: IntersectionObserver with 200px rootMargin for preloading before viewport
 - [Phase 02]: Staggered enter animation with 30ms delay per item for premium feel
+- [Phase 02-03]: Destroy/recreate PhotoSwipe instance on filter change for category-scoped navigation
+- [Phase 02-03]: CSS counter hide as belt-and-suspenders with counterEl option
 
 ### Pending Todos
 
@@ -94,6 +97,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-15T05:27:28.362Z
-Stopped at: Completed 02-02-PLAN.md
+Last session: 2026-03-15T05:34:07Z
+Stopped at: Completed 02-03-PLAN.md
 Resume file: None
