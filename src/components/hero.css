@@ -1,0 +1,179 @@
+/* ==========================================================================
+ * Hero Section
+ *
+ * Full-viewport cinematic hero with Ken Burns background animation,
+ * dark gradient overlay, bottom-left editorial text, and staggered
+ * entrance animations triggered by .hero--loaded class.
+ * ========================================================================== */
+
+/* --------------------------------------------------------------------------
+ * Hero Container
+ * -------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+ * Hero Background Image + Ken Burns
+ * -------------------------------------------------------------------------- */
+
+.hero__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  animation: kenburns 25s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.08) translate3d(-2%, -1%, 0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * Dark Gradient Overlay
+ * -------------------------------------------------------------------------- */
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--hero-overlay);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+ * Hero Content (bottom-left positioning via parent flex)
+ * -------------------------------------------------------------------------- */
+
+.hero__content {
+  position: relative;
+  z-index: 3;
+  padding: var(--space-lg) var(--space-md);
+  max-width: 800px;
+}
+
+/* --------------------------------------------------------------------------
+ * Hero Name
+ * -------------------------------------------------------------------------- */
+
+.hero__name {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 900;
+  color: var(--color-white);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+}
+
+/* --------------------------------------------------------------------------
+ * Hero Tagline
+ * -------------------------------------------------------------------------- */
+
+.hero__tagline {
+  font-family: var(--font-body);
+  font-size: var(--text-xl);
+  color: var(--color-text);
+  font-weight: 300;
+  margin-bottom: var(--space-lg);
+}
+
+/* --------------------------------------------------------------------------
+ * Hero CTA
+ * -------------------------------------------------------------------------- */
+
+.hero__cta {
+  font-size: var(--text-lg);
+  padding: var(--space-sm) var(--space-lg);
+  text-decoration: none;
+}
+
+/* --------------------------------------------------------------------------
+ * Entrance Animation (class-toggle driven)
+ *
+ * Elements start hidden; .hero--loaded on the container triggers
+ * a staggered fade-in + slide-up via CSS transitions.
+ * -------------------------------------------------------------------------- */
+
+.hero__name,
+.hero__tagline,
+.hero__cta {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.hero__name {
+  transition-delay: 0.2s;
+}
+
+.hero__tagline {
+  transition-delay: 0.5s;
+}
+
+.hero__cta {
+  transition-delay: 0.8s;
+}
+
+.hero--loaded .hero__name,
+.hero--loaded .hero__tagline,
+.hero--loaded .hero__cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+ * Reduced Motion
+ * -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__image {
+    animation: none;
+  }
+
+  .hero__name,
+  .hero__tagline,
+  .hero__cta {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * Responsive
+ * -------------------------------------------------------------------------- */
+
+/* Tablet (768px+) */
+@media (min-width: 768px) {
+  .hero__content {
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .hero__tagline {
+    font-size: var(--text-2xl);
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .hero__content {
+    padding: var(--space-xl) var(--space-xl);
+  }
+}
