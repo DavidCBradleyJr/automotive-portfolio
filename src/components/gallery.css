@@ -1,0 +1,221 @@
+/* ==========================================================================
+ * Gallery Component — Masonry grid, filter pills, LQIP lazy load
+ * BEM: .gallery, .gallery__element, .gallery__element--modifier
+ * ========================================================================== */
+
+/* --------------------------------------------------------------------------
+ * 1. Gallery section override — wider max-width for masonry
+ * -------------------------------------------------------------------------- */
+
+.gallery {
+  max-width: 1400px;
+}
+
+/* --------------------------------------------------------------------------
+ * 2. Filter bar — sticky below nav
+ * -------------------------------------------------------------------------- */
+
+.gallery__filters {
+  position: sticky;
+  top: var(--nav-height);
+  z-index: 90;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) 0;
+}
+
+/* --------------------------------------------------------------------------
+ * 3. Individual filter pill
+ * -------------------------------------------------------------------------- */
+
+.gallery__pill {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  padding: var(--space-xs) var(--space-md);
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.gallery__pill:hover {
+  background-color: rgba(124, 58, 237, 0.15);
+}
+
+.gallery__pill--active {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border-color: var(--color-accent);
+}
+
+.gallery__pill--active:hover {
+  background-color: var(--color-accent);
+}
+
+/* --------------------------------------------------------------------------
+ * 4. Masonry grid
+ * -------------------------------------------------------------------------- */
+
+.gallery__grid {
+  column-count: 1;
+  column-gap: 0;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .gallery__grid {
+    column-count: 2;
+    column-gap: 16px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .gallery__grid {
+    column-count: 3;
+    column-gap: 20px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * 5. Gallery item
+ * -------------------------------------------------------------------------- */
+
+.gallery__item {
+  break-inside: avoid;
+  margin-bottom: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .gallery__item {
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * 6. Gallery image — LQIP blur-up
+ * -------------------------------------------------------------------------- */
+
+.gallery__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: blur(20px);
+  transform: scale(1.05);
+  transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+.gallery__img--loaded {
+  filter: blur(0);
+  transform: scale(1);
+}
+
+/* --------------------------------------------------------------------------
+ * 7. Placeholder items
+ * -------------------------------------------------------------------------- */
+
+.gallery__item--placeholder {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery__item--placeholder::after {
+  content: 'Coming Soon';
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+ * 8. Filter animation classes
+ * -------------------------------------------------------------------------- */
+
+.gallery__item--fading {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.gallery__item--hidden {
+  display: none;
+}
+
+@keyframes galleryEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gallery__item--entering {
+  animation: galleryEnter 0.3s ease-out forwards;
+}
+
+/* --------------------------------------------------------------------------
+ * 9. CTA wrap
+ * -------------------------------------------------------------------------- */
+
+.gallery__cta-wrap {
+  text-align: center;
+  padding: var(--space-xl) 0;
+}
+
+/* --------------------------------------------------------------------------
+ * 10. Mobile full-bleed
+ * -------------------------------------------------------------------------- */
+
+@media (max-width: 767px) {
+  .gallery {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .gallery__filters {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+
+  .gallery__cta-wrap {
+    padding-left: var(--space-lg);
+    padding-right: var(--space-lg);
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * 11. prefers-reduced-motion
+ * -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery__img {
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+
+  .gallery__item--fading {
+    transition: none;
+  }
+
+  .gallery__item--entering {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

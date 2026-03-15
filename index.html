@@ -86,8 +86,23 @@
     <!-- ================================================================
          Section Stubs
          ================================================================ -->
-    <section class="section" id="gallery">
+    <section class="section gallery" id="gallery">
       <h2 class="section__heading">Gallery</h2>
+
+      <!-- Filter bar - sticks below nav on scroll -->
+      <div class="gallery__filters" id="gallery-filters">
+        <!-- Filter pills rendered by JS from categories data -->
+      </div>
+
+      <!-- Masonry grid - items rendered by JS from galleryImages data -->
+      <div class="gallery__grid" id="gallery-grid">
+        <!-- Gallery items injected by gallery.js -->
+      </div>
+
+      <!-- CTA after gallery -->
+      <div class="gallery__cta-wrap">
+        <a href="#contact" class="btn btn--primary gallery__cta">Book a Shoot</a>
+      </div>
     </section>
 
     <section class="section" id="video">
