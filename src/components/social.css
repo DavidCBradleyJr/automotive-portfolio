@@ -1,0 +1,76 @@
+/* ==========================================================================
+ * Social Wall — Instagram-style 3x3 Grid
+ * ========================================================================== */
+
+.social__intro {
+  text-align: center;
+  color: var(--color-text-muted);
+  max-width: 600px;
+  margin: 0 auto var(--space-lg);
+  line-height: 1.6;
+}
+
+/* 3x3 square grid */
+.social__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.social__item {
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 4px;
+  position: relative;
+}
+
+.social__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.social__item:hover .social__img {
+  transform: scale(1.05);
+}
+
+/* Follow CTA links below grid */
+.social__follow {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-md);
+  justify-content: center;
+  margin-top: var(--space-lg);
+}
+
+.social__follow-link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: var(--text-base);
+  padding: var(--space-xs) var(--space-md);
+  border: 1px solid var(--color-text-muted);
+  border-radius: 999px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.social__follow-link:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* Mobile: tighter gap */
+@media (max-width: 479px) {
+  .social__grid {
+    gap: var(--space-xs);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .social__img {
+    transition: none;
+  }
+}
