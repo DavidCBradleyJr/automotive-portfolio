@@ -1,1 +1,165 @@
-/* Placeholder — populated in Task 2 */
+/* Image conventions (FOUND-06):
+ * - Max width: 2000px
+ * - Max file size: 400KB (hero: 200KB)
+ * - Format: WebP
+ * - Descriptive filenames (not IMG_1234.jpg)
+ */
+
+@import './tokens.css';
+
+/* ==========================================================================
+ * Modern CSS Reset — based on Josh Comeau's
+ * ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* ==========================================================================
+ * Reduced Motion
+ * ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+ * Base Styles
+ * ========================================================================== */
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+}
+
+/* ==========================================================================
+ * Typography
+ * ========================================================================== */
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  line-height: 1.1;
+}
+
+h2 {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+ * Button System
+ * ========================================================================== */
+
+.btn {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-lg);
+  border: none;
+  border-radius: 4px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.btn--primary {
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  box-shadow: 0 0 20px var(--color-accent-glow), 0 0 40px var(--color-accent-glow);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+ * Section Base
+ * ========================================================================== */
+
+.section {
+  min-height: 50vh;
+  padding: var(--space-xl) var(--space-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section__heading {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  margin-bottom: var(--space-lg);
+  color: var(--color-text);
+}
+
+/* ==========================================================================
+ * Utilities
+ * ========================================================================== */
+
+.no-scroll {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+ * Responsive Breakpoints
+ * ========================================================================== */
+
+/* Default: 320px+ (mobile-first) */
+
+@media (min-width: 768px) {
+  .section {
+    padding: var(--space-xl) var(--space-xl);
+  }
+
+  .section__heading {
+    font-size: var(--text-4xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: var(--space-2xl) var(--space-xl);
+  }
+}
+
+@media (min-width: 1440px) {
+  .section {
+    max-width: 1400px;
+  }
+}
