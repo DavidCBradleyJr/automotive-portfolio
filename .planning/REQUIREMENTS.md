@@ -44,23 +44,23 @@
 
 ### Video Reel
 
-- [ ] **VID-01**: Video reel section with embedded YouTube or Vimeo player (placeholder embed)
-- [ ] **VID-02**: Video embed uses facade pattern (lite-youtube-embed) — no 500KB+ payload on initial load
-- [ ] **VID-03**: Video section has heading, brief description text, and plays muted-by-default where autoplayed
-- [ ] **VID-04**: Responsive video container (16:9 aspect ratio maintained across all screen sizes)
+- [x] **VID-01**: Video reel section with embedded YouTube or Vimeo player (placeholder embed)
+- [x] **VID-02**: Video embed uses facade pattern (lite-youtube-embed) — no 500KB+ payload on initial load
+- [x] **VID-03**: Video section has heading, brief description text, and plays muted-by-default where autoplayed
+- [x] **VID-04**: Responsive video container (16:9 aspect ratio maintained across all screen sizes)
 
 ### About
 
-- [ ] **ABOUT-01**: About section with photographer photo (placeholder) and personal bio text
-- [ ] **ABOUT-02**: Bio communicates personality, passion, and automotive background — not just credentials
-- [ ] **ABOUT-03**: Two-column layout on desktop (photo left, text right), stacked on mobile
-- [ ] **ABOUT-04**: CTA after about section directing to contact/booking
+- [x] **ABOUT-01**: About section with photographer photo (placeholder) and personal bio text
+- [x] **ABOUT-02**: Bio communicates personality, passion, and automotive background — not just credentials
+- [x] **ABOUT-03**: Two-column layout on desktop (photo left, text right), stacked on mobile
+- [x] **ABOUT-04**: CTA after about section directing to contact/booking
 
 ### Behind the Scenes
 
-- [ ] **BTS-01**: Behind-the-scenes section with grid of BTS images (placeholders)
-- [ ] **BTS-02**: Captions or short descriptions for BTS images (gear, location, process)
-- [ ] **BTS-03**: Section heading and brief intro paragraph explaining the BTS content
+- [x] **BTS-01**: Behind-the-scenes section with grid of BTS images (placeholders)
+- [x] **BTS-02**: Captions or short descriptions for BTS images (gear, location, process)
+- [x] **BTS-03**: Section heading and brief intro paragraph explaining the BTS content
 
 ### Contact & Booking
 
@@ -144,9 +144,9 @@
 | NAV-01 through NAV-05 | Phase 1 | Pending |
 | HERO-01 through HERO-05 | Phase 1 | Pending |
 | GAL-01 through GAL-08 | Phase 2 | Pending |
-| VID-01 through VID-04 | Phase 3 | Pending |
-| ABOUT-01 through ABOUT-04 | Phase 3 | Pending |
-| BTS-01 through BTS-03 | Phase 3 | Pending |
+| VID-01 through VID-04 | Phase 3 | Complete |
+| ABOUT-01 through ABOUT-04 | Phase 3 | Complete |
+| BTS-01 through BTS-03 | Phase 3 | Complete |
 | CONT-01 through CONT-07 | Phase 3 | Pending |
 | SOCIAL-01 through SOCIAL-02 | Phase 3 | Pending |
 | ANIM-01 through ANIM-05 | Phase 4 | Pending |

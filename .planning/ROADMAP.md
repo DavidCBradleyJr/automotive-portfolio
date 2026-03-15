@@ -96,5 +96,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. Foundation, Hero, and Navigation | 5/5 | Complete | 2026-03-14 |
 | 2. Gallery and Image Pipeline | 3/3 | Complete   | 2026-03-15 |
-| 3. Content Sections and Contact | 0/2 | Not started | - |
+| 3. Content Sections and Contact | 1/2 | In progress | - |
 | 4. Animations, Polish, and Launch | 0/2 | Not started | - |
