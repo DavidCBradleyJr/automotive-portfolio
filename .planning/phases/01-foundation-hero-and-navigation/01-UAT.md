@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 01-foundation-hero-and-navigation
 source: [01-01-SUMMARY.md, 01-02-SUMMARY.md, 01-03-SUMMARY.md]
 started: 2026-03-15T02:00:00Z
@@ -78,9 +78,15 @@ skipped: 1
   reason: "User reported: there is no image, just a gray background so I can't test that."
   severity: major
   test: 4
-  root_cause: ""
-  artifacts: []
-  missing: []
+  root_cause: "Placeholder image is a near-black gradient (4.6KB) indistinguishable from page background. Combined with dark overlay (rgba 0.85 opacity), no visible content appears."
+  artifacts:
+    - path: "public/images/hero-placeholder.webp"
+      issue: "Dark gradient placeholder has no visible content — needs real automotive photograph"
+    - path: "src/tokens.css"
+      issue: "Hero overlay opacity at 0.85 is too aggressive for darker images"
+  missing:
+    - "Replace placeholder with a real automotive photo (1920x1080 WebP, under 200KB)"
+    - "Consider reducing overlay opacity from 0.85 to 0.6-0.65"
   debug_session: ""
 
 - truth: "Hero text elements fade in and slide up with staggered timing on page load"
@@ -88,17 +94,28 @@ skipped: 1
   reason: "User reported: i don't see any animation, it just loads it seems"
   severity: major
   test: 5
-  root_cause: ""
-  artifacts: []
-  missing: []
-  debug_session: ""
+  root_cause: "Single requestAnimationFrame in initHero() can fire before browser paints initial hidden state (opacity:0, translateY:30px). Browser never commits a 'before' frame, so transition collapses to final values instantly."
+  artifacts:
+    - path: "src/components/hero.js"
+      issue: "Single rAF race condition — class added before initial CSS state is painted"
+  missing:
+    - "Use double requestAnimationFrame pattern to guarantee initial state is painted before class toggle"
+  debug_session: ".planning/debug/hero-entrance-animations.md"
 
 - truth: "Hamburger mobile menu opens consistently regardless of scroll position"
   status: failed
   reason: "User reported: when I try to open the menu scrolled lower, like the about section, the menu doesn't open the same"
   severity: major
   test: 10
-  root_cause: ""
-  artifacts: []
-  missing: []
-  debug_session: ""
+  root_cause: "The no-scroll body class only sets overflow:hidden, which is insufficient on iOS/Safari. No scroll-position save/restore in openOverlay()/closeOverlay(), so background can scroll or jump when overlay opens while scrolled down."
+  artifacts:
+    - path: "src/style.css"
+      issue: ".no-scroll class needs iOS-safe scroll lock (position:fixed + top offset)"
+    - path: "src/components/nav.js"
+      issue: "openOverlay()/closeOverlay() lack scroll-position save/restore"
+    - path: "src/components/nav.css"
+      issue: "Missing .nav__overlay-link--active CSS rule"
+  missing:
+    - "Implement iOS-safe scroll lock: save scrollY, set body position:fixed with top:-scrollY, restore on close"
+    - "Add .nav__overlay-link--active CSS rule for active state in overlay"
+  debug_session: ".planning/debug/hamburger-overlay-scroll-position.md"
