@@ -48,11 +48,12 @@ Plans:
   3. Clicking any gallery image opens a PhotoSwipe lightbox with keyboard navigation, mobile swipe, and pinch-to-zoom
   4. Gallery images lazy-load with LQIP blur-up effect, and on mobile the layout uses full-width single-column so landscape automotive images are never cropped
   5. A "Book a Shoot" CTA button appears after the gallery, scrolling to the contact section
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Image processing pipeline with sharp and gallery data file
+- [ ] 02-02-PLAN.md — Gallery masonry grid, category filter pills, and LQIP lazy loading
+- [ ] 02-03-PLAN.md — PhotoSwipe lightbox integration with category-scoped navigation
 
 ### Phase 3: Content Sections and Contact
 **Goal**: The full storytelling arc is complete -- visitors can watch video content, learn about David, see behind-the-scenes work, find social links, and submit a booking inquiry
@@ -95,6 +96,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation, Hero, and Navigation | 5/5 | Complete | 2026-03-14 |
-| 2. Gallery and Image Pipeline | 0/2 | Not started | - |
+| 2. Gallery and Image Pipeline | 0/3 | Not started | - |
 | 3. Content Sections and Contact | 0/3 | Not started | - |
 | 4. Animations, Polish, and Launch | 0/2 | Not started | - |
