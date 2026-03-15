@@ -210,6 +210,10 @@
   color: var(--color-accent);
 }
 
+.nav__overlay-link--active {
+  color: var(--color-accent);
+}
+
 .nav__overlay-cta {
   font-size: var(--text-lg);
   padding: var(--space-sm) var(--space-xl);
