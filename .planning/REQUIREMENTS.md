@@ -92,14 +92,14 @@
 
 ### Performance & SEO
 
-- [ ] **PERF-01**: Lighthouse performance score ≥ 90 on mobile
-- [ ] **PERF-02**: LCP (Largest Contentful Paint) < 2.5 seconds
-- [ ] **PERF-03**: Total JavaScript bundle < 80KB gzip
-- [ ] **PERF-04**: All images have descriptive alt text
-- [ ] **PERF-05**: Descriptive image filenames (not IMG_1234.jpg)
-- [ ] **PERF-06**: Proper heading hierarchy (one H1, logical H2/H3 structure)
-- [ ] **PERF-07**: Open Graph and Twitter Card meta tags for social sharing
-- [ ] **PERF-08**: Netlify deployment with git-based CI/CD and global CDN
+- [x] **PERF-01**: Lighthouse performance score ≥ 90 on mobile
+- [x] **PERF-02**: LCP (Largest Contentful Paint) < 2.5 seconds
+- [x] **PERF-03**: Total JavaScript bundle < 80KB gzip
+- [x] **PERF-04**: All images have descriptive alt text
+- [x] **PERF-05**: Descriptive image filenames (not IMG_1234.jpg)
+- [x] **PERF-06**: Proper heading hierarchy (one H1, logical H2/H3 structure)
+- [x] **PERF-07**: Open Graph and Twitter Card meta tags for social sharing
+- [x] **PERF-08**: Netlify deployment with git-based CI/CD and global CDN
 
 ## v2 Requirements
 
