@@ -111,7 +111,12 @@ Plans:
   3. Running the build generates a gallery data file in the same format as v1, and the public gallery renders identically with zero code changes to the frontend
   4. LQIP base64 placeholders are generated at build time from Cloudinary thumbnail URLs, preserving the blur-up loading effect
   5. The public site JS bundle remains under 80KB gzip with no Cloudinary SDK or admin code loaded by visitors
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 05-01-PLAN.md -- Install Cloudinary SDK, create migration script, upload 29 images
+- [ ] 05-02-PLAN.md -- Create build-gallery-data.js script and wire into npm prebuild
+- [ ] 05-03-PLAN.md -- Update BTS/social image paths, verify bundle size, visual check
 
 ### Phase 6: Admin Authentication & Upload
 **Goal**: David can log into a browser-based admin panel and upload new photos with categories and captions that appear in the gallery after a short rebuild
@@ -146,6 +151,6 @@ Phases execute in numeric order: 5 -> 6 -> 7
 | 2. Gallery and Image Pipeline | v1.0 | 3/3 | Complete | 2026-03-15 |
 | 3. Content Sections and Contact | v1.0 | 2/2 | Complete | 2026-03-16 |
 | 4. Animations, Polish, and Launch | v1.0 | 2/2 | Complete | 2026-03-16 |
-| 5. Cloudinary Storage & Build Pipeline | v2.0 | 0/? | Not started | - |
+| 5. Cloudinary Storage & Build Pipeline | v2.0 | 0/3 | Not started | - |
 | 6. Admin Authentication & Upload | v2.0 | 0/? | Not started | - |
 | 7. Admin Image Management | v2.0 | 0/? | Not started | - |
