@@ -81,11 +81,11 @@ Plans:
   3. A footer displays David Bradley's name/copyright, social links, nav links, and a "Book a Shoot" CTA
   4. Lighthouse mobile performance score is 90+, LCP is under 2.5 seconds, total JS bundle is under 80KB gzip, and all images have descriptive alt text and filenames
   5. The site is deployed on Netlify with git-based CI/CD, has Open Graph and Twitter Card meta tags, and proper heading hierarchy (one H1, logical H2/H3 structure)
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] 04-01: TBD
-- [ ] 04-02: TBD
+- [ ] 04-01-PLAN.md — Footer component, scroll animations (section reveals, hero parallax, gallery stagger), and hamburger bug fix
+- [ ] 04-02-PLAN.md — SEO audit, meta tags, performance verification, and Netlify deployment
 
 ## Progress
 
