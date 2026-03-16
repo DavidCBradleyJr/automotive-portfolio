@@ -75,9 +75,8 @@ function renderGalleryItems() {
       anchor.target = '_blank';
 
       const img = document.createElement('img');
-      img.className = 'gallery__img';
-      img.src = image.lqip || '';
-      img.dataset.src = image.src;
+      img.className = 'gallery__img gallery__img--loaded';
+      img.src = image.src;
       img.alt = image.alt;
       img.width = image.width;
       img.height = image.height;
