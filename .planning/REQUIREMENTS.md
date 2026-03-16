@@ -105,11 +105,11 @@
 
 ### Image Storage
 
-- [ ] **STOR-01**: Images stored on Cloudinary CDN instead of git repo
+- [x] **STOR-01**: Images stored on Cloudinary CDN instead of git repo
 - [ ] **STOR-02**: Automatic WebP conversion and responsive resizing via Cloudinary URL transforms
 - [ ] **STOR-03**: LQIP base64 generated at build time from Cloudinary thumbnail URLs
 - [ ] **STOR-04**: Gallery data file auto-generated from Cloudinary metadata at build time
-- [ ] **STOR-05**: Existing 29 images migrated from git to Cloudinary with metadata preserved
+- [x] **STOR-05**: Existing 29 images migrated from git to Cloudinary with metadata preserved
 
 ### Admin Authentication
 
@@ -177,11 +177,11 @@
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | FOUND-01 through PERF-08 | Phases 1-4 (v1.0) | Complete |
-| STOR-01 | Phase 5 | Pending |
+| STOR-01 | Phase 5 | Complete |
 | STOR-02 | Phase 5 | Pending |
 | STOR-03 | Phase 5 | Pending |
 | STOR-04 | Phase 5 | Pending |
-| STOR-05 | Phase 5 | Pending |
+| STOR-05 | Phase 5 | Complete |
 | BUILD-01 | Phase 5 | Pending |
 | BUILD-02 | Phase 5 | Pending |
 | BUILD-03 | Phase 5 | Pending |

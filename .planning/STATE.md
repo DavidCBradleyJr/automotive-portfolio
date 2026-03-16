@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Admin Panel & Image Pipeline
 status: executing
-stopped_at: "05-01 paused at Task 3 checkpoint (human-action: Cloudinary account setup + migration run)"
-last_updated: "2026-03-16T22:58:35.949Z"
-last_activity: 2026-03-16 -- v2.0 roadmap created
+stopped_at: "Completed 05-01-PLAN.md"
+last_updated: "2026-03-16T23:35:00.000Z"
+last_activity: 2026-03-16 -- 05-01 complete, 29 images migrated to Cloudinary
 progress:
   total_phases: 3
   completed_phases: 0
   total_plans: 3
-  completed_plans: 0
-  percent: 0
+  completed_plans: 1
+  percent: 33
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-16)
 
 **Core value:** The portfolio must make David's photography the hero -- every design decision serves the images.
-**Current focus:** v2.0 Admin Panel & Image Pipeline -- Phase 5 Plan 01 executing (checkpoint)
+**Current focus:** v2.0 Admin Panel & Image Pipeline -- Phase 5 Plan 02 next
 
 ## Current Position
 
 Phase: 5 of 7 (Cloudinary Storage & Build Pipeline)
-Plan: 1 of 3 (Cloudinary SDK + Migration Script)
-Status: Paused at checkpoint (Task 3 - human-action)
-Last activity: 2026-03-16 -- 05-01 Tasks 1-2 complete, awaiting human action
+Plan: 2 of 3 (Build Gallery Data Script)
+Status: Ready
+Last activity: 2026-03-16 -- 05-01 complete, 29 images migrated to Cloudinary
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [███░░░░░░░] 33%
 
 ## Performance Metrics
 
@@ -62,6 +62,9 @@ Recent decisions affecting current work:
 - v2.0: Build-time data generation (preserves static gallery performance)
 - v2.0: Vanilla JS for admin (matches site stack, scope doesn't justify framework)
 - v2.0: No runtime Cloudinary SDK on public site (bundle stays under 80KB)
+- 05-01: Object form for Cloudinary context metadata (avoids pipe-delimiter issues)
+- 05-01: Node 20+ --env-file flag for .env loading (no dotenv dependency needed)
+- 05-01: Cloudinary cloud name: dl0atmtb7
 
 ### Pending Todos
 
@@ -73,6 +76,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-16T22:58:35.947Z
-Stopped at: 05-01 paused at Task 3 checkpoint (human-action: Cloudinary account setup + migration run)
+Last session: 2026-03-16T23:35:00.000Z
+Stopped at: Completed 05-01-PLAN.md
 Resume file: None
