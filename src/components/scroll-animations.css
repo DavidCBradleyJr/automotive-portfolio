@@ -1,0 +1,61 @@
+/* ==========================================================================
+ * Scroll Animations
+ *
+ * Section reveal states and gallery scroll entrance animation.
+ * All animations respect prefers-reduced-motion.
+ * ========================================================================== */
+
+/* --------------------------------------------------------------------------
+ * Section Reveal: Hidden / Visible States
+ * -------------------------------------------------------------------------- */
+
+.section--hidden {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.section--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+ * Gallery Scroll Stagger Entrance
+ *
+ * Separate from .gallery__item--entering (used by filter changes).
+ * Applied once on first scroll into view, then removed.
+ * -------------------------------------------------------------------------- */
+
+@keyframes galleryScrollFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gallery__item--scroll-entering {
+  animation: galleryScrollFadeInUp 300ms ease forwards;
+}
+
+/* --------------------------------------------------------------------------
+ * Reduced Motion: Disable all scroll animations
+ * -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .section--hidden {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .gallery__item--scroll-entering {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

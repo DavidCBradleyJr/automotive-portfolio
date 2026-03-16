@@ -95,7 +95,7 @@ export function initNav() {
     overlay.classList.remove('nav__overlay--open');
     document.body.classList.remove('no-scroll');
     document.body.style.top = '';
-    window.scrollTo(0, savedScrollY);
+    window.scrollTo({ top: savedScrollY, behavior: 'instant' });
     hamburger.setAttribute('aria-expanded', 'false');
 
     // Return focus to hamburger

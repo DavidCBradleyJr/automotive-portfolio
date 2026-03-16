@@ -138,6 +138,16 @@ function reobserveUnloaded() {
  * Filter gallery items by category with smooth animation.
  */
 function filterGallery(category) {
+  // If the initial scroll stagger animation hasn't completed yet,
+  // cancel it immediately to avoid collision with filter animation.
+  if (!window.__galleryInitialAnimDone) {
+    window.__galleryInitialAnimDone = true;
+    document.querySelectorAll('.gallery__item--scroll-entering').forEach((item) => {
+      item.classList.remove('gallery__item--scroll-entering');
+      item.style.animationDelay = '';
+    });
+  }
+
   activeCategory = category;
 
   // 1. Update active pill

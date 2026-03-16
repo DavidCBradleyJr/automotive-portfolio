@@ -8,14 +8,17 @@ import './components/bts.css';
 import './components/social.css';
 import './components/contact.css';
 import './components/footer.css';
+import './components/scroll-animations.css';
 import { initHero } from './components/hero.js';
 import { initNav } from './components/nav.js';
 import { initGallery } from './components/gallery.js';
 import { initVideo } from './components/video.js';
 import { initContact } from './components/contact.js';
+import { initScrollAnimations } from './components/scroll-animations.js';
 
 initHero();
 initNav();
 initGallery();
 initVideo();
 initContact();
+initScrollAnimations();
