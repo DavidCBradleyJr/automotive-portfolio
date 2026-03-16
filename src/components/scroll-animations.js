@@ -39,21 +39,33 @@ function initSectionReveals() {
   if (prefersReducedMotion) return;
 
   const sections = document.querySelectorAll('.section');
-  sections.forEach((s) => s.classList.add('section--hidden'));
+
+  // Only hide sections that are below the current viewport.
+  // Sections already visible get no animation (avoids flash of hidden content).
+  sections.forEach((s) => {
+    const rect = s.getBoundingClientRect();
+    if (rect.top >= window.innerHeight) {
+      s.classList.add('section--hidden');
+    }
+  });
 
   const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && entry.target.classList.contains('section--hidden')) {
           entry.target.classList.add('section--visible');
           revealObserver.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.15 }
+    { threshold: 0.1 }
   );
 
-  sections.forEach((s) => revealObserver.observe(s));
+  sections.forEach((s) => {
+    if (s.classList.contains('section--hidden')) {
+      revealObserver.observe(s);
+    }
+  });
 }
 
 /* --------------------------------------------------------------------------
