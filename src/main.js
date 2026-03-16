@@ -23,6 +23,9 @@ initContact();
 
 // --- Scroll animations (no GSAP) ---
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Always mark done immediately if reduced motion is preferred.
+// The filter code in gallery.js reads this flag before running filter animations.
 window.__galleryInitialAnimDone = prefersReducedMotion;
 
 if (!prefersReducedMotion) {
@@ -48,27 +51,69 @@ if (!prefersReducedMotion) {
     if (s.classList.contains('section--hidden')) revealObserver.observe(s);
   });
 
-  // Gallery: mark grid as pending, CSS hides items.
-  // When grid scrolls into view, remove pending → CSS animation plays.
+  // Gallery stagger entrance.
+  //
+  // Safety-first design: items are NEVER hidden by default.
+  // Animation is purely additive — if anything goes wrong, items stay visible.
+  //
+  // Strategy: observe the grid. When it enters the viewport for the first time,
+  // apply a staggered fadeInUp animation per-item using inline styles.
+  // Clean up inline styles after animations finish so filter animations work cleanly.
   const grid = document.getElementById('gallery-grid');
   if (grid) {
-    grid.classList.add('gallery__grid--pending');
+    let animationTriggered = false;
 
+    function runGalleryEntrance() {
+      if (animationTriggered) return;
+      animationTriggered = true;
+
+      const items = grid.querySelectorAll('.gallery__item');
+      if (items.length === 0) {
+        // No items yet — nothing to animate, mark done.
+        window.__galleryInitialAnimDone = true;
+        return;
+      }
+
+      let maxDelay = 0;
+
+      items.forEach((item, i) => {
+        // Cap stagger at 10 items (400ms) so the last items don't wait forever.
+        const delay = Math.min(i, 10) * 40;
+        maxDelay = Math.max(maxDelay, delay);
+
+        item.style.animationName = 'galleryScrollFadeInUp';
+        item.style.animationDuration = '0.4s';
+        item.style.animationTimingFunction = 'ease';
+        item.style.animationFillMode = 'both';
+        item.style.animationDelay = `${delay}ms`;
+      });
+
+      // Clean up inline animation styles after all animations have finished.
+      // 'both' fill-mode keeps items visible during cleanup.
+      const totalDuration = maxDelay + 400 + 50; // last delay + duration + buffer
+      setTimeout(() => {
+        items.forEach((item) => {
+          item.style.animationName = '';
+          item.style.animationDuration = '';
+          item.style.animationTimingFunction = '';
+          item.style.animationFillMode = '';
+          item.style.animationDelay = '';
+        });
+        window.__galleryInitialAnimDone = true;
+      }, totalDuration);
+    }
+
+    // Check if grid is already in or near the viewport on page load.
+    // Uses a generous rootMargin so the animation starts just before the grid
+    // scrolls into view rather than after it's already half-visible.
     const gridObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          grid.classList.remove('gallery__grid--pending');
-          grid.classList.add('gallery__grid--animate');
           gridObserver.disconnect();
-
-          // Mark done after animations finish
-          setTimeout(() => {
-            grid.classList.remove('gallery__grid--animate');
-            window.__galleryInitialAnimDone = true;
-          }, 2000);
+          runGalleryEntrance();
         }
       },
-      { threshold: 0.05 }
+      { threshold: 0, rootMargin: '0px 0px -50px 0px' }
     );
     gridObserver.observe(grid);
   }
