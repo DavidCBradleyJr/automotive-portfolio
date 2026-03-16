@@ -117,6 +117,19 @@ function initGalleryScrollStagger() {
     return;
   }
 
+  // Hide gallery items before they scroll into view
+  const allItems = grid.querySelectorAll('.gallery__item');
+  const gridRect = grid.getBoundingClientRect();
+  if (gridRect.top >= window.innerHeight * 0.5) {
+    allItems.forEach((item) => {
+      item.style.opacity = '0';
+    });
+  } else {
+    // Gallery already in view, skip animation
+    window.__galleryInitialAnimDone = true;
+    return;
+  }
+
   const observer = new IntersectionObserver(
     ([entry]) => {
       if (entry.isIntersecting) {
@@ -125,6 +138,7 @@ function initGalleryScrollStagger() {
         );
 
         items.forEach((item, i) => {
+          item.style.opacity = '';
           item.style.animationDelay = `${i * 30}ms`;
           item.classList.add('gallery__item--scroll-entering');
         });
