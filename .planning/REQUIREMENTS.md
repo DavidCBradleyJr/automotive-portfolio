@@ -3,13 +3,13 @@
 **Defined:** 2026-03-14
 **Core Value:** The portfolio must make David's photography the hero — every design decision serves the images, and visitors should feel the craft and passion before they ever contact him.
 
-## v1 Requirements
+## v1 Requirements (Complete)
 
 ### Foundation & Theme
 
 - [x] **FOUND-01**: Project scaffolded with Vite 6.x, vanilla HTML/CSS/JS, optimized build output
 - [x] **FOUND-02**: CSS custom properties define the full design token system (colors, typography, spacing, motion)
-- [x] **FOUND-03**: Dark theme implemented with off-black background (#121212–#1A1A1A) and purple accent color verified at WCAG AA contrast ratio
+- [x] **FOUND-03**: Dark theme implemented with off-black background (#0F0F0F) and purple accent color verified at WCAG AA contrast ratio
 - [x] **FOUND-04**: Orbitron (headings) and Space Grotesk (body) fonts loaded via Google Fonts with performance-safe loading strategy
 - [x] **FOUND-05**: Global responsive breakpoints established (mobile-first, 320px–1440px+)
 - [x] **FOUND-06**: Image sizing conventions and performance budget documented and enforced (max 2000px wide, under 400KB per image, WebP format)
@@ -25,9 +25,9 @@
 
 ### Hero
 
-- [x] **HERO-01**: Full-viewport hero section with cinematic full-bleed background image (placeholder)
+- [x] **HERO-01**: Full-viewport hero section with cinematic full-bleed background image
 - [x] **HERO-02**: David Bradley name rendered in Orbitron with entrance animation on page load
-- [x] **HERO-03**: Tagline text below name (e.g. "Automotive Photography")
+- [x] **HERO-03**: Tagline text below name ("Where Speed Meets Art")
 - [x] **HERO-04**: Primary CTA button scrolling to Gallery section
 - [x] **HERO-05**: Hero image treated as LCP element (never lazy-loaded, fetchpriority="high", under 200KB)
 
@@ -36,128 +36,159 @@
 - [x] **GAL-01**: Photo gallery section with CSS Grid layout, responsive across all screen sizes
 - [x] **GAL-02**: Category filter buttons for JDM, Euro, Supercar, American Muscle, Track/Motorsport
 - [x] **GAL-03**: Filter transitions animate smoothly (fade + scale) without page reload
-- [x] **GAL-04**: 8–12 placeholder images per category (40–60 total placeholders)
-- [x] **GAL-05**: All gallery images lazy-loaded with LQIP (Low Quality Image Placeholder) blur-up effect
+- [x] **GAL-04**: 8–12 images per category (40–60 total)
+- [x] **GAL-05**: All gallery images lazy-loaded with native loading="lazy"
 - [x] **GAL-06**: PhotoSwipe 5.4 lightbox on image click — keyboard navigation, swipe on mobile, pinch-to-zoom
 - [x] **GAL-07**: Gallery mobile layout uses full-width single-column (landscape automotive images must not be cropped)
 - [x] **GAL-08**: CTA button after gallery ("Book a Shoot") scrolling to contact section
 
 ### Video Reel
 
-- [x] **VID-01**: Video reel section with embedded YouTube or Vimeo player (placeholder embed)
-- [x] **VID-02**: Video embed uses facade pattern (lite-youtube-embed) — no 500KB+ payload on initial load
-- [x] **VID-03**: Video section has heading, brief description text, and plays muted-by-default where autoplayed
+- [x] **VID-01**: Video reel section with embedded YouTube player (placeholder embed)
+- [x] **VID-02**: Video embed uses facade pattern (lite-youtube-embed) — no heavy payload on initial load
+- [x] **VID-03**: Video section has heading, brief description text
 - [x] **VID-04**: Responsive video container (16:9 aspect ratio maintained across all screen sizes)
 
 ### About
 
-- [x] **ABOUT-01**: About section with photographer photo (placeholder) and personal bio text
-- [x] **ABOUT-02**: Bio communicates personality, passion, and automotive background — not just credentials
+- [x] **ABOUT-01**: About section with photographer avatar and personal bio text
+- [x] **ABOUT-02**: Bio communicates personality, passion, and automotive background
 - [x] **ABOUT-03**: Two-column layout on desktop (photo left, text right), stacked on mobile
 - [x] **ABOUT-04**: CTA after about section directing to contact/booking
 
 ### Behind the Scenes
 
-- [x] **BTS-01**: Behind-the-scenes section with grid of BTS images (placeholders)
-- [x] **BTS-02**: Captions or short descriptions for BTS images (gear, location, process)
-- [x] **BTS-03**: Section heading and brief intro paragraph explaining the BTS content
+- [x] **BTS-01**: Behind-the-scenes section with 2x2 grid of BTS images
+- [x] **BTS-02**: Captions describing gear, location, or process
+- [x] **BTS-03**: Section heading and brief intro paragraph
 
 ### Contact & Booking
 
-- [x] **CONT-01**: Booking inquiry form with exactly 5 fields: Name, Email, Event Type (dropdown), Tentative Date, Brief Message
+- [x] **CONT-01**: Booking inquiry form with 5 fields: Name, Email, Event Type, Tentative Date, Brief Message
 - [x] **CONT-02**: Form integrated with Formspree — submissions delivered to David's email
-- [x] **CONT-03**: Client-side validation with inline error messages before submission
-- [x] **CONT-04**: Success state shown after submission (no page reload)
+- [x] **CONT-03**: Client-side validation with inline error messages
+- [x] **CONT-04**: Success state shown after submission (toast notification, no page reload)
 - [x] **CONT-05**: Error state shown if submission fails, with retry guidance
-- [x] **CONT-06**: Alternative contact method visible (email address displayed directly)
-- [x] **CONT-07**: Phone number field is optional — not required
+- [x] **CONT-06**: Alternative contact method visible (email + social links)
+- [x] **CONT-07**: No phone number field required
 
 ### Social Media
 
-- [x] **SOCIAL-01**: Social media links in navigation and/or footer (Instagram, potentially YouTube/TikTok)
-- [x] **SOCIAL-02**: Social wall section with curated static grid of social-style images (Instagram-style layout) — static images used instead of live API to avoid Instagram API instability
+- [x] **SOCIAL-01**: Social media links in footer (Instagram @itz.dat.david, TikTok @itzdatdavid)
+- [x] **SOCIAL-02**: Social wall section with 3x3 Instagram-style static grid
 
 ### Animations & Polish
 
-- [x] **ANIM-01**: Scroll-triggered section reveals using Intersection Observer + CSS transitions (opacity + translateY)
-- [x] **ANIM-02**: GSAP ScrollTrigger used for hero parallax effect and text animations only
-- [x] **ANIM-03**: Maximum 3–4 distinct animation types site-wide (no animation chaos)
-- [x] **ANIM-04**: `prefers-reduced-motion` media query respected — all animations disabled for users who prefer it
-- [x] **ANIM-05**: Staggered gallery item entrance animations on filter change
+- [x] **ANIM-01**: Scroll-triggered section reveals using IntersectionObserver + CSS transitions
+- [x] **ANIM-02**: GSAP ScrollTrigger for hero parallax effect
+- [x] **ANIM-03**: Maximum 3–4 distinct animation types site-wide
+- [x] **ANIM-04**: `prefers-reduced-motion` respected — all animations disabled
+- [x] **ANIM-05**: Staggered gallery item entrance animations
 
 ### Footer
 
-- [x] **FOOT-01**: Footer with David Bradley name/copyright, social links, and nav links
+- [x] **FOOT-01**: Three-column footer with name/copyright, nav links, social links
 - [x] **FOOT-02**: "Book a Shoot" CTA in footer
 
 ### Performance & SEO
 
 - [x] **PERF-01**: Lighthouse performance score ≥ 90 on mobile
-- [x] **PERF-02**: LCP (Largest Contentful Paint) < 2.5 seconds
+- [x] **PERF-02**: LCP < 2.5 seconds
 - [x] **PERF-03**: Total JavaScript bundle < 80KB gzip
 - [x] **PERF-04**: All images have descriptive alt text
-- [x] **PERF-05**: Descriptive image filenames (not IMG_1234.jpg)
-- [x] **PERF-06**: Proper heading hierarchy (one H1, logical H2/H3 structure)
-- [x] **PERF-07**: Open Graph and Twitter Card meta tags for social sharing
-- [x] **PERF-08**: Netlify deployment with git-based CI/CD and global CDN
+- [x] **PERF-05**: Descriptive image filenames
+- [x] **PERF-06**: Proper heading hierarchy (one H1, logical H2/H3)
+- [x] **PERF-07**: Open Graph and Twitter Card meta tags
+- [x] **PERF-08**: Netlify deployment with git-based CI/CD
 
 ## v2 Requirements
+
+### Image Storage
+
+- [ ] **STOR-01**: Images stored on Cloudinary CDN instead of git repo
+- [ ] **STOR-02**: Automatic WebP conversion and responsive resizing via Cloudinary URL transforms
+- [ ] **STOR-03**: LQIP base64 generated at build time from Cloudinary thumbnail URLs
+- [ ] **STOR-04**: Gallery data file auto-generated from Cloudinary metadata at build time
+- [ ] **STOR-05**: Existing 29 images migrated from git to Cloudinary with metadata preserved
+
+### Admin Authentication
+
+- [ ] **AUTH-01**: Admin page at `/admin` protected by Netlify Identity login
+- [ ] **AUTH-02**: Only invited users (David) can access admin — no public registration
+
+### Admin Upload
+
+- [ ] **UPLOAD-01**: Drag-and-drop upload zone with file picker fallback, accepts JPEG/PNG/WebP
+- [ ] **UPLOAD-02**: Batch upload — multiple photos in one session
+- [ ] **UPLOAD-03**: Per-image metadata form: category (dropdown), caption (text), alt text (text)
+- [ ] **UPLOAD-04**: Auto-generated image ID/slug from category + caption, editable
+- [ ] **UPLOAD-05**: Image preview shown before upload using browser URL.createObjectURL
+- [ ] **UPLOAD-06**: Upload proxied through Netlify Function (Cloudinary API secret stays server-side)
+- [ ] **UPLOAD-07**: Netlify rebuild triggered automatically after upload completes
+
+### Admin Management
+
+- [ ] **MGMT-01**: View all uploaded gallery images in a grid with metadata
+- [ ] **MGMT-02**: Edit category, caption, and alt text on existing images
+- [ ] **MGMT-03**: Delete images from gallery (removes from Cloudinary + metadata)
+- [ ] **MGMT-04**: Reorder images within categories via drag or sort controls
+
+### Build Pipeline
+
+- [ ] **BUILD-01**: Build script fetches all gallery images from Cloudinary API with metadata
+- [ ] **BUILD-02**: Build script generates gallery-images.js in same format as v1 (static import)
+- [ ] **BUILD-03**: Public site gallery component requires zero code changes
+- [ ] **BUILD-04**: Public site JS bundle stays under 80KB gzip (admin code never loaded by visitors)
+
+## Future Requirements (Deferred)
 
 ### Enhanced Content
 
 - **V2-01**: Project storytelling pages — narrative photo series with context per shoot
-- **V2-02**: Before/after retouching slider to demonstrate post-production skill
+- **V2-02**: Before/after retouching slider
 - **V2-03**: Client testimonials section
 - **V2-04**: Client logo bar (brands/events photographed)
 
 ### Business Features
 
 - **V2-05**: Pricing tiers page with service packages
-- **V2-06**: Live Instagram feed via embed widget (when API approach is resolved)
+- **V2-06**: Live Instagram feed via embed widget
 - **V2-07**: Plausible or similar privacy-friendly analytics
 
 ### Technical
 
-- **V2-08**: Headless CMS integration for content editing without code changes
 - **V2-09**: Print store / digital download integration
 
 ## Out of Scope
 
 | Feature | Reason |
 |---------|--------|
-| CMS / admin panel | Static site for v1 — content edited directly in code |
-| E-commerce / print sales | Future milestone, significant complexity |
-| Blog | Not core to portfolio conversion goal |
-| Authentication / login | No user accounts needed |
-| Real-time chat | Over-engineering; inquiry form is sufficient |
-| Live Instagram API | Instagram API requires app review, subject to breaking changes — use static images |
-| Video autoplay with sound | Poor UX, fails mobile browser policies |
-| Scroll hijacking | Kills usability, harms mobile performance |
-| Tailwind CSS | Bespoke dark/purple design requires bespoke CSS |
-| React / Astro / Next.js | Single-page site doesn't benefit from framework abstraction |
+| Multi-user admin | Single owner only — no team collaboration needed |
+| Real-time publish (<30s) | 2-3 min rebuild delay is acceptable for a portfolio |
+| Database (Supabase/Postgres) | Cloudinary metadata + build-time generation is sufficient |
+| JavaScript framework for admin | Vanilla JS matches the site, scope doesn't justify React/Vue |
+| Image cropping in admin | Masonry layout handles any aspect ratio naturally |
+| E-commerce / print sales | Future milestone |
+| Blog | Not core to portfolio conversion |
+| Live Instagram API | API instability, static images sufficient |
 
 ## Traceability
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 through FOUND-07 | Phase 1 | Pending |
-| NAV-01 through NAV-05 | Phase 1 | Pending |
-| HERO-01 through HERO-05 | Phase 1 | Pending |
-| GAL-01 through GAL-08 | Phase 2 | Pending |
-| VID-01 through VID-04 | Phase 3 | Complete |
-| ABOUT-01 through ABOUT-04 | Phase 3 | Complete |
-| BTS-01 through BTS-03 | Phase 3 | Complete |
-| CONT-01 through CONT-07 | Phase 3 | Pending |
-| SOCIAL-01 through SOCIAL-02 | Phase 3 | Pending |
-| ANIM-01 through ANIM-05 | Phase 4 | Pending |
-| FOOT-01 through FOOT-02 | Phase 4 | Pending |
-| PERF-01 through PERF-08 | Phase 4 | Pending |
+| FOUND-01 through PERF-08 | Phases 1–4 (v1.0) | Complete |
+| STOR-01 through STOR-05 | Phase 5 | Pending |
+| AUTH-01 through AUTH-02 | Phase 6 | Pending |
+| UPLOAD-01 through UPLOAD-07 | Phase 6 | Pending |
+| MGMT-01 through MGMT-04 | Phase 6 | Pending |
+| BUILD-01 through BUILD-04 | Phase 5 | Pending |
 
 **Coverage:**
-- v1 requirements: 56 total
-- Mapped to phases: 56
+- v1 requirements: 56 total (all complete)
+- v2 requirements: 20 total
+- Mapped to phases: 20
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-14*
-*Last updated: 2026-03-14 after roadmap creation (coarse granularity: 4 phases)*
+*Last updated: 2026-03-16 after v2.0 milestone start*
