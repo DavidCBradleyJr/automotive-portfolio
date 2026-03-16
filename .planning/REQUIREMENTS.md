@@ -176,19 +176,36 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 through PERF-08 | Phases 1–4 (v1.0) | Complete |
-| STOR-01 through STOR-05 | Phase 5 | Pending |
-| AUTH-01 through AUTH-02 | Phase 6 | Pending |
-| UPLOAD-01 through UPLOAD-07 | Phase 6 | Pending |
-| MGMT-01 through MGMT-04 | Phase 6 | Pending |
-| BUILD-01 through BUILD-04 | Phase 5 | Pending |
+| FOUND-01 through PERF-08 | Phases 1-4 (v1.0) | Complete |
+| STOR-01 | Phase 5 | Pending |
+| STOR-02 | Phase 5 | Pending |
+| STOR-03 | Phase 5 | Pending |
+| STOR-04 | Phase 5 | Pending |
+| STOR-05 | Phase 5 | Pending |
+| BUILD-01 | Phase 5 | Pending |
+| BUILD-02 | Phase 5 | Pending |
+| BUILD-03 | Phase 5 | Pending |
+| BUILD-04 | Phase 5 | Pending |
+| AUTH-01 | Phase 6 | Pending |
+| AUTH-02 | Phase 6 | Pending |
+| UPLOAD-01 | Phase 6 | Pending |
+| UPLOAD-02 | Phase 6 | Pending |
+| UPLOAD-03 | Phase 6 | Pending |
+| UPLOAD-04 | Phase 6 | Pending |
+| UPLOAD-05 | Phase 6 | Pending |
+| UPLOAD-06 | Phase 6 | Pending |
+| UPLOAD-07 | Phase 6 | Pending |
+| MGMT-01 | Phase 7 | Pending |
+| MGMT-02 | Phase 7 | Pending |
+| MGMT-03 | Phase 7 | Pending |
+| MGMT-04 | Phase 7 | Pending |
 
 **Coverage:**
 - v1 requirements: 56 total (all complete)
-- v2 requirements: 20 total
-- Mapped to phases: 20
+- v2 requirements: 22 total
+- Mapped to phases: 22
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-14*
-*Last updated: 2026-03-16 after v2.0 milestone start*
+*Last updated: 2026-03-16 after v2.0 roadmap creation*
