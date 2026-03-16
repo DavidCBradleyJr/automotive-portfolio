@@ -38,7 +38,8 @@ export function initScrollAnimations() {
 function initSectionReveals() {
   if (prefersReducedMotion) return;
 
-  const sections = document.querySelectorAll('.section');
+  // Skip gallery (has its own stagger animation) and hero (has parallax)
+  const sections = document.querySelectorAll('.section:not(.gallery):not(.hero)');
 
   // Only hide sections that are below the current viewport.
   // Sections already visible get no animation (avoids flash of hidden content).
