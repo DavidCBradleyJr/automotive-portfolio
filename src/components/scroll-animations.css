@@ -23,8 +23,8 @@
 /* --------------------------------------------------------------------------
  * Gallery Scroll Stagger Entrance
  *
- * Separate from .gallery__item--entering (used by filter changes).
- * Applied once on first scroll into view, then removed.
+ * .gallery__grid--pending: items are hidden (waiting to scroll into view)
+ * .gallery__grid--animate: items play staggered fadeInUp via nth-child delays
  * -------------------------------------------------------------------------- */
 
 @keyframes galleryScrollFadeInUp {
@@ -38,9 +38,28 @@
   }
 }
 
-.gallery__item--scroll-entering {
-  animation: galleryScrollFadeInUp 300ms ease forwards;
+/* While pending, hide all items */
+.gallery__grid--pending .gallery__item {
+  opacity: 0;
 }
+
+/* When animate class is added, stagger items in */
+.gallery__grid--animate .gallery__item {
+  animation: galleryScrollFadeInUp 0.4s ease forwards;
+}
+
+/* Stagger delays via nth-child groups */
+.gallery__grid--animate .gallery__item:nth-child(1) { animation-delay: 0ms; }
+.gallery__grid--animate .gallery__item:nth-child(2) { animation-delay: 40ms; }
+.gallery__grid--animate .gallery__item:nth-child(3) { animation-delay: 80ms; }
+.gallery__grid--animate .gallery__item:nth-child(4) { animation-delay: 120ms; }
+.gallery__grid--animate .gallery__item:nth-child(5) { animation-delay: 160ms; }
+.gallery__grid--animate .gallery__item:nth-child(6) { animation-delay: 200ms; }
+.gallery__grid--animate .gallery__item:nth-child(7) { animation-delay: 240ms; }
+.gallery__grid--animate .gallery__item:nth-child(8) { animation-delay: 280ms; }
+.gallery__grid--animate .gallery__item:nth-child(9) { animation-delay: 320ms; }
+.gallery__grid--animate .gallery__item:nth-child(10) { animation-delay: 360ms; }
+.gallery__grid--animate .gallery__item:nth-child(n+11) { animation-delay: 400ms; }
 
 /* --------------------------------------------------------------------------
  * Reduced Motion: Disable all scroll animations
@@ -53,7 +72,11 @@
     transition: none;
   }
 
-  .gallery__item--scroll-entering {
+  .gallery__grid--pending .gallery__item {
+    opacity: 1;
+  }
+
+  .gallery__grid--animate .gallery__item {
     animation: none;
     opacity: 1;
     transform: none;

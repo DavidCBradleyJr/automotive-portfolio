@@ -21,18 +21,18 @@ initGallery();
 initVideo();
 initContact();
 
-// --- Section reveals (no GSAP, runs immediately) ---
+// --- Scroll animations (no GSAP) ---
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+window.__galleryInitialAnimDone = prefersReducedMotion;
 
 if (!prefersReducedMotion) {
-  // Reveal animations for non-gallery sections below the fold
+  // Section reveals for non-gallery sections below the fold
   const sections = document.querySelectorAll('.section:not(.gallery):not(.hero)');
   sections.forEach((s) => {
     if (s.getBoundingClientRect().top >= window.innerHeight) {
       s.classList.add('section--hidden');
     }
   });
-
   const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -48,42 +48,30 @@ if (!prefersReducedMotion) {
     if (s.classList.contains('section--hidden')) revealObserver.observe(s);
   });
 
-  // Gallery stagger entrance on first scroll
+  // Gallery: mark grid as pending, CSS hides items.
+  // When grid scrolls into view, remove pending → CSS animation plays.
   const grid = document.getElementById('gallery-grid');
-  if (grid && grid.getBoundingClientRect().top >= window.innerHeight * 0.5) {
-    const allItems = grid.querySelectorAll('.gallery__item');
-    allItems.forEach((item) => { item.style.opacity = '0'; });
+  if (grid) {
+    grid.classList.add('gallery__grid--pending');
 
     const gridObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          const items = grid.querySelectorAll('.gallery__item:not(.gallery__item--hidden)');
-          items.forEach((item, i) => {
-            item.style.opacity = '';
-            item.style.animationDelay = `${i * 30}ms`;
-            item.classList.add('gallery__item--scroll-entering');
-          });
-
-          const totalDuration = 300 + items.length * 30;
-          setTimeout(() => {
-            items.forEach((item) => {
-              item.classList.remove('gallery__item--scroll-entering');
-              item.style.animationDelay = '';
-            });
-            window.__galleryInitialAnimDone = true;
-          }, totalDuration);
-
+          grid.classList.remove('gallery__grid--pending');
+          grid.classList.add('gallery__grid--animate');
           gridObserver.disconnect();
+
+          // Mark done after animations finish
+          setTimeout(() => {
+            grid.classList.remove('gallery__grid--animate');
+            window.__galleryInitialAnimDone = true;
+          }, 2000);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
     gridObserver.observe(grid);
-  } else {
-    window.__galleryInitialAnimDone = true;
   }
-} else {
-  window.__galleryInitialAnimDone = true;
 }
 
 // Load GSAP hero parallax dynamically (failure won't break anything)
