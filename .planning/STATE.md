@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Admin Panel & Image Pipeline
 status: executing
-stopped_at: Completed 05-02-PLAN.md
-last_updated: "2026-03-16T23:35:13Z"
-last_activity: 2026-03-16 -- 05-02 complete, build pipeline generates gallery data from Cloudinary
+stopped_at: Completed 05-03-PLAN.md
+last_updated: "2026-03-16T23:50:00Z"
+last_activity: 2026-03-16 -- Phase 5 complete, all images on Cloudinary CDN, build pipeline verified
 progress:
   total_phases: 3
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
-  percent: 67
+  completed_plans: 3
+  percent: 100
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-16)
 
 **Core value:** The portfolio must make David's photography the hero -- every design decision serves the images.
-**Current focus:** v2.0 Admin Panel & Image Pipeline -- Phase 5 Plan 03 next
+**Current focus:** v2.0 Admin Panel & Image Pipeline -- Phase 5 complete, Phase 6 next
 
 ## Current Position
 
-Phase: 5 of 7 (Cloudinary Storage & Build Pipeline)
-Plan: 3 of 3 (Cleanup and Netlify Config)
-Status: Ready
-Last activity: 2026-03-16 -- 05-02 complete, build pipeline generates gallery data from Cloudinary
+Phase: 6 of 7 (Admin Authentication & Upload)
+Plan: 1 of ? (pending planning)
+Status: Phase 5 complete, Phase 6 not yet planned
+Last activity: 2026-03-16 -- Phase 5 complete, all images on Cloudinary CDN, build pipeline verified
 
-Progress: [███████░░░] 67%
+Progress: [██████████] 100% (Phase 5)
 
 ## Performance Metrics
 
@@ -67,6 +67,8 @@ Recent decisions affecting current work:
 - 05-01: Cloudinary cloud name: dl0atmtb7
 - 05-02: Auto-load .env in build script for seamless local/Netlify builds
 - 05-02: Support both context.custom.X and context.X paths for Cloudinary metadata
+- 05-03: w_800,c_limit transform for BTS/social images (smaller display size than gallery)
+- 05-03: Hero image stays local for LCP performance
 
 ### Pending Todos
 
@@ -78,6 +80,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-16T23:35:13Z
-Stopped at: Completed 05-02-PLAN.md
+Last session: 2026-03-16T23:50:00Z
+Stopped at: Completed 05-03-PLAN.md (Phase 5 complete)
 Resume file: None

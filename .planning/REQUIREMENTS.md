@@ -137,8 +137,8 @@
 
 - [x] **BUILD-01**: Build script fetches all gallery images from Cloudinary API with metadata
 - [x] **BUILD-02**: Build script generates gallery-images.js in same format as v1 (static import)
-- [ ] **BUILD-03**: Public site gallery component requires zero code changes
-- [ ] **BUILD-04**: Public site JS bundle stays under 80KB gzip (admin code never loaded by visitors)
+- [x] **BUILD-03**: Public site gallery component requires zero code changes
+- [x] **BUILD-04**: Public site JS bundle stays under 80KB gzip (admin code never loaded by visitors)
 
 ## Future Requirements (Deferred)
 
@@ -184,8 +184,8 @@
 | STOR-05 | Phase 5 | Complete |
 | BUILD-01 | Phase 5 | Complete |
 | BUILD-02 | Phase 5 | Complete |
-| BUILD-03 | Phase 5 | Pending |
-| BUILD-04 | Phase 5 | Pending |
+| BUILD-03 | Phase 5 | Complete |
+| BUILD-04 | Phase 5 | Complete |
 | AUTH-01 | Phase 6 | Pending |
 | AUTH-02 | Phase 6 | Pending |
 | UPLOAD-01 | Phase 6 | Pending |
