@@ -79,16 +79,16 @@
 
 ### Animations & Polish
 
-- [ ] **ANIM-01**: Scroll-triggered section reveals using Intersection Observer + CSS transitions (opacity + translateY)
-- [ ] **ANIM-02**: GSAP ScrollTrigger used for hero parallax effect and text animations only
-- [ ] **ANIM-03**: Maximum 3–4 distinct animation types site-wide (no animation chaos)
-- [ ] **ANIM-04**: `prefers-reduced-motion` media query respected — all animations disabled for users who prefer it
-- [ ] **ANIM-05**: Staggered gallery item entrance animations on filter change
+- [x] **ANIM-01**: Scroll-triggered section reveals using Intersection Observer + CSS transitions (opacity + translateY)
+- [x] **ANIM-02**: GSAP ScrollTrigger used for hero parallax effect and text animations only
+- [x] **ANIM-03**: Maximum 3–4 distinct animation types site-wide (no animation chaos)
+- [x] **ANIM-04**: `prefers-reduced-motion` media query respected — all animations disabled for users who prefer it
+- [x] **ANIM-05**: Staggered gallery item entrance animations on filter change
 
 ### Footer
 
-- [ ] **FOOT-01**: Footer with David Bradley name/copyright, social links, and nav links
-- [ ] **FOOT-02**: "Book a Shoot" CTA in footer
+- [x] **FOOT-01**: Footer with David Bradley name/copyright, social links, and nav links
+- [x] **FOOT-02**: "Book a Shoot" CTA in footer
 
 ### Performance & SEO
 

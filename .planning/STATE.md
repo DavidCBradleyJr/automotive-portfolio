@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Phase 4 context gathered
-last_updated: "2026-03-16T19:26:47.521Z"
-last_activity: 2026-03-15 -- Completed 03-02 contact form and social wall
+status: in-progress
+stopped_at: Completed 04-01 scroll animations and footer
+last_updated: "2026-03-16T20:02:29.937Z"
+last_activity: 2026-03-16 -- Completed 04-01 scroll animations, footer, and hamburger fix
 progress:
   total_phases: 4
   completed_phases: 3
-  total_plans: 10
-  completed_plans: 10
+  total_plans: 12
+  completed_plans: 11
   percent: 100
 ---
 
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14)
 
 **Core value:** The portfolio must make David's photography the hero -- every design decision serves the images, and visitors should feel the craft and passion before they ever contact him.
-**Current focus:** Phase 3: Content Sections and Contact -- IN PROGRESS
+**Current focus:** Phase 4: Animations, Polish, and Launch -- IN PROGRESS
 
 ## Current Position
 
-Phase: 3 of 4 (Content Sections and Contact) -- COMPLETE
-Plan: 2 of 2 in current phase -- COMPLETE
-Status: Phase 3 Complete
-Last activity: 2026-03-15 -- Completed 03-02 contact form and social wall
+Phase: 4 of 4 (Animations, Polish, and Launch) -- IN PROGRESS
+Plan: 1 of 2 in current phase -- COMPLETE
+Status: 04-01 Complete, 04-02 pending
+Last activity: 2026-03-16 -- Completed 04-01 scroll animations, footer, and hamburger fix
 
-Progress: [██████████] 100%
+Progress: [█████████░] 92%
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Progress: [██████████] 100%
 | Phase 02 P03 | 2min | 2 tasks | 4 files |
 | Phase 03 P01 | 2min | 2 tasks | 7 files |
 | Phase 03 P02 | 2min | 2 tasks | 5 files |
+| Phase 04 P01 | 2min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -93,6 +94,9 @@ Recent decisions affecting current work:
 - [Phase 03-01]: Reused gallery images as BTS stand-ins (user swaps real BTS photos later)
 - [Phase 03-02]: Toast auto-dismisses after 5s with fallback removal for reduced-motion
 - [Phase 03-02]: Social follow links styled as pill badges for visual distinction
+- [Phase 04-01]: GSAP only for hero parallax; IO + CSS for all other scroll animations (keeps bundle lean)
+- [Phase 04-01]: window.__galleryInitialAnimDone flag prevents scroll stagger vs filter stagger collision
+- [Phase 04-01]: scrollTo behavior:'instant' fixes hamburger overlay smooth-scroll restore bug
 
 ### Pending Todos
 
@@ -104,6 +108,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-16T19:26:47.518Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-animations-polish-and-launch/04-CONTEXT.md
+Last session: 2026-03-16T20:01:30Z
+Stopped at: Completed 04-01 scroll animations and footer
+Resume file: .planning/phases/04-animations-polish-and-launch/04-01-SUMMARY.md
