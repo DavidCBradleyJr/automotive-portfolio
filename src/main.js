@@ -14,11 +14,13 @@ import { initNav } from './components/nav.js';
 import { initGallery } from './components/gallery.js';
 import { initVideo } from './components/video.js';
 import { initContact } from './components/contact.js';
-import { initScrollAnimations } from './components/scroll-animations.js';
-
 initHero();
 initNav();
 initGallery();
 initVideo();
 initContact();
-initScrollAnimations();
+
+// Load scroll animations dynamically so GSAP failure can't crash other components
+import('./components/scroll-animations.js')
+  .then((m) => m.initScrollAnimations())
+  .catch(() => {});
