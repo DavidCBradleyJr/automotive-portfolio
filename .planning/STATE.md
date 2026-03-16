@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Admin Panel & Image Pipeline
 status: executing
-stopped_at: "Completed 05-01-PLAN.md"
-last_updated: "2026-03-16T23:35:00.000Z"
-last_activity: 2026-03-16 -- 05-01 complete, 29 images migrated to Cloudinary
+stopped_at: Completed 05-02-PLAN.md
+last_updated: "2026-03-16T23:35:13Z"
+last_activity: 2026-03-16 -- 05-02 complete, build pipeline generates gallery data from Cloudinary
 progress:
   total_phases: 3
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
-  percent: 33
+  completed_plans: 2
+  percent: 67
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-16)
 
 **Core value:** The portfolio must make David's photography the hero -- every design decision serves the images.
-**Current focus:** v2.0 Admin Panel & Image Pipeline -- Phase 5 Plan 02 next
+**Current focus:** v2.0 Admin Panel & Image Pipeline -- Phase 5 Plan 03 next
 
 ## Current Position
 
 Phase: 5 of 7 (Cloudinary Storage & Build Pipeline)
-Plan: 2 of 3 (Build Gallery Data Script)
+Plan: 3 of 3 (Cleanup and Netlify Config)
 Status: Ready
-Last activity: 2026-03-16 -- 05-01 complete, 29 images migrated to Cloudinary
+Last activity: 2026-03-16 -- 05-02 complete, build pipeline generates gallery data from Cloudinary
 
-Progress: [███░░░░░░░] 33%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
@@ -65,6 +65,8 @@ Recent decisions affecting current work:
 - 05-01: Object form for Cloudinary context metadata (avoids pipe-delimiter issues)
 - 05-01: Node 20+ --env-file flag for .env loading (no dotenv dependency needed)
 - 05-01: Cloudinary cloud name: dl0atmtb7
+- 05-02: Auto-load .env in build script for seamless local/Netlify builds
+- 05-02: Support both context.custom.X and context.X paths for Cloudinary metadata
 
 ### Pending Todos
 
@@ -76,6 +78,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-16T23:35:00.000Z
-Stopped at: Completed 05-01-PLAN.md
+Last session: 2026-03-16T23:35:13Z
+Stopped at: Completed 05-02-PLAN.md
 Resume file: None

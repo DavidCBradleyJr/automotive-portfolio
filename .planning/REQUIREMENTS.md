@@ -106,9 +106,9 @@
 ### Image Storage
 
 - [x] **STOR-01**: Images stored on Cloudinary CDN instead of git repo
-- [ ] **STOR-02**: Automatic WebP conversion and responsive resizing via Cloudinary URL transforms
-- [ ] **STOR-03**: LQIP base64 generated at build time from Cloudinary thumbnail URLs
-- [ ] **STOR-04**: Gallery data file auto-generated from Cloudinary metadata at build time
+- [x] **STOR-02**: Automatic WebP conversion and responsive resizing via Cloudinary URL transforms
+- [x] **STOR-03**: LQIP base64 generated at build time from Cloudinary thumbnail URLs
+- [x] **STOR-04**: Gallery data file auto-generated from Cloudinary metadata at build time
 - [x] **STOR-05**: Existing 29 images migrated from git to Cloudinary with metadata preserved
 
 ### Admin Authentication
@@ -135,8 +135,8 @@
 
 ### Build Pipeline
 
-- [ ] **BUILD-01**: Build script fetches all gallery images from Cloudinary API with metadata
-- [ ] **BUILD-02**: Build script generates gallery-images.js in same format as v1 (static import)
+- [x] **BUILD-01**: Build script fetches all gallery images from Cloudinary API with metadata
+- [x] **BUILD-02**: Build script generates gallery-images.js in same format as v1 (static import)
 - [ ] **BUILD-03**: Public site gallery component requires zero code changes
 - [ ] **BUILD-04**: Public site JS bundle stays under 80KB gzip (admin code never loaded by visitors)
 
@@ -178,12 +178,12 @@
 |-------------|-------|--------|
 | FOUND-01 through PERF-08 | Phases 1-4 (v1.0) | Complete |
 | STOR-01 | Phase 5 | Complete |
-| STOR-02 | Phase 5 | Pending |
-| STOR-03 | Phase 5 | Pending |
-| STOR-04 | Phase 5 | Pending |
+| STOR-02 | Phase 5 | Complete |
+| STOR-03 | Phase 5 | Complete |
+| STOR-04 | Phase 5 | Complete |
 | STOR-05 | Phase 5 | Complete |
-| BUILD-01 | Phase 5 | Pending |
-| BUILD-02 | Phase 5 | Pending |
+| BUILD-01 | Phase 5 | Complete |
+| BUILD-02 | Phase 5 | Complete |
 | BUILD-03 | Phase 5 | Pending |
 | BUILD-04 | Phase 5 | Pending |
 | AUTH-01 | Phase 6 | Pending |

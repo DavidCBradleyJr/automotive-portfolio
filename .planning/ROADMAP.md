@@ -111,7 +111,7 @@ Plans:
   3. Running the build generates a gallery data file in the same format as v1, and the public gallery renders identically with zero code changes to the frontend
   4. LQIP base64 placeholders are generated at build time from Cloudinary thumbnail URLs, preserving the blur-up loading effect
   5. The public site JS bundle remains under 80KB gzip with no Cloudinary SDK or admin code loaded by visitors
-**Plans:** 3 plans
+**Plans:** 2/3 plans executed
 
 Plans:
 - [x] 05-01-PLAN.md -- Install Cloudinary SDK, create migration script, upload 29 images
@@ -151,6 +151,6 @@ Phases execute in numeric order: 5 -> 6 -> 7
 | 2. Gallery and Image Pipeline | v1.0 | 3/3 | Complete | 2026-03-15 |
 | 3. Content Sections and Contact | v1.0 | 2/2 | Complete | 2026-03-16 |
 | 4. Animations, Polish, and Launch | v1.0 | 2/2 | Complete | 2026-03-16 |
-| 5. Cloudinary Storage & Build Pipeline | v2.0 | 1/3 | In progress | - |
+| 5. Cloudinary Storage & Build Pipeline | 2/3 | In Progress|  | - |
 | 6. Admin Authentication & Upload | v2.0 | 0/? | Not started | - |
 | 7. Admin Image Management | v2.0 | 0/? | Not started | - |
