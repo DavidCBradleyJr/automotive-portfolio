@@ -1,0 +1,232 @@
+/**
+ * Build Gallery Data from Cloudinary
+ *
+ * Fetches gallery image metadata from Cloudinary Search API,
+ * generates LQIP base64 placeholders from Cloudinary thumbnail transforms,
+ * and writes src/data/gallery-images.js in the same format as v1.
+ *
+ * Usage: node scripts/build-gallery-data.js
+ * Local: node --env-file=.env scripts/build-gallery-data.js
+ */
+
+import { v2 as cloudinary } from 'cloudinary';
+import { writeFile, mkdir } from 'node:fs/promises';
+import { dirname } from 'node:path';
+
+// --- Env var validation ---
+const requiredVars = ['CLOUDINARY_CLOUD_NAME', 'CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET'];
+const missing = requiredVars.filter((v) => !process.env[v]);
+if (missing.length > 0) {
+  console.error('ERROR: Missing required environment variables:');
+  missing.forEach((v) => console.error(`  - ${v}`));
+  console.error('\nSet these in your .env file (local) or Netlify dashboard (production).');
+  console.error('See .env.example for reference.');
+  process.exit(1);
+}
+
+// --- Configure Cloudinary ---
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// --- Category label map (hardcoded, same as v1) ---
+const categoryLabels = {
+  'jdm': 'JDM',
+  'euro': 'Euro',
+  'supercar': 'Supercar',
+  'american-muscle': 'American Muscle',
+  'track': 'Track/Motorsport',
+};
+
+/**
+ * Fetch tiny blurred thumbnails and convert to base64 data URLs.
+ * Processes in batches of 5 to limit concurrency.
+ */
+async function generateLqipBatch(resources) {
+  const results = [];
+  const BATCH_SIZE = 5;
+
+  for (let i = 0; i < resources.length; i += BATCH_SIZE) {
+    const batch = resources.slice(i, i + BATCH_SIZE);
+    const batchResults = await Promise.all(
+      batch.map(async (resource) => {
+        const lqipUrl = cloudinary.url(resource.public_id, {
+          width: 16,
+          effect: 'blur:1000',
+          quality: 'auto',
+          fetch_format: 'webp',
+          secure: true,
+        });
+
+        const response = await fetch(lqipUrl);
+        if (!response.ok) {
+          console.warn(`Warning: Failed to fetch LQIP for ${resource.public_id} (${response.status})`);
+          return null;
+        }
+        const buffer = Buffer.from(await response.arrayBuffer());
+        return `data:image/webp;base64,${buffer.toString('base64')}`;
+      })
+    );
+    results.push(...batchResults);
+  }
+
+  return results;
+}
+
+/**
+ * Extract category from a Cloudinary resource.
+ * Folder structure: gallery/{category}/{filename}
+ */
+function extractCategory(resource) {
+  // Try asset_folder first (dynamic folder mode)
+  if (resource.asset_folder) {
+    const parts = resource.asset_folder.split('/');
+    // asset_folder could be "gallery/jdm" or just "jdm"
+    if (parts.length >= 2 && parts[0] === 'gallery') {
+      return parts[1];
+    }
+    if (parts.length === 1 && categoryLabels[parts[0]]) {
+      return parts[0];
+    }
+  }
+
+  // Fall back to parsing public_id
+  const parts = resource.public_id.split('/');
+  // Expected: gallery/{category}/{filename}
+  if (parts.length >= 3 && parts[0] === 'gallery') {
+    return parts[1];
+  }
+
+  // Last resort: try folder field
+  if (resource.folder) {
+    const folderParts = resource.folder.split('/');
+    if (folderParts.length >= 2 && folderParts[0] === 'gallery') {
+      return folderParts[1];
+    }
+  }
+
+  return 'uncategorized';
+}
+
+async function main() {
+  console.log('Fetching gallery images from Cloudinary...');
+
+  // Fetch all gallery images
+  const result = await cloudinary.search
+    .expression('folder:gallery/*')
+    .with_field('context')
+    .sort_by('public_id', 'asc')
+    .max_results(500)
+    .execute();
+
+  const resources = result.resources;
+  console.log(`Found ${resources.length} images in Cloudinary.`);
+
+  if (resources.length === 0) {
+    console.error('ERROR: No images found in Cloudinary gallery folder.');
+    console.error('Run the migration script first: npm run migrate');
+    process.exit(1);
+  }
+
+  // Generate LQIP base64 strings
+  console.log('Generating LQIP base64 placeholders...');
+  const lqipStrings = await generateLqipBatch(resources);
+
+  // Build gallery entries
+  const galleryImages = resources.map((resource, index) => {
+    const publicIdParts = resource.public_id.split('/');
+    const id = publicIdParts[publicIdParts.length - 1];
+    const category = extractCategory(resource);
+
+    const src = cloudinary.url(resource.public_id, {
+      fetch_format: 'auto',
+      quality: 'auto',
+      width: 2000,
+      crop: 'limit',
+      secure: true,
+    });
+
+    const caption = resource.context?.custom?.caption || '';
+    const alt = resource.context?.custom?.alt || '';
+
+    return {
+      id,
+      src,
+      lqip: lqipStrings[index] || '',
+      width: resource.width,
+      height: resource.height,
+      category,
+      caption,
+      alt,
+      isPlaceholder: false,
+    };
+  });
+
+  // Sort: by category alphabetically, then by id alphabetically
+  galleryImages.sort((a, b) => {
+    if (a.category < b.category) return -1;
+    if (a.category > b.category) return 1;
+    if (a.id < b.id) return -1;
+    if (a.id > b.id) return 1;
+    return 0;
+  });
+
+  // Build the output file content
+  const entries = galleryImages
+    .map((img) => {
+      const caption = img.caption.replace(/'/g, "\\'");
+      const alt = img.alt.replace(/'/g, "\\'");
+      return `  {
+    id: '${img.id}',
+    src: '${img.src}',
+    lqip: '${img.lqip}',
+    width: ${img.width},
+    height: ${img.height},
+    category: '${img.category}',
+    caption: '${caption}',
+    alt: '${alt}',
+    isPlaceholder: false,
+  }`;
+    })
+    .join(',\n');
+
+  const categoriesBlock = `  { id: 'all', label: 'All' },
+  { id: 'jdm', label: 'JDM' },
+  { id: 'euro', label: 'Euro' },
+  { id: 'supercar', label: 'Supercar' },
+  { id: 'american-muscle', label: 'American Muscle' },
+  { id: 'track', label: 'Track/Motorsport' },`;
+
+  const output = `/**
+ * Gallery Image Data
+ *
+ * Auto-generated by scripts/build-gallery-data.js
+ * Do not edit manually -- re-run the build to regenerate.
+ *
+ * Total: ${galleryImages.length} images
+ */
+
+export const galleryImages = [
+${entries},
+];
+
+export const categories = [
+${categoriesBlock}
+];
+`;
+
+  // Ensure output directory exists
+  const outputPath = 'src/data/gallery-images.js';
+  await mkdir(dirname(outputPath), { recursive: true });
+
+  // Write the data file
+  await writeFile(outputPath, output, 'utf-8');
+  console.log(`Generated gallery-images.js with ${galleryImages.length} images.`);
+}
+
+main().catch((err) => {
+  console.error('Build gallery data failed:', err);
+  process.exit(1);
+});
