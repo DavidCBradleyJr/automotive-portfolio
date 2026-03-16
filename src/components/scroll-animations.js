@@ -1,12 +1,8 @@
 /* ==========================================================================
- * Scroll Animations
+ * Scroll Animations — GSAP-dependent
  *
- * Three animation systems:
- * 1. Section reveals — IntersectionObserver + CSS transitions
- * 2. Hero parallax — GSAP ScrollTrigger (scrub)
- * 3. Gallery scroll stagger — IntersectionObserver + CSS animation
- *
- * All animations respect prefers-reduced-motion.
+ * Only hero parallax lives here (requires GSAP ScrollTrigger).
+ * Section reveals and gallery stagger are in main.js (no GSAP needed).
  * ========================================================================== */
 
 import gsap from 'gsap';
@@ -14,68 +10,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const prefersReducedMotion = window.matchMedia(
-  '(prefers-reduced-motion: reduce)'
-).matches;
-
 /**
- * Initialize all scroll animations. Call once after DOM is ready.
+ * Initialize GSAP-based scroll animations.
  */
 export function initScrollAnimations() {
-  initSectionReveals();
   initHeroParallax();
-  initGalleryScrollStagger();
 }
-
-/* --------------------------------------------------------------------------
- * 1. Section Reveals
- *
- * Adds .section--hidden to all .section elements, then reveals them
- * with .section--visible when 15% visible via IntersectionObserver.
- * One-time: unobserves after reveal.
- * -------------------------------------------------------------------------- */
-
-function initSectionReveals() {
-  if (prefersReducedMotion) return;
-
-  // Skip gallery (has its own stagger animation) and hero (has parallax)
-  const sections = document.querySelectorAll('.section:not(.gallery):not(.hero)');
-
-  // Only hide sections that are below the current viewport.
-  // Sections already visible get no animation (avoids flash of hidden content).
-  sections.forEach((s) => {
-    const rect = s.getBoundingClientRect();
-    if (rect.top >= window.innerHeight) {
-      s.classList.add('section--hidden');
-    }
-  });
-
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.target.classList.contains('section--hidden')) {
-          entry.target.classList.add('section--visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  sections.forEach((s) => {
-    if (s.classList.contains('section--hidden')) {
-      revealObserver.observe(s);
-    }
-  });
-}
-
-/* --------------------------------------------------------------------------
- * 2. Hero Parallax
- *
- * GSAP ScrollTrigger scrub on .hero__image creating depth as user scrolls.
- * Layers on top of existing Ken Burns CSS animation — GSAP handles
- * transform concatenation automatically.
- * -------------------------------------------------------------------------- */
 
 function initHeroParallax() {
   const mm = gsap.matchMedia();
@@ -92,72 +32,4 @@ function initHeroParallax() {
       },
     });
   });
-}
-
-/* --------------------------------------------------------------------------
- * 3. Gallery Scroll Stagger Entrance
- *
- * One-time staggered entrance when gallery grid first scrolls into view.
- * Uses .gallery__item--scroll-entering CSS class with staggered
- * animation-delay per item.
- *
- * Sets window.__galleryInitialAnimDone flag after completion to prevent
- * collision with filter stagger animations in gallery.js.
- * -------------------------------------------------------------------------- */
-
-function initGalleryScrollStagger() {
-  if (prefersReducedMotion) {
-    window.__galleryInitialAnimDone = true;
-    return;
-  }
-
-  const grid = document.getElementById('gallery-grid');
-  if (!grid) {
-    window.__galleryInitialAnimDone = true;
-    return;
-  }
-
-  // Hide gallery items before they scroll into view
-  const allItems = grid.querySelectorAll('.gallery__item');
-  const gridRect = grid.getBoundingClientRect();
-  if (gridRect.top >= window.innerHeight * 0.5) {
-    allItems.forEach((item) => {
-      item.style.opacity = '0';
-    });
-  } else {
-    // Gallery already in view, skip animation
-    window.__galleryInitialAnimDone = true;
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        const items = grid.querySelectorAll(
-          '.gallery__item:not(.gallery__item--hidden)'
-        );
-
-        items.forEach((item, i) => {
-          item.style.opacity = '';
-          item.style.animationDelay = `${i * 30}ms`;
-          item.classList.add('gallery__item--scroll-entering');
-        });
-
-        // Cleanup after animation completes
-        const totalDuration = 300 + items.length * 30;
-        setTimeout(() => {
-          items.forEach((item) => {
-            item.classList.remove('gallery__item--scroll-entering');
-            item.style.animationDelay = '';
-          });
-          window.__galleryInitialAnimDone = true;
-        }, totalDuration);
-
-        observer.disconnect();
-      }
-    },
-    { threshold: 0.1 }
-  );
-
-  observer.observe(grid);
 }
