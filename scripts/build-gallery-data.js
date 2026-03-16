@@ -11,7 +11,24 @@
 
 import { v2 as cloudinary } from 'cloudinary';
 import { writeFile, mkdir } from 'node:fs/promises';
+import { readFileSync, existsSync } from 'node:fs';
 import { dirname } from 'node:path';
+
+// --- Auto-load .env if present and env vars not already set ---
+if (!process.env.CLOUDINARY_CLOUD_NAME && existsSync('.env')) {
+  const envContent = readFileSync('.env', 'utf-8');
+  for (const line of envContent.split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const eqIndex = trimmed.indexOf('=');
+    if (eqIndex === -1) continue;
+    const key = trimmed.slice(0, eqIndex).trim();
+    const value = trimmed.slice(eqIndex + 1).trim();
+    if (!process.env[key]) {
+      process.env[key] = value;
+    }
+  }
+}
 
 // --- Env var validation ---
 const requiredVars = ['CLOUDINARY_CLOUD_NAME', 'CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET'];
@@ -148,8 +165,10 @@ async function main() {
       secure: true,
     });
 
-    const caption = resource.context?.custom?.caption || '';
-    const alt = resource.context?.custom?.alt || '';
+    // Context metadata may be at context.custom.X (pipe-delimited upload)
+    // or directly at context.X (object-form upload, as used by our migration)
+    const caption = resource.context?.custom?.caption || resource.context?.caption || '';
+    const alt = resource.context?.custom?.alt || resource.context?.alt || '';
 
     return {
       id,
