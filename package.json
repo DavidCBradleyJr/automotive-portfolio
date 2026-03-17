@@ -14,11 +14,13 @@
   },
   "devDependencies": {
     "cloudinary": "^2.9.0",
+    "sharp": "^0.34.5",
     "vite": "^6.0.0"
   },
   "dependencies": {
     "gsap": "^3.14.2",
     "lite-youtube-embed": "^0.3.4",
+    "netlify-identity-widget": "^2.0.3",
     "photoswipe": "^5.4.4",
     "photoswipe-dynamic-caption-plugin": "^1.2.7"
   }
