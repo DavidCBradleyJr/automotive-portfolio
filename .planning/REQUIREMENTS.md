@@ -113,8 +113,8 @@
 
 ### Admin Authentication
 
-- [ ] **AUTH-01**: Admin page at `/admin` protected by Netlify Identity login
-- [ ] **AUTH-02**: Only invited users (David) can access admin — no public registration
+- [x] **AUTH-01**: Admin page at `/admin` protected by Netlify Identity login
+- [x] **AUTH-02**: Only invited users (David) can access admin — no public registration
 
 ### Admin Upload
 
@@ -186,8 +186,8 @@
 | BUILD-02 | Phase 5 | Complete |
 | BUILD-03 | Phase 5 | Complete |
 | BUILD-04 | Phase 5 | Complete |
-| AUTH-01 | Phase 6 | Pending |
-| AUTH-02 | Phase 6 | Pending |
+| AUTH-01 | Phase 6 | Complete |
+| AUTH-02 | Phase 6 | Complete |
 | UPLOAD-01 | Phase 6 | Pending |
 | UPLOAD-02 | Phase 6 | Pending |
 | UPLOAD-03 | Phase 6 | Pending |

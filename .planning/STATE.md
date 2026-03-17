@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Admin Panel & Image Pipeline
-status: completed
-stopped_at: Phase 6 context gathered
-last_updated: "2026-03-17T00:56:31.213Z"
-last_activity: 2026-03-16 -- Phase 5 complete, all images on Cloudinary CDN, build pipeline verified
+status: executing
+stopped_at: Completed 06-01-PLAN.md
+last_updated: "2026-03-17T00:57:45.145Z"
+last_activity: 2026-03-17 -- Completed 06-02 serverless functions (upload-image + trigger-rebuild)
 progress:
   total_phases: 3
   completed_phases: 1
   total_plans: 6
-  completed_plans: 4
-  percent: 100
+  completed_plans: 5
+  percent: 67
 ---
 
 # Project State
@@ -49,6 +49,7 @@ Progress: [███████░░░] 67%
 | 04 - Polish | 2 | 5min | 2.5min |
 
 *Updated after each plan completion*
+| Phase 06 P01 | 2min | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -71,6 +72,8 @@ Recent decisions affecting current work:
 - 05-03: Hero image stays local for LCP performance
 - 06-02: Lambda-compatible v1 syntax for Netlify Identity context.clientContext.user JWT pattern
 - 06-02: Separate upload and rebuild functions to prevent premature rebuilds during batch uploads
+- [Phase 06]: Netlify Identity with no signup option -- admin is invite-only
+- [Phase 06]: Separate Vite entry point keeps admin JS out of public bundle
 
 ### Pending Todos
 
@@ -82,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T00:57:00Z
-Stopped at: Completed 06-02-PLAN.md
-Resume file: .planning/phases/06-admin-authentication-upload/06-02-SUMMARY.md
+Last session: 2026-03-17T00:57:45.143Z
+Stopped at: Completed 06-01-PLAN.md
+Resume file: None
