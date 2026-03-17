@@ -38,7 +38,38 @@
         <main class="admin-content">
           <section id="panel-upload" class="admin-panel-section admin-panel-section--active">
             <h2>Upload Photos</h2>
-            <p class="admin-placeholder">Upload functionality loading...</p>
+
+            <!-- Batch category selector -->
+            <div class="upload-batch-settings">
+              <label class="upload-label" for="batch-category">Category for this batch</label>
+              <select id="batch-category" class="upload-select">
+                <option value="">Select category...</option>
+                <option value="jdm">JDM</option>
+                <option value="euro">Euro</option>
+                <option value="supercar">Supercar</option>
+                <option value="american-muscle">American Muscle</option>
+                <option value="track">Track/Motorsport</option>
+              </select>
+            </div>
+
+            <!-- Drop zone -->
+            <div class="upload-zone" id="upload-zone">
+              <div class="upload-zone__icon">+</div>
+              <p class="upload-zone__text">Drag photos here or</p>
+              <label class="btn btn--primary upload-zone__btn">
+                Browse Files
+                <input type="file" id="file-input" multiple accept="image/jpeg,image/png,image/webp" hidden>
+              </label>
+              <p class="upload-zone__hint">JPEG, PNG, or WebP -- max 4 MB per file</p>
+            </div>
+
+            <!-- File queue (populated by JS) -->
+            <div id="upload-queue" class="upload-queue"></div>
+
+            <!-- Upload button -->
+            <button id="upload-btn" class="btn btn--primary upload-action-btn" disabled>
+              Upload All
+            </button>
           </section>
           <section id="panel-gallery" class="admin-panel-section">
             <h2>Gallery</h2>
