@@ -132,8 +132,9 @@ async function main() {
 
   // Fetch all gallery images
   const result = await cloudinary.search
-    .expression('folder:gallery/*')
+    .expression('folder:gallery/* AND -tags:hidden')
     .with_field('context')
+    .with_field('tags')
     .sort_by('public_id', 'asc')
     .max_results(500)
     .execute();
@@ -169,6 +170,7 @@ async function main() {
     // or directly at context.X (object-form upload, as used by our migration)
     const caption = resource.context?.custom?.caption || resource.context?.caption || '';
     const alt = resource.context?.custom?.alt || resource.context?.alt || '';
+    const sort_order = parseInt(resource.context?.custom?.sort_order || resource.context?.sort_order || '999', 10);
 
     return {
       id,
@@ -179,17 +181,19 @@ async function main() {
       category,
       caption,
       alt,
+      sort_order,
       isPlaceholder: false,
     };
   });
 
-  // Sort: by category alphabetically, then by id alphabetically
+  // Sort: by category alphabetically, then by sort_order ascending, then by id
   galleryImages.sort((a, b) => {
     if (a.category < b.category) return -1;
     if (a.category > b.category) return 1;
-    if (a.id < b.id) return -1;
-    if (a.id > b.id) return 1;
-    return 0;
+    const orderA = a.sort_order ?? 999;
+    const orderB = b.sort_order ?? 999;
+    if (orderA !== orderB) return orderA - orderB;
+    return a.id.localeCompare(b.id);
   });
 
   // Build the output file content

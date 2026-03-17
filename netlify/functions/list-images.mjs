@@ -25,9 +25,19 @@ export const handler = async (event, context) => {
   }
 
   try {
+    // Check for show_hidden query parameter
+    const params = new URL(event.rawUrl || 'http://localhost').searchParams;
+    const showHidden = params.get('show_hidden') === 'true';
+
+    // Default: exclude hidden images. show_hidden=true: show ONLY hidden images.
+    const searchExpression = showHidden
+      ? 'folder:gallery/* AND tags:hidden'
+      : 'folder:gallery/* AND -tags:hidden';
+
     const result = await cloudinary.search
-      .expression('folder:gallery/*')
+      .expression(searchExpression)
       .with_field('context')
+      .with_field('tags')
       .sort_by('created_at', 'desc')
       .max_results(200)
       .execute();
@@ -53,8 +63,18 @@ export const handler = async (event, context) => {
       category: extractCategory(r),
       caption: r.context?.custom?.caption || r.context?.caption || '',
       alt: r.context?.custom?.alt || r.context?.alt || '',
+      sort_order: parseInt(r.context?.custom?.sort_order || r.context?.sort_order || '999', 10),
+      tags: r.tags || [],
       created_at: r.created_at,
     }));
+
+    // Sort by category, then sort_order ascending, then created_at descending
+    images.sort((a, b) => {
+      if (a.category < b.category) return -1;
+      if (a.category > b.category) return 1;
+      if (a.sort_order !== b.sort_order) return a.sort_order - b.sort_order;
+      return new Date(b.created_at) - new Date(a.created_at);
+    });
 
     return { statusCode: 200, headers, body: JSON.stringify({ images }) };
   } catch (err) {
