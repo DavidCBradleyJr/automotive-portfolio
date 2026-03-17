@@ -24,14 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize auth with login/logout handlers
   initAuth(
-    // onLogin
+    // onLogin — show panel first, then init components (errors won't hide panel)
     (user) => {
       loginScreen.hidden = true;
       adminPanel.hidden = false;
-      initTabs();
-      initUpload();
-      initGalleryView();
-      initSettings();
+
+      try { initTabs(); } catch (e) { console.error('Tabs init failed:', e); }
+      try { initUpload(); } catch (e) { console.error('Upload init failed:', e); }
+      try { initGalleryView(); } catch (e) { console.error('Gallery view init failed:', e); }
+      try { initSettings(); } catch (e) { console.error('Settings init failed:', e); }
     },
     // onLogout
     () => {
