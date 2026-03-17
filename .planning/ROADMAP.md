@@ -96,7 +96,7 @@ Plans:
 **Milestone Goal:** Let David upload photos, tag them with categories/captions, and have them appear in the gallery -- all through a browser-based admin panel with no CLI or git knowledge required.
 
 - [x] **Phase 5: Cloudinary Storage & Build Pipeline** - Migrate images to Cloudinary CDN and generate gallery data at build time (completed 2026-03-16)
-- [ ] **Phase 6: Admin Authentication & Upload** - Protected admin panel with drag-and-drop photo upload and metadata tagging
+- [x] **Phase 6: Admin Authentication & Upload** - Protected admin panel with drag-and-drop photo upload and metadata tagging (completed 2026-03-17)
 - [ ] **Phase 7: Admin Image Management** - View, edit, delete, and reorder existing gallery images from the admin panel
 
 ## Phase Details
@@ -143,7 +143,11 @@ Plans:
   2. David can edit the category, caption, or alt text on any existing image and the changes persist after the next build
   3. David can delete an image from the gallery, which removes it from both Cloudinary and the gallery metadata
   4. David can reorder images within a category using drag or sort controls, and the new order is reflected on the public site after rebuild
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 07-01-PLAN.md -- Backend Netlify Functions (update, delete, restore, reorder) + build script updates
+- [ ] 07-02-PLAN.md -- Frontend edit modal, gallery management UI, drag-and-drop reorder
 
 ## Progress
 
@@ -158,4 +162,4 @@ Phases execute in numeric order: 5 -> 6 -> 7
 | 4. Animations, Polish, and Launch | v1.0 | 2/2 | Complete | 2026-03-16 |
 | 5. Cloudinary Storage & Build Pipeline | v2.0 | 3/3 | Complete | 2026-03-16 |
 | 6. Admin Authentication & Upload | v2.0 | 3/3 | Complete | 2026-03-17 |
-| 7. Admin Image Management | v2.0 | 0/? | Not started | - |
+| 7. Admin Image Management | v2.0 | 0/2 | Not started | - |
