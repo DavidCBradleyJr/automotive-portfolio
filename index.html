@@ -27,6 +27,12 @@
       href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;700&display=swap"
       rel="stylesheet"
     />
+    <!-- Redirect Netlify Identity confirmation/recovery tokens to /admin -->
+    <script>
+      if (window.location.hash.match(/#(confirmation_token|invite_token|recovery_token|email_change_token)=/)) {
+        window.location.href = '/admin' + window.location.hash;
+      }
+    </script>
   </head>
   <body>
     <!-- ================================================================
