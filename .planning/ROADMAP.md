@@ -127,7 +127,12 @@ Plans:
   2. After login, David can drag-and-drop (or file-pick) one or more JPEG/PNG/WebP images, see previews, and fill in category, caption, and alt text per image
   3. Uploading images sends them through a Netlify Function proxy to Cloudinary (API secret never exposed to browser), and David sees success/error feedback
   4. After upload completes, a Netlify rebuild is triggered automatically, and within 2-3 minutes the new photos appear in the public gallery
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 06-01-PLAN.md -- Admin HTML shell, Netlify Identity auth, tab navigation, Vite multi-page build
+- [ ] 06-02-PLAN.md -- Netlify Functions for upload proxy and rebuild trigger
+- [ ] 06-03-PLAN.md -- Upload UI, gallery view, settings tab, wiring to functions
 
 ### Phase 7: Admin Image Management
 **Goal**: David can view, edit, and organize his entire gallery from the admin panel without touching code or the Cloudinary dashboard
@@ -152,5 +157,5 @@ Phases execute in numeric order: 5 -> 6 -> 7
 | 3. Content Sections and Contact | v1.0 | 2/2 | Complete | 2026-03-16 |
 | 4. Animations, Polish, and Launch | v1.0 | 2/2 | Complete | 2026-03-16 |
 | 5. Cloudinary Storage & Build Pipeline | v2.0 | 3/3 | Complete | 2026-03-16 |
-| 6. Admin Authentication & Upload | v2.0 | 0/? | Not started | - |
+| 6. Admin Authentication & Upload | v2.0 | 0/3 | In Progress | - |
 | 7. Admin Image Management | v2.0 | 0/? | Not started | - |
