@@ -73,7 +73,23 @@
           </section>
           <section id="panel-gallery" class="admin-panel-section">
             <h2>Gallery</h2>
-            <p class="admin-text-muted">View all images. Edit, delete, and reorder coming in Phase 7.</p>
+            <div class="gallery-controls">
+              <div class="gallery-controls__filter">
+                <label class="admin-label" for="gallery-category-filter">Filter by category</label>
+                <select id="gallery-category-filter" class="upload-select">
+                  <option value="all">All Categories</option>
+                  <option value="jdm">JDM</option>
+                  <option value="euro">Euro</option>
+                  <option value="supercar">Supercar</option>
+                  <option value="american-muscle">American Muscle</option>
+                  <option value="track">Track/Motorsport</option>
+                </select>
+              </div>
+              <div class="gallery-controls__actions">
+                <button id="trash-toggle" class="btn btn--secondary">Show Trash</button>
+                <button id="save-order-btn" class="btn btn--primary" hidden>Save Order</button>
+              </div>
+            </div>
             <div id="gallery-grid" class="admin-gallery-grid">
               <p class="admin-placeholder">Loading gallery...</p>
             </div>
