@@ -3,6 +3,12 @@
   publish = "dist"
   functions = "netlify/functions"
 
+# Serve /admin as /admin.html
+[[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 200
+
 [[headers]]
   for = "/assets/*"
   [headers.values]
