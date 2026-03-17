@@ -9,6 +9,8 @@ import './admin.css';
 import { initAuth, openLogin, logout } from './components/auth.js';
 import { initTabs } from './components/tabs.js';
 import { initUpload } from './components/upload.js';
+import { initGalleryView } from './components/gallery-view.js';
+import { initSettings } from './components/settings.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const loginScreen = document.getElementById('login-screen');
@@ -28,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
       adminPanel.hidden = false;
       initTabs();
       initUpload();
+      initGalleryView();
+      initSettings();
     },
     // onLogout
     () => {

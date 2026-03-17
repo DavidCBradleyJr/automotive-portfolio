@@ -31,7 +31,7 @@ export const handler = async (event, context) => {
   }
 
   try {
-    const { image, folder, public_id, context: metadata } = JSON.parse(event.body);
+    const { image, folder, public_id, context: metadata, overwrite: shouldOverwrite } = JSON.parse(event.body);
 
     // Validate required fields
     if (!image || !folder || !public_id) {
@@ -42,12 +42,12 @@ export const handler = async (event, context) => {
       };
     }
 
-    // Validate image is a data URI
-    if (!image.startsWith('data:image/')) {
+    // Validate image is a data URI or a Cloudinary URL (for hero image selection)
+    if (!image.startsWith('data:image/') && !image.startsWith('https://res.cloudinary.com/')) {
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: 'Invalid image format. Expected base64 data URI.' }),
+        body: JSON.stringify({ error: 'Invalid image format. Expected base64 data URI or Cloudinary URL.' }),
       };
     }
 
@@ -57,7 +57,7 @@ export const handler = async (event, context) => {
       public_id,
       context: metadata || {},
       resource_type: 'image',
-      overwrite: false,
+      overwrite: shouldOverwrite || false,
     });
 
     return {

@@ -73,11 +73,32 @@
           </section>
           <section id="panel-gallery" class="admin-panel-section">
             <h2>Gallery</h2>
-            <p class="admin-placeholder">Gallery view loading...</p>
+            <p class="admin-text-muted">View all images. Edit, delete, and reorder coming in Phase 7.</p>
+            <div id="gallery-grid" class="admin-gallery-grid">
+              <p class="admin-placeholder">Loading gallery...</p>
+            </div>
           </section>
           <section id="panel-settings" class="admin-panel-section">
             <h2>Settings</h2>
-            <p class="admin-placeholder">Settings loading...</p>
+            <h3>Hero Image</h3>
+            <p class="admin-text-muted">Select a gallery image to use as the hero background, or upload a custom hero image.</p>
+            <div class="settings-hero">
+              <div class="settings-hero__current">
+                <p class="admin-label">Current hero:</p>
+                <img id="current-hero" class="settings-hero__preview" src="" alt="Current hero image">
+              </div>
+              <div class="settings-hero__select">
+                <p class="admin-label">Select from gallery:</p>
+                <div id="hero-gallery-grid" class="admin-gallery-grid admin-gallery-grid--small"></div>
+              </div>
+              <div class="settings-hero__custom">
+                <p class="admin-label">Or upload custom hero:</p>
+                <label class="btn btn--secondary">
+                  Choose File
+                  <input type="file" id="hero-file-input" accept="image/jpeg,image/png,image/webp" hidden>
+                </label>
+              </div>
+            </div>
           </section>
         </main>
       </div>

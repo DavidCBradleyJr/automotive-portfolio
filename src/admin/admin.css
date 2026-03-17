@@ -378,6 +378,105 @@ body {
 }
 
 /* --------------------------------------------------------------------------
+ * Gallery Grid
+ * -------------------------------------------------------------------------- */
+
+.admin-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-md);
+}
+
+.admin-gallery-grid--small {
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+}
+
+.admin-gallery-card {
+  background: #1a1a1a;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: default;
+}
+
+.admin-gallery-card img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.admin-gallery-card__meta {
+  padding: var(--space-sm);
+}
+
+.admin-gallery-card__meta p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-xs);
+}
+
+.admin-gallery-card__category {
+  display: inline-block;
+  background: var(--color-accent);
+  color: white;
+  font-size: var(--text-sm);
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-bottom: var(--space-xs);
+}
+
+.admin-text-muted {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.admin-label {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.admin-loading {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* --------------------------------------------------------------------------
+ * Settings — Hero Image
+ * -------------------------------------------------------------------------- */
+
+.settings-hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.settings-hero__preview {
+  max-width: 600px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+}
+
+.settings-hero__select .admin-gallery-card {
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+  border: 2px solid transparent;
+}
+
+.settings-hero__select .admin-gallery-card:hover {
+  transform: scale(1.02);
+  border-color: var(--color-accent);
+}
+
+.admin-panel-section h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: var(--space-sm);
+  letter-spacing: 0.02em;
+}
+
+/* --------------------------------------------------------------------------
  * Responsive
  * -------------------------------------------------------------------------- */
 
