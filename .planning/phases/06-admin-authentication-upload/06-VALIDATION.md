@@ -20,7 +20,7 @@ created: 2026-03-16
 | **Framework** | Manual + automated CLI checks |
 | **Config file** | none |
 | **Quick run command** | `npx vite build && echo "BUILD OK"` |
-| **Full suite command** | `npx vite build && test -f dist/admin/index.html && echo "ADMIN BUILD OK"` |
+| **Full suite command** | `npx vite build && test -f dist/admin.html && echo "ADMIN BUILD OK"` |
 | **Estimated runtime** | ~15 seconds (includes Cloudinary API fetch) |
 
 ---
