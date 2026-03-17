@@ -1,0 +1,258 @@
+/* ==========================================================================
+ * Admin Panel Styles — Dark Theme
+ *
+ * Reuses design tokens from the public site for visual consistency.
+ * Scoped to the admin page only (separate Vite entry point).
+ * ========================================================================== */
+
+@import '../tokens.css';
+
+/* --------------------------------------------------------------------------
+ * Base
+ * -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+#admin-app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+/* --------------------------------------------------------------------------
+ * Login Screen
+ * -------------------------------------------------------------------------- */
+
+.admin-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  gap: var(--space-md);
+}
+
+.admin-login__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--color-white);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.admin-login__subtitle {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+
+.admin-login__btn {
+  margin-top: var(--space-md);
+  font-size: var(--text-lg);
+  padding: var(--space-md) var(--space-xl);
+}
+
+/* --------------------------------------------------------------------------
+ * Header
+ * -------------------------------------------------------------------------- */
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.admin-header__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-white);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+ * Tabs
+ * -------------------------------------------------------------------------- */
+
+.admin-tabs {
+  display: flex;
+  gap: var(--space-sm);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-sm) 0 0;
+}
+
+.admin-tab {
+  background: transparent;
+  color: var(--color-text-muted);
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.admin-tab:hover {
+  color: var(--color-text);
+}
+
+.admin-tab--active {
+  color: var(--color-accent);
+  border-bottom: 2px solid var(--color-accent);
+}
+
+/* --------------------------------------------------------------------------
+ * Panel Sections
+ * -------------------------------------------------------------------------- */
+
+.admin-panel-section {
+  display: none;
+}
+
+.admin-panel-section--active {
+  display: block;
+  padding: var(--space-lg) 0;
+}
+
+.admin-panel-section h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: var(--space-md);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.admin-placeholder {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+/* --------------------------------------------------------------------------
+ * Buttons
+ * -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn--primary {
+  background: var(--color-accent);
+  color: var(--color-white);
+  padding: var(--space-sm) var(--space-lg);
+  border: none;
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.btn--secondary:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+ * Toast Notifications
+ * -------------------------------------------------------------------------- */
+
+.toast {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-white);
+  z-index: 1000;
+  transform: translateX(120%);
+  transition: transform 0.3s ease;
+  max-width: 400px;
+}
+
+.toast--visible {
+  transform: translateX(0);
+}
+
+.toast--success {
+  background: #16a34a;
+}
+
+.toast--error {
+  background: #dc2626;
+}
+
+.toast--info {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+/* --------------------------------------------------------------------------
+ * Responsive
+ * -------------------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  #admin-app {
+    padding: 0 var(--space-sm);
+  }
+
+  .admin-login__title {
+    font-size: var(--text-2xl);
+  }
+
+  .admin-header {
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-align: center;
+  }
+
+  .admin-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-panel-section--active {
+    padding: var(--space-md) 0;
+  }
+
+  .toast {
+    right: var(--space-sm);
+    left: var(--space-sm);
+    max-width: none;
+  }
+}
