@@ -8,7 +8,7 @@
 import { getToken } from './auth.js';
 import { showToast } from './toast.js';
 
-const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4 MB
+const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100 MB (Cloudinary limit)
 const ACCEPTED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 let fileQueue = [];
@@ -278,16 +278,15 @@ async function uploadAll() {
     try {
       // Refresh token before each upload to prevent JWT expiry mid-batch
       const token = await getToken();
-      const base64 = await fileToBase64(item.file);
 
-      const response = await fetch('/.netlify/functions/upload-image', {
+      // Step 1: Get signed upload params from our function (lightweight, no file data)
+      const signRes = await fetch('/.netlify/functions/sign-upload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          image: base64,
           folder: `gallery/${category}`,
           public_id: item.slug,
           context: {
@@ -297,10 +296,50 @@ async function uploadAll() {
         }),
       });
 
-      if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        throw new Error(err.error || `Upload failed (${response.status})`);
+      if (!signRes.ok) {
+        const err = await signRes.json().catch(() => ({}));
+        throw new Error(err.error || `Signature failed (${signRes.status})`);
       }
+
+      const { signature, timestamp, cloud_name, api_key } = await signRes.json();
+
+      // Step 2: Upload file directly to Cloudinary (no size limit from Netlify Functions)
+      const formData = new FormData();
+      formData.append('file', item.file);
+      formData.append('signature', signature);
+      formData.append('timestamp', timestamp);
+      formData.append('api_key', api_key);
+      formData.append('folder', `gallery/${category}`);
+      formData.append('public_id', item.slug);
+      formData.append('overwrite', 'false');
+      if (item.caption || item.alt) {
+        const ctx = [item.caption && `caption=${item.caption}`, item.alt && `alt=${item.alt}`].filter(Boolean).join('|');
+        formData.append('context', ctx);
+      }
+
+      // Use XMLHttpRequest for progress tracking
+      await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`);
+
+        xhr.upload.addEventListener('progress', (e) => {
+          if (e.lengthComputable) {
+            item.progress = Math.round((e.loaded / e.total) * 100);
+            updateItemUI(i);
+          }
+        });
+
+        xhr.addEventListener('load', () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(JSON.parse(xhr.responseText));
+          } else {
+            reject(new Error(`Cloudinary upload failed (${xhr.status})`));
+          }
+        });
+
+        xhr.addEventListener('error', () => reject(new Error('Network error during upload')));
+        xhr.send(formData);
+      });
 
       item.status = 'success';
       item.progress = 100;
