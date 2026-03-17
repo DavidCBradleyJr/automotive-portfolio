@@ -4,13 +4,13 @@ milestone: v2.0
 milestone_name: Admin Panel & Image Pipeline
 status: completed
 stopped_at: Phase 6 context gathered
-last_updated: "2026-03-17T00:18:58.309Z"
+last_updated: "2026-03-17T00:56:31.213Z"
 last_activity: 2026-03-16 -- Phase 5 complete, all images on Cloudinary CDN, build pipeline verified
 progress:
   total_phases: 3
   completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
+  total_plans: 6
+  completed_plans: 4
   percent: 100
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-16)
 ## Current Position
 
 Phase: 6 of 7 (Admin Authentication & Upload)
-Plan: 1 of ? (pending planning)
-Status: Phase 5 complete, Phase 6 not yet planned
-Last activity: 2026-03-16 -- Phase 5 complete, all images on Cloudinary CDN, build pipeline verified
+Plan: 3 of 4
+Status: executing
+Last activity: 2026-03-17 -- Completed 06-02 serverless functions (upload-image + trigger-rebuild)
 
-Progress: [██████████] 100% (Phase 5)
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
@@ -69,6 +69,8 @@ Recent decisions affecting current work:
 - 05-02: Support both context.custom.X and context.X paths for Cloudinary metadata
 - 05-03: w_800,c_limit transform for BTS/social images (smaller display size than gallery)
 - 05-03: Hero image stays local for LCP performance
+- 06-02: Lambda-compatible v1 syntax for Netlify Identity context.clientContext.user JWT pattern
+- 06-02: Separate upload and rebuild functions to prevent premature rebuilds during batch uploads
 
 ### Pending Todos
 
@@ -80,6 +82,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T00:18:58.307Z
-Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-admin-authentication-upload/06-CONTEXT.md
+Last session: 2026-03-17T00:57:00Z
+Stopped at: Completed 06-02-PLAN.md
+Resume file: .planning/phases/06-admin-authentication-upload/06-02-SUMMARY.md

@@ -123,8 +123,8 @@
 - [ ] **UPLOAD-03**: Per-image metadata form: category (dropdown), caption (text), alt text (text)
 - [ ] **UPLOAD-04**: Auto-generated image ID/slug from category + caption, editable
 - [ ] **UPLOAD-05**: Image preview shown before upload using browser URL.createObjectURL
-- [ ] **UPLOAD-06**: Upload proxied through Netlify Function (Cloudinary API secret stays server-side)
-- [ ] **UPLOAD-07**: Netlify rebuild triggered automatically after upload completes
+- [x] **UPLOAD-06**: Upload proxied through Netlify Function (Cloudinary API secret stays server-side)
+- [x] **UPLOAD-07**: Netlify rebuild triggered automatically after upload completes
 
 ### Admin Management
 
@@ -193,8 +193,8 @@
 | UPLOAD-03 | Phase 6 | Pending |
 | UPLOAD-04 | Phase 6 | Pending |
 | UPLOAD-05 | Phase 6 | Pending |
-| UPLOAD-06 | Phase 6 | Pending |
-| UPLOAD-07 | Phase 6 | Pending |
+| UPLOAD-06 | Phase 6 | Complete |
+| UPLOAD-07 | Phase 6 | Complete |
 | MGMT-01 | Phase 7 | Pending |
 | MGMT-02 | Phase 7 | Pending |
 | MGMT-03 | Phase 7 | Pending |
