@@ -128,10 +128,10 @@
 
 ### Admin Management
 
-- [ ] **MGMT-01**: View all uploaded gallery images in a grid with metadata
-- [ ] **MGMT-02**: Edit category, caption, and alt text on existing images
-- [ ] **MGMT-03**: Delete images from gallery (removes from Cloudinary + metadata)
-- [ ] **MGMT-04**: Reorder images within categories via drag or sort controls
+- [x] **MGMT-01**: View all uploaded gallery images in a grid with metadata
+- [x] **MGMT-02**: Edit category, caption, and alt text on existing images
+- [x] **MGMT-03**: Delete images from gallery (removes from Cloudinary + metadata)
+- [x] **MGMT-04**: Reorder images within categories via drag or sort controls
 
 ### Build Pipeline
 
@@ -195,10 +195,10 @@
 | UPLOAD-05 | Phase 6 | Complete |
 | UPLOAD-06 | Phase 6 | Complete |
 | UPLOAD-07 | Phase 6 | Complete |
-| MGMT-01 | Phase 7 | Pending |
-| MGMT-02 | Phase 7 | Pending |
-| MGMT-03 | Phase 7 | Pending |
-| MGMT-04 | Phase 7 | Pending |
+| MGMT-01 | Phase 7 | Complete |
+| MGMT-02 | Phase 7 | Complete |
+| MGMT-03 | Phase 7 | Complete |
+| MGMT-04 | Phase 7 | Complete |
 
 **Coverage:**
 - v1 requirements: 56 total (all complete)
