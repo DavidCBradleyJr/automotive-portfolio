@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Admin Panel & Image Pipeline
 status: executing
-stopped_at: Completed 06-01-PLAN.md
-last_updated: "2026-03-17T00:57:45.145Z"
-last_activity: 2026-03-17 -- Completed 06-02 serverless functions (upload-image + trigger-rebuild)
+stopped_at: Completed 06-03-PLAN.md
+last_updated: "2026-03-17T15:10:07.149Z"
+last_activity: 2026-03-17 -- Completed 06-03 upload UI, gallery view, settings tab
 progress:
   total_phases: 3
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 6
-  completed_plans: 5
-  percent: 67
+  completed_plans: 6
+  percent: 100
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-16)
 ## Current Position
 
 Phase: 6 of 7 (Admin Authentication & Upload)
-Plan: 3 of 4
+Plan: 3 of 3 (phase complete)
 Status: executing
-Last activity: 2026-03-17 -- Completed 06-02 serverless functions (upload-image + trigger-rebuild)
+Last activity: 2026-03-17 -- Completed 06-03 upload UI, gallery view, settings tab
 
-Progress: [███████░░░] 67%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -50,6 +50,7 @@ Progress: [███████░░░] 67%
 
 *Updated after each plan completion*
 | Phase 06 P01 | 2min | 2 tasks | 9 files |
+| Phase 06 P03 | ~45min | 3 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,9 @@ Recent decisions affecting current work:
 - 06-02: Separate upload and rebuild functions to prevent premature rebuilds during batch uploads
 - [Phase 06]: Netlify Identity with no signup option -- admin is invite-only
 - [Phase 06]: Separate Vite entry point keeps admin JS out of public bundle
+- 06-03: Direct Cloudinary upload with signed params removes 4MB serverless body limit
+- 06-03: Sequential batch upload with JWT refresh before each file prevents token expiry
+- 06-03: list-images function proxies Cloudinary search API to keep secrets server-side
 
 ### Pending Todos
 
@@ -85,6 +89,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-17T00:57:45.143Z
-Stopped at: Completed 06-01-PLAN.md
+Last session: 2026-03-17T15:08:36Z
+Stopped at: Completed 06-03-PLAN.md
 Resume file: None

@@ -118,11 +118,11 @@
 
 ### Admin Upload
 
-- [ ] **UPLOAD-01**: Drag-and-drop upload zone with file picker fallback, accepts JPEG/PNG/WebP
-- [ ] **UPLOAD-02**: Batch upload — multiple photos in one session
-- [ ] **UPLOAD-03**: Per-image metadata form: category (dropdown), caption (text), alt text (text)
-- [ ] **UPLOAD-04**: Auto-generated image ID/slug from category + caption, editable
-- [ ] **UPLOAD-05**: Image preview shown before upload using browser URL.createObjectURL
+- [x] **UPLOAD-01**: Drag-and-drop upload zone with file picker fallback, accepts JPEG/PNG/WebP
+- [x] **UPLOAD-02**: Batch upload — multiple photos in one session
+- [x] **UPLOAD-03**: Per-image metadata form: category (dropdown), caption (text), alt text (text)
+- [x] **UPLOAD-04**: Auto-generated image ID/slug from category + caption, editable
+- [x] **UPLOAD-05**: Image preview shown before upload using browser URL.createObjectURL
 - [x] **UPLOAD-06**: Upload proxied through Netlify Function (Cloudinary API secret stays server-side)
 - [x] **UPLOAD-07**: Netlify rebuild triggered automatically after upload completes
 
@@ -188,11 +188,11 @@
 | BUILD-04 | Phase 5 | Complete |
 | AUTH-01 | Phase 6 | Complete |
 | AUTH-02 | Phase 6 | Complete |
-| UPLOAD-01 | Phase 6 | Pending |
-| UPLOAD-02 | Phase 6 | Pending |
-| UPLOAD-03 | Phase 6 | Pending |
-| UPLOAD-04 | Phase 6 | Pending |
-| UPLOAD-05 | Phase 6 | Pending |
+| UPLOAD-01 | Phase 6 | Complete |
+| UPLOAD-02 | Phase 6 | Complete |
+| UPLOAD-03 | Phase 6 | Complete |
+| UPLOAD-04 | Phase 6 | Complete |
+| UPLOAD-05 | Phase 6 | Complete |
 | UPLOAD-06 | Phase 6 | Complete |
 | UPLOAD-07 | Phase 6 | Complete |
 | MGMT-01 | Phase 7 | Pending |
