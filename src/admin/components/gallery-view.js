@@ -169,9 +169,13 @@ async function handleDelete(image) {
       throw new Error(err.error || `Delete failed (${res.status})`);
     }
 
+    // Remove card from DOM immediately for instant feedback
+    const card = document.querySelector(`.admin-gallery-card[data-public-id="${image.public_id}"]`);
+    if (card) card.remove();
+    allImages = allImages.filter((img) => img.public_id !== image.public_id);
+
     showToast('success', 'Image hidden from gallery');
     await triggerRebuild();
-    await refreshGallery();
   } catch (err) {
     console.error('Delete failed:', err);
     showToast('error', 'Failed to delete image');
@@ -198,9 +202,13 @@ async function handleRestore(image) {
       throw new Error(err.error || `Restore failed (${res.status})`);
     }
 
+    // Remove card from trash view immediately
+    const card = document.querySelector(`.admin-gallery-card[data-public-id="${image.public_id}"]`);
+    if (card) card.remove();
+    allImages = allImages.filter((img) => img.public_id !== image.public_id);
+
     showToast('success', 'Image restored');
     await triggerRebuild();
-    await refreshGallery();
   } catch (err) {
     console.error('Restore failed:', err);
     showToast('error', 'Failed to restore image');
