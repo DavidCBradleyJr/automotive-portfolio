@@ -25,3 +25,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Generated blog pages (built from content/blog/*.md)
+/blog/
+
+# Local Netlify folder
+.netlify
