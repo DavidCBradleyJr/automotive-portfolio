@@ -33,6 +33,7 @@
           <button class="admin-tab admin-tab--active" data-tab="upload">Upload</button>
           <button class="admin-tab" data-tab="gallery">Gallery</button>
           <button class="admin-tab" data-tab="settings">Settings</button>
+          <button class="admin-tab" data-tab="blog">Blog</button>
         </nav>
 
         <main class="admin-content">
@@ -113,6 +114,100 @@
                   Choose File
                   <input type="file" id="hero-file-input" accept="image/jpeg,image/png,image/webp" hidden>
                 </label>
+              </div>
+            </div>
+          </section>
+          <section id="panel-blog" class="admin-panel-section">
+            <!-- Post list view (shown by default) -->
+            <div id="blog-list-view">
+              <div class="blog-controls">
+                <h2>Blog Posts</h2>
+                <button id="new-post-btn" class="btn btn--primary">New Post</button>
+              </div>
+              <div id="blog-post-grid" class="blog-post-grid">
+                <p class="admin-placeholder">Loading posts...</p>
+              </div>
+            </div>
+
+            <!-- Editor view (hidden until editing) -->
+            <div id="blog-editor-view" hidden>
+              <!-- Metadata fields -->
+              <div class="blog-editor-header">
+                <button id="back-to-posts" class="btn btn--secondary">Back to Posts</button>
+                <div class="blog-editor-actions">
+                  <button id="save-draft-btn" class="btn btn--secondary">Save Draft</button>
+                  <button id="publish-btn" class="btn btn--primary">Publish</button>
+                </div>
+              </div>
+
+              <div class="blog-editor-meta">
+                <div class="blog-editor-meta__field">
+                  <label for="post-title">Title</label>
+                  <input type="text" id="post-title" class="admin-input" placeholder="Post title">
+                </div>
+                <div class="blog-editor-meta__field">
+                  <label for="post-slug">Slug</label>
+                  <input type="text" id="post-slug" class="admin-input" placeholder="auto-generated-from-title">
+                </div>
+                <div class="blog-editor-meta__field blog-editor-meta__field--cover">
+                  <label>Cover Image</label>
+                  <div class="blog-cover-picker">
+                    <img id="cover-preview" class="blog-cover-picker__preview" src="" alt="Cover preview" hidden>
+                    <button id="pick-cover-btn" class="btn btn--secondary">Pick from Gallery</button>
+                    <button id="clear-cover-btn" class="btn btn--secondary" hidden>Clear</button>
+                  </div>
+                </div>
+                <div class="blog-editor-meta__field">
+                  <label for="post-excerpt">Excerpt</label>
+                  <input type="text" id="post-excerpt" class="admin-input" placeholder="Short description for post cards">
+                </div>
+                <div class="blog-editor-meta__field">
+                  <label for="post-tags">Tags</label>
+                  <input type="text" id="post-tags" class="admin-input" placeholder="Comma-separated tags">
+                </div>
+              </div>
+
+              <!-- Editor area with gallery sidebar -->
+              <div class="blog-editor-layout">
+                <div class="blog-editor-main">
+                  <!-- Write/Preview tabs -->
+                  <div class="blog-editor-tabs">
+                    <button class="blog-editor-tab blog-editor-tab--active" data-editor-tab="write">Write</button>
+                    <button class="blog-editor-tab" data-editor-tab="preview">Preview</button>
+                  </div>
+
+                  <!-- Formatting toolbar -->
+                  <div class="blog-toolbar" id="blog-toolbar">
+                    <button class="blog-toolbar__btn" data-action="bold" title="Bold"><b>B</b></button>
+                    <button class="blog-toolbar__btn" data-action="italic" title="Italic"><i>I</i></button>
+                    <span class="blog-toolbar__sep"></span>
+                    <button class="blog-toolbar__btn" data-action="h2" title="Heading 2">H2</button>
+                    <button class="blog-toolbar__btn" data-action="h3" title="Heading 3">H3</button>
+                    <span class="blog-toolbar__sep"></span>
+                    <button class="blog-toolbar__btn" data-action="link" title="Link">Link</button>
+                    <button class="blog-toolbar__btn" data-action="blockquote" title="Blockquote">&gt;</button>
+                    <button class="blog-toolbar__btn" data-action="ul" title="Bullet List">List</button>
+                    <button class="blog-toolbar__btn" data-action="ol" title="Numbered List">1.</button>
+                  </div>
+
+                  <!-- Write pane -->
+                  <textarea id="post-body" class="blog-editor-textarea" placeholder="Write your post in markdown..."></textarea>
+
+                  <!-- Preview pane -->
+                  <div id="post-preview" class="blog-editor-preview" hidden></div>
+                </div>
+
+                <!-- Gallery sidebar -->
+                <aside id="gallery-sidebar" class="blog-gallery-sidebar">
+                  <div class="blog-gallery-sidebar__header">
+                    <h3>Gallery</h3>
+                    <button id="sidebar-toggle" class="btn btn--secondary btn--small">Hide</button>
+                  </div>
+                  <div id="sidebar-gallery-grid" class="blog-gallery-sidebar__grid">
+                    <p class="admin-placeholder">Loading images...</p>
+                  </div>
+                  <button id="sidebar-upload-btn" class="btn btn--secondary blog-gallery-sidebar__upload">Upload Photo</button>
+                </aside>
               </div>
             </div>
           </section>

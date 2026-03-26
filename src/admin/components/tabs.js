@@ -5,7 +5,7 @@
  * for back/forward navigation.
  * ========================================================================== */
 
-const VALID_TABS = ['upload', 'gallery', 'settings'];
+const VALID_TABS = ['upload', 'gallery', 'settings', 'blog'];
 const DEFAULT_TAB = 'upload';
 
 /**

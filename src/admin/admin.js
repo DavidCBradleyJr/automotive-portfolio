@@ -11,6 +11,7 @@ import { initTabs } from './components/tabs.js';
 import { initUpload } from './components/upload.js';
 import { initGalleryView } from './components/gallery-view.js';
 import { initSettings } from './components/settings.js';
+import { initBlogManager } from './components/blog-manager.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const loginScreen = document.getElementById('login-screen');
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try { initUpload(); } catch (e) { console.error('Upload init failed:', e); }
       try { initGalleryView(); } catch (e) { console.error('Gallery view init failed:', e); }
       try { initSettings(); } catch (e) { console.error('Settings init failed:', e); }
+      try { initBlogManager(); } catch (e) { console.error('Blog manager init failed:', e); }
     },
     // onLogout
     () => {
