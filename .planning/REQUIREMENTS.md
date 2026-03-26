@@ -145,8 +145,8 @@
 ### Blog Public Pages
 
 - [ ] **BLOG-01**: Blog listing page at `/blog` showing all published posts in reverse-chronological order
-- [ ] **BLOG-02**: Individual post pages at `/blog/post-slug` with full rendered markdown content
-- [ ] **BLOG-03**: Each post displays: title, date, cover image, rendered markdown body with embedded photos
+- [x] **BLOG-02**: Individual post pages at `/blog/post-slug` with full rendered markdown content
+- [x] **BLOG-03**: Each post displays: title, date, cover image, rendered markdown body with embedded photos
 - [ ] **BLOG-04**: Featured/recent post preview section on the main page (between existing sections)
 - [ ] **BLOG-05**: Blog pages share the dark theme, typography, and nav/footer from the main site
 - [ ] **BLOG-06**: Blog listing page has post cards with cover image, title, excerpt, and date
@@ -165,10 +165,10 @@
 
 ### Blog Data Pipeline
 
-- [ ] **BDATA-01**: Blog posts stored as JSON/markdown files in git (committed via Netlify Function or GitHub API)
-- [ ] **BDATA-02**: Build script generates static blog pages from post data at build time
-- [ ] **BDATA-03**: Blog pages are fully static HTML — no runtime API calls for visitors
-- [ ] **BDATA-04**: Photos referenced in posts use Cloudinary CDN URLs (same as gallery)
+- [x] **BDATA-01**: Blog posts stored as JSON/markdown files in git (committed via Netlify Function or GitHub API)
+- [x] **BDATA-02**: Build script generates static blog pages from post data at build time
+- [x] **BDATA-03**: Blog pages are fully static HTML — no runtime API calls for visitors
+- [x] **BDATA-04**: Photos referenced in posts use Cloudinary CDN URLs (same as gallery)
 - [ ] **BDATA-05**: Auto-rebuild triggered after post publish/edit/delete
 
 ## Future Requirements (Deferred)
@@ -230,8 +230,8 @@
 | MGMT-03 | Phase 7 | Complete |
 | MGMT-04 | Phase 7 | Complete |
 | BLOG-01 | Phase 10 | Pending |
-| BLOG-02 | Phase 8 | Pending |
-| BLOG-03 | Phase 8 | Pending |
+| BLOG-02 | Phase 8 | Complete |
+| BLOG-03 | Phase 8 | Complete |
 | BLOG-04 | Phase 10 | Pending |
 | BLOG-05 | Phase 8 | Pending |
 | BLOG-06 | Phase 10 | Pending |
@@ -244,10 +244,10 @@
 | EDITOR-06 | Phase 9 | Pending |
 | EDITOR-07 | Phase 9 | Pending |
 | EDITOR-08 | Phase 9 | Pending |
-| BDATA-01 | Phase 8 | Pending |
-| BDATA-02 | Phase 8 | Pending |
-| BDATA-03 | Phase 8 | Pending |
-| BDATA-04 | Phase 8 | Pending |
+| BDATA-01 | Phase 8 | Complete |
+| BDATA-02 | Phase 8 | Complete |
+| BDATA-03 | Phase 8 | Complete |
+| BDATA-04 | Phase 8 | Complete |
 | BDATA-05 | Phase 9 | Pending |
 
 **Coverage:**

@@ -171,7 +171,7 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 08-01-PLAN.md -- Sample blog posts, build-blog.js prebuild script, Vite dynamic entry discovery
+- [x] 08-01-PLAN.md -- Sample blog posts, build-blog.js prebuild script, Vite dynamic entry discovery
 - [ ] 08-02-PLAN.md -- Blog post CSS/JS (dark theme styling, PhotoSwipe lightbox, responsive layout)
 **UI hint**: yes
 
