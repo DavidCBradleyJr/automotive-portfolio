@@ -9,6 +9,7 @@
 import { getToken } from './auth.js';
 import { showToast } from './toast.js';
 import { initEditor, getEditorData, setEditorData, clearEditor, buildMarkdown } from './blog-editor.js';
+import { initGallerySidebar } from './blog-gallery-sidebar.js';
 
 /** Module state */
 let posts = [];
@@ -20,6 +21,7 @@ let saving = false;
  */
 export function initBlogManager() {
   initEditor();
+  try { initGallerySidebar(); } catch (e) { console.error('Gallery sidebar init failed:', e); }
   loadPosts();
 
   const newPostBtn = document.getElementById('new-post-btn');
