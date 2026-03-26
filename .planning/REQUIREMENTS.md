@@ -155,13 +155,13 @@
 ### Blog Admin Editor
 
 - [x] **EDITOR-01**: New "Blog" tab in admin panel for creating and managing posts
-- [ ] **EDITOR-02**: Markdown editor with formatting toolbar (bold, italic, headings, links, blockquote, lists)
-- [ ] **EDITOR-03**: Live preview pane showing rendered markdown alongside the editor
+- [x] **EDITOR-02**: Markdown editor with formatting toolbar (bold, italic, headings, links, blockquote, lists)
+- [x] **EDITOR-03**: Live preview pane showing rendered markdown alongside the editor
 - [ ] **EDITOR-04**: Insert photos from existing gallery images via image picker
 - [ ] **EDITOR-05**: Upload new photos directly in the editor (auto-added to Cloudinary gallery)
-- [ ] **EDITOR-06**: Post metadata fields: title, slug (auto-generated, editable), cover image, excerpt, tags
-- [ ] **EDITOR-07**: Save as draft or publish — drafts not visible on public site
-- [ ] **EDITOR-08**: Edit and delete existing posts from the Blog tab
+- [x] **EDITOR-06**: Post metadata fields: title, slug (auto-generated, editable), cover image, excerpt, tags
+- [x] **EDITOR-07**: Save as draft or publish — drafts not visible on public site
+- [x] **EDITOR-08**: Edit and delete existing posts from the Blog tab
 
 ### Blog Data Pipeline
 
@@ -237,13 +237,13 @@
 | BLOG-06 | Phase 10 | Pending |
 | BLOG-07 | Phase 8 | Complete |
 | EDITOR-01 | Phase 9 | Complete |
-| EDITOR-02 | Phase 9 | Pending |
-| EDITOR-03 | Phase 9 | Pending |
+| EDITOR-02 | Phase 9 | Complete |
+| EDITOR-03 | Phase 9 | Complete |
 | EDITOR-04 | Phase 9 | Pending |
 | EDITOR-05 | Phase 9 | Pending |
-| EDITOR-06 | Phase 9 | Pending |
-| EDITOR-07 | Phase 9 | Pending |
-| EDITOR-08 | Phase 9 | Pending |
+| EDITOR-06 | Phase 9 | Complete |
+| EDITOR-07 | Phase 9 | Complete |
+| EDITOR-08 | Phase 9 | Complete |
 | BDATA-01 | Phase 8 | Complete |
 | BDATA-02 | Phase 8 | Complete |
 | BDATA-03 | Phase 8 | Complete |

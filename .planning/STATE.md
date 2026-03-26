@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Blog
 status: executing
-stopped_at: Completed 09-01-PLAN.md
-last_updated: "2026-03-26T02:03:34.123Z"
+stopped_at: Completed 09-02-PLAN.md
+last_updated: "2026-03-26T02:07:24.779Z"
 last_activity: 2026-03-26
 progress:
   total_phases: 3
   completed_phases: 1
   total_plans: 5
-  completed_plans: 3
+  completed_plans: 4
   percent: 60
 ---
 
@@ -26,8 +26,8 @@ See: .planning/PROJECT.md (updated 2026-03-25)
 ## Current Position
 
 Phase: 9 of 10 (blog admin editor)
-Plan: 1 of 3 complete
-Status: Executing
+Plan: 2 of 3 complete
+Status: Ready to execute
 Last activity: 2026-03-26
 
 Progress: [██████░░░░] 60%
@@ -57,6 +57,7 @@ Progress: [██████░░░░] 60%
 | Phase 08 P01 | 5min | 2 tasks | 7 files |
 | Phase 08 P02 | 3min | 2 tasks | 2 files |
 | Phase 09 P01 | 3min | 2 tasks | 8 files |
+| Phase 09 P02 | 2min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -79,6 +80,8 @@ Recent decisions affecting current work:
 - [Phase 09]: Inline rebuild trigger in save/delete-post (no function-to-function calls)
 - [Phase 09]: list-posts returns full body to avoid separate fetch per edit
 - [Phase 09]: Simple regex frontmatter parsing server-side (no gray-matter dependency)
+- [Phase 09]: Extracted renderPreview helper with security comment for admin-only innerHTML usage
+- [Phase 09]: Slug field readonly (not disabled) for existing posts to prevent orphaned files
 
 ### Pending Todos
 
@@ -90,6 +93,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-26T02:03:34.119Z
-Stopped at: Completed 09-01-PLAN.md
+Last session: 2026-03-26T02:07:24.777Z
+Stopped at: Completed 09-02-PLAN.md
 Resume file: None
