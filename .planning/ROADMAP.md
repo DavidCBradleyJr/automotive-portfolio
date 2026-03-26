@@ -153,7 +153,7 @@ Plans:
 
 **Milestone Goal:** Let David publish blog posts about shoots directly from the admin panel -- with a markdown editor, photo attachments from the gallery or new uploads, and a dedicated /blog page with individual post pages. The main page shows a featured/recent post preview.
 
-- [ ] **Phase 8: Blog Data Pipeline & Post Pages** - Post storage in git, build-time HTML generation, and individual post page rendering
+- [x] **Phase 8: Blog Data Pipeline & Post Pages** - Post storage in git, build-time HTML generation, and individual post page rendering (completed 2026-03-26)
 - [ ] **Phase 9: Blog Admin Editor** - Markdown editor in admin with formatting toolbar, photo insertion, and publish workflow
 - [ ] **Phase 10: Blog Listing & Homepage Integration** - Blog index page with post cards and featured/recent preview on the main page
 
@@ -168,11 +168,11 @@ Plans:
   2. The generated post page displays the title, formatted date, cover image (from Cloudinary), and fully rendered markdown body with embedded photos
   3. The post page shares the dark theme, Orbitron/Space Grotesk typography, and nav/footer from the main site -- it looks like it belongs
   4. The post page is responsive and readable from 320px to 1440px+, with no runtime API calls (fully static)
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [x] 08-01-PLAN.md -- Sample blog posts, build-blog.js prebuild script, Vite dynamic entry discovery
-- [ ] 08-02-PLAN.md -- Blog post CSS/JS (dark theme styling, PhotoSwipe lightbox, responsive layout)
+- [x] 08-02-PLAN.md -- Blog post CSS/JS (dark theme styling, PhotoSwipe lightbox, responsive layout)
 **UI hint**: yes
 
 ### Phase 9: Blog Admin Editor
@@ -213,6 +213,6 @@ Phases execute in numeric order: 8 -> 9 -> 10
 | 5. Cloudinary Storage & Build Pipeline | v2.0 | 3/3 | Complete | 2026-03-16 |
 | 6. Admin Authentication & Upload | v2.0 | 3/3 | Complete | 2026-03-17 |
 | 7. Admin Image Management | v2.0 | 2/2 | Complete | 2026-03-25 |
-| 8. Blog Data Pipeline & Post Pages | v3.0 | 0/2 | Planning | - |
+| 8. Blog Data Pipeline & Post Pages | v3.0 | 2/2 | Complete   | 2026-03-26 |
 | 9. Blog Admin Editor | v3.0 | 0/? | Not started | - |
 | 10. Blog Listing & Homepage Integration | v3.0 | 0/? | Not started | - |

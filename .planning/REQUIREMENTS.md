@@ -148,9 +148,9 @@
 - [x] **BLOG-02**: Individual post pages at `/blog/post-slug` with full rendered markdown content
 - [x] **BLOG-03**: Each post displays: title, date, cover image, rendered markdown body with embedded photos
 - [ ] **BLOG-04**: Featured/recent post preview section on the main page (between existing sections)
-- [ ] **BLOG-05**: Blog pages share the dark theme, typography, and nav/footer from the main site
+- [x] **BLOG-05**: Blog pages share the dark theme, typography, and nav/footer from the main site
 - [ ] **BLOG-06**: Blog listing page has post cards with cover image, title, excerpt, and date
-- [ ] **BLOG-07**: Responsive layout — post content readable from 320px to 1440px+
+- [x] **BLOG-07**: Responsive layout — post content readable from 320px to 1440px+
 
 ### Blog Admin Editor
 
@@ -233,9 +233,9 @@
 | BLOG-02 | Phase 8 | Complete |
 | BLOG-03 | Phase 8 | Complete |
 | BLOG-04 | Phase 10 | Pending |
-| BLOG-05 | Phase 8 | Pending |
+| BLOG-05 | Phase 8 | Complete |
 | BLOG-06 | Phase 10 | Pending |
-| BLOG-07 | Phase 8 | Pending |
+| BLOG-07 | Phase 8 | Complete |
 | EDITOR-01 | Phase 9 | Pending |
 | EDITOR-02 | Phase 9 | Pending |
 | EDITOR-03 | Phase 9 | Pending |

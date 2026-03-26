@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Blog
 status: executing
-stopped_at: Completed 08-01-PLAN.md
-last_updated: "2026-03-26T01:09:41Z"
-last_activity: 2026-03-25 -- Completed blog data pipeline (08-01)
+stopped_at: Completed 08-02-PLAN.md
+last_updated: "2026-03-26T01:19:30.533Z"
+last_activity: 2026-03-26
 progress:
   total_phases: 3
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 2
-  completed_plans: 1
+  completed_plans: 2
   percent: 17
 ---
 
@@ -26,9 +26,9 @@ See: .planning/PROJECT.md (updated 2026-03-25)
 ## Current Position
 
 Phase: 8 of 10 (Blog Data Pipeline & Post Pages)
-Plan: 1 of 2 complete
-Status: Executing
-Last activity: 2026-03-25 -- Completed blog data pipeline (08-01)
+Plan: 2 of 2 complete
+Status: Ready to execute
+Last activity: 2026-03-26
 
 Progress: [█░░░░░░░░░] 17%
 
@@ -55,6 +55,7 @@ Progress: [█░░░░░░░░░] 17%
 | Phase 07 P01 | 2min | 2 tasks | 7 files |
 | Phase 07 P02 | multi-session | 3 tasks | 4 files |
 | Phase 08 P01 | 5min | 2 tasks | 7 files |
+| Phase 08 P02 | 3min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -73,6 +74,7 @@ Recent decisions affecting current work:
 - v3.0: HTML-escape frontmatter values in generated blog pages for correctness
 - v3.0: Root-anchor /blog/ in .gitignore to avoid matching src/blog/
 - v3.0: blog-post.js created with nav toggle + PhotoSwipe to unblock Vite build
+- [Phase 08]: Blog nav always frosted glass (no scroll-spy), PhotoSwipe loop disabled for sequential narrative
 
 ### Pending Todos
 
@@ -84,6 +86,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-26T01:09:41Z
-Stopped at: Completed 08-01-PLAN.md
-Resume file: .planning/phases/08-blog-data-pipeline-post-pages/08-01-SUMMARY.md
+Last session: 2026-03-26T01:19:30.531Z
+Stopped at: Completed 08-02-PLAN.md
+Resume file: None
