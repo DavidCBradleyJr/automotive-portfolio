@@ -1,36 +1,34 @@
 ---
 gsd_state_version: 1.0
-milestone: v3.0
-milestone_name: Blog
-status: executing
-stopped_at: Completed 09-03-PLAN.md
-last_updated: "2026-03-26T02:10:57.139Z"
+milestone: v4.0
+milestone_name: Complete Redesign
+status: defining_requirements
+stopped_at: null
+last_updated: "2026-03-26"
 last_activity: 2026-03-26
 progress:
-  total_phases: 3
-  completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
-  percent: 60
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-03-25)
+See: .planning/PROJECT.md (updated 2026-03-26)
 
 **Core value:** The portfolio must make David's photography the hero -- every design decision serves the images.
-**Current focus:** v3.0 Blog -- Phase 9 Plan 1 complete, Plan 2 next
+**Current focus:** v4.0 Complete Redesign -- Defining requirements
 
 ## Current Position
 
-Phase: 9 of 10 (blog admin editor)
-Plan: 3 of 3 complete
-Status: Ready to execute
-Last activity: 2026-03-26
-
-Progress: [██████░░░░] 60%
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-03-26 — Milestone v4.0 started
 
 ## Performance Metrics
 
@@ -49,17 +47,6 @@ Progress: [██████░░░░] 60%
 | 03 - Content | 2 | 4min | 2min |
 | 04 - Polish | 2 | 5min | 2.5min |
 
-*Updated after each plan completion*
-| Phase 06 P01 | 2min | 2 tasks | 9 files |
-| Phase 06 P03 | ~45min | 3 tasks | 12 files |
-| Phase 07 P01 | 2min | 2 tasks | 7 files |
-| Phase 07 P02 | multi-session | 3 tasks | 4 files |
-| Phase 08 P01 | 5min | 2 tasks | 7 files |
-| Phase 08 P02 | 3min | 2 tasks | 2 files |
-| Phase 09 P01 | 3min | 2 tasks | 8 files |
-| Phase 09 P02 | 2min | 2 tasks | 2 files |
-| Phase 09 P03 | 2min | 2 tasks | 2 files |
-
 ## Accumulated Context
 
 ### Decisions
@@ -67,23 +54,14 @@ Progress: [██████░░░░] 60%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- v2.0: Cloudinary for image storage (CDN + transforms)
-- v2.0: Netlify Identity for admin auth (free, integrated, JWT-based)
-- v2.0: Build-time data generation (preserves static performance)
-- v2.0: Vanilla JS for admin (matches site stack)
-- v3.0: Blog posts stored as JSON/markdown in git, generated to static HTML at build time
-- v3.0: Multi-page support needed (currently single-page site + admin.html)
-- v3.0: Photos in posts use Cloudinary CDN URLs (same as gallery)
-- v3.0: HTML-escape frontmatter values in generated blog pages for correctness
-- v3.0: Root-anchor /blog/ in .gitignore to avoid matching src/blog/
-- v3.0: blog-post.js created with nav toggle + PhotoSwipe to unblock Vite build
-- [Phase 08]: Blog nav always frosted glass (no scroll-spy), PhotoSwipe loop disabled for sequential narrative
-- [Phase 09]: Inline rebuild trigger in save/delete-post (no function-to-function calls)
-- [Phase 09]: list-posts returns full body to avoid separate fetch per edit
-- [Phase 09]: Simple regex frontmatter parsing server-side (no gray-matter dependency)
-- [Phase 09]: Extracted renderPreview helper with security comment for admin-only innerHTML usage
-- [Phase 09]: Slug field readonly (not disabled) for existing posts to prevent orphaned files
-- [Phase 09]: Gallery sidebar uses list-images url field for thumbnails, cover picker uses inline-styled overlay
+- v4.0: Moving from Vite + vanilla JS to Next.js + React
+- v4.0: Multi-page architecture (Home, Gallery, Blog, About+Contact)
+- v4.0: Dark cinematic luxury aesthetic (Porsche/McLaren caliber)
+- v4.0: UI UX Pro Max for design system generation
+- v4.0: 21st.dev for React component sourcing
+- v4.0: Gemini (Nano Banana 2) for visual asset generation (user-driven)
+- v4.0: Cloudinary integration preserved, adapted for Next.js Image
+- v4.0: Admin panel redesigned alongside public site
 
 ### Pending Todos
 
@@ -95,6 +73,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-26T02:10:57.137Z
-Stopped at: Completed 09-03-PLAN.md
+Last session: 2026-03-26
+Stopped at: Milestone v4.0 started, defining requirements
 Resume file: None
