@@ -154,7 +154,7 @@
 
 ### Blog Admin Editor
 
-- [ ] **EDITOR-01**: New "Blog" tab in admin panel for creating and managing posts
+- [x] **EDITOR-01**: New "Blog" tab in admin panel for creating and managing posts
 - [ ] **EDITOR-02**: Markdown editor with formatting toolbar (bold, italic, headings, links, blockquote, lists)
 - [ ] **EDITOR-03**: Live preview pane showing rendered markdown alongside the editor
 - [ ] **EDITOR-04**: Insert photos from existing gallery images via image picker
@@ -169,7 +169,7 @@
 - [x] **BDATA-02**: Build script generates static blog pages from post data at build time
 - [x] **BDATA-03**: Blog pages are fully static HTML — no runtime API calls for visitors
 - [x] **BDATA-04**: Photos referenced in posts use Cloudinary CDN URLs (same as gallery)
-- [ ] **BDATA-05**: Auto-rebuild triggered after post publish/edit/delete
+- [x] **BDATA-05**: Auto-rebuild triggered after post publish/edit/delete
 
 ## Future Requirements (Deferred)
 
@@ -236,7 +236,7 @@
 | BLOG-05 | Phase 8 | Complete |
 | BLOG-06 | Phase 10 | Pending |
 | BLOG-07 | Phase 8 | Complete |
-| EDITOR-01 | Phase 9 | Pending |
+| EDITOR-01 | Phase 9 | Complete |
 | EDITOR-02 | Phase 9 | Pending |
 | EDITOR-03 | Phase 9 | Pending |
 | EDITOR-04 | Phase 9 | Pending |
@@ -248,7 +248,7 @@
 | BDATA-02 | Phase 8 | Complete |
 | BDATA-03 | Phase 8 | Complete |
 | BDATA-04 | Phase 8 | Complete |
-| BDATA-05 | Phase 9 | Pending |
+| BDATA-05 | Phase 9 | Complete |
 
 **Coverage:**
 - v1 requirements: 56 total (all complete)

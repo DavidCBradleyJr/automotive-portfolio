@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Blog
 status: executing
-stopped_at: Phase 9 context gathered
-last_updated: "2026-03-26T01:34:16.997Z"
+stopped_at: Completed 09-01-PLAN.md
+last_updated: "2026-03-26T02:03:34.123Z"
 last_activity: 2026-03-26
 progress:
   total_phases: 3
   completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
-  percent: 17
+  total_plans: 5
+  completed_plans: 3
+  percent: 60
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-25)
 
 **Core value:** The portfolio must make David's photography the hero -- every design decision serves the images.
-**Current focus:** v3.0 Blog -- Phase 8 Plan 1 complete, Plan 2 next
+**Current focus:** v3.0 Blog -- Phase 9 Plan 1 complete, Plan 2 next
 
 ## Current Position
 
 Phase: 9 of 10 (blog admin editor)
-Plan: Not started
-Status: Ready to execute
+Plan: 1 of 3 complete
+Status: Executing
 Last activity: 2026-03-26
 
-Progress: [█░░░░░░░░░] 17%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
@@ -56,6 +56,7 @@ Progress: [█░░░░░░░░░] 17%
 | Phase 07 P02 | multi-session | 3 tasks | 4 files |
 | Phase 08 P01 | 5min | 2 tasks | 7 files |
 | Phase 08 P02 | 3min | 2 tasks | 2 files |
+| Phase 09 P01 | 3min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -75,6 +76,9 @@ Recent decisions affecting current work:
 - v3.0: Root-anchor /blog/ in .gitignore to avoid matching src/blog/
 - v3.0: blog-post.js created with nav toggle + PhotoSwipe to unblock Vite build
 - [Phase 08]: Blog nav always frosted glass (no scroll-spy), PhotoSwipe loop disabled for sequential narrative
+- [Phase 09]: Inline rebuild trigger in save/delete-post (no function-to-function calls)
+- [Phase 09]: list-posts returns full body to avoid separate fetch per edit
+- [Phase 09]: Simple regex frontmatter parsing server-side (no gray-matter dependency)
 
 ### Pending Todos
 
@@ -86,6 +90,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-26T01:34:16.994Z
-Stopped at: Phase 9 context gathered
-Resume file: .planning/phases/09-blog-admin-editor/09-CONTEXT.md
+Last session: 2026-03-26T02:03:34.119Z
+Stopped at: Completed 09-01-PLAN.md
+Resume file: None
