@@ -15,9 +15,18 @@
 - Footer, scroll animations, SEO meta tags
 - Netlify deployment with git-based CI/CD
 
-**Key decisions:**
-- Vite 6.x, vanilla HTML/CSS/JS (no framework)
-- Dark theme (#0F0F0F) with purple accent (#7C3AED)
-- CSS columns for masonry, IntersectionObserver for lazy loading
-- GSAP only for hero parallax, IO + CSS for all other animations
-- Images committed to git repo as WebP
+## v2.0 — Admin Panel & Image Pipeline (Complete)
+
+**Completed:** 2026-03-25
+**Phases:** 5–7 (8 plans, 22 requirements)
+
+**What shipped:**
+- Cloudinary image storage replacing git-committed images
+- Build-time gallery data generation from Cloudinary API
+- Admin panel at /admin with Netlify Identity auth (invite-only)
+- Drag-and-drop photo upload with direct Cloudinary upload (no size limit)
+- Edit modal for category/caption/alt text with category change support
+- Soft delete with trash/restore
+- Drag-and-drop reorder per category via SortableJS
+- Hero image selection from gallery or custom upload
+- Auto site rebuild after changes

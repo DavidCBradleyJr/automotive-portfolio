@@ -8,17 +8,17 @@ A single-page scroll portfolio website for automotive photographer David Bradley
 
 The portfolio must make David's photography the hero — every design decision serves the images, and visitors should feel the craft and passion before they ever contact him.
 
-## Current Milestone: v2.0 Admin Panel & Image Pipeline
+## Current Milestone: v3.0 Blog
 
-**Goal:** Let David upload photos, tag them with categories/captions, and have them appear in the gallery — all through a browser-based admin panel with no CLI or git knowledge required.
+**Goal:** Let David publish blog posts about shoots directly from the admin panel — with a markdown editor, photo attachments from the gallery or new uploads, and a dedicated /blog page with individual post pages. The main page shows a featured/recent post preview.
 
 **Target features:**
-- Cloudinary-backed image storage (no more images in git)
-- Browser-based admin panel at `/admin` with drag-and-drop upload
-- Netlify Identity for admin authentication
-- Netlify Function for secure upload proxy
-- Build-time gallery data generation from Cloudinary metadata
-- Automatic Netlify rebuild on new uploads
+- Blog page at `/blog` with post listing and individual post pages (`/blog/post-slug`)
+- Featured/recent post preview section on the main page
+- Markdown editor in admin with formatting toolbar + live preview
+- Photo insertion from existing gallery or new upload (auto-added to gallery)
+- Blog post data stored and generated at build time (same static pattern as gallery)
+- Post metadata: title, slug, date, cover image, tags, excerpt
 
 ## Requirements
 
@@ -40,11 +40,11 @@ The portfolio must make David's photography the hero — every design decision s
 
 ### Active
 
-- [ ] Cloudinary image storage replacing git-committed images
-- [ ] Admin panel for photo upload and tagging
-- [ ] Netlify Identity authentication for admin access
-- [ ] Build-time gallery data generation from Cloudinary
-- [ ] Image processing via Cloudinary URL transforms (WebP, resize, LQIP)
+- [ ] Blog page at /blog with post listing and individual post pages
+- [ ] Featured/recent post preview on main page
+- [ ] Markdown editor in admin with toolbar + live preview
+- [ ] Photo insertion from gallery or new upload
+- [ ] Blog post storage and build-time generation
 
 ### Out of Scope
 

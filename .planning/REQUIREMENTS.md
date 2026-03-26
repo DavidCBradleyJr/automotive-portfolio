@@ -140,6 +140,37 @@
 - [x] **BUILD-03**: Public site gallery component requires zero code changes
 - [x] **BUILD-04**: Public site JS bundle stays under 80KB gzip (admin code never loaded by visitors)
 
+## v3 Requirements
+
+### Blog Public Pages
+
+- [ ] **BLOG-01**: Blog listing page at `/blog` showing all published posts in reverse-chronological order
+- [ ] **BLOG-02**: Individual post pages at `/blog/post-slug` with full rendered markdown content
+- [ ] **BLOG-03**: Each post displays: title, date, cover image, rendered markdown body with embedded photos
+- [ ] **BLOG-04**: Featured/recent post preview section on the main page (between existing sections)
+- [ ] **BLOG-05**: Blog pages share the dark theme, typography, and nav/footer from the main site
+- [ ] **BLOG-06**: Blog listing page has post cards with cover image, title, excerpt, and date
+- [ ] **BLOG-07**: Responsive layout — post content readable from 320px to 1440px+
+
+### Blog Admin Editor
+
+- [ ] **EDITOR-01**: New "Blog" tab in admin panel for creating and managing posts
+- [ ] **EDITOR-02**: Markdown editor with formatting toolbar (bold, italic, headings, links, blockquote, lists)
+- [ ] **EDITOR-03**: Live preview pane showing rendered markdown alongside the editor
+- [ ] **EDITOR-04**: Insert photos from existing gallery images via image picker
+- [ ] **EDITOR-05**: Upload new photos directly in the editor (auto-added to Cloudinary gallery)
+- [ ] **EDITOR-06**: Post metadata fields: title, slug (auto-generated, editable), cover image, excerpt, tags
+- [ ] **EDITOR-07**: Save as draft or publish — drafts not visible on public site
+- [ ] **EDITOR-08**: Edit and delete existing posts from the Blog tab
+
+### Blog Data Pipeline
+
+- [ ] **BDATA-01**: Blog posts stored as JSON/markdown files in git (committed via Netlify Function or GitHub API)
+- [ ] **BDATA-02**: Build script generates static blog pages from post data at build time
+- [ ] **BDATA-03**: Blog pages are fully static HTML — no runtime API calls for visitors
+- [ ] **BDATA-04**: Photos referenced in posts use Cloudinary CDN URLs (same as gallery)
+- [ ] **BDATA-05**: Auto-rebuild triggered after post publish/edit/delete
+
 ## Future Requirements (Deferred)
 
 ### Enhanced Content
