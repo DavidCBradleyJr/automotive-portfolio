@@ -30,3 +30,16 @@
 - Drag-and-drop reorder per category via SortableJS
 - Hero image selection from gallery or custom upload
 - Auto site rebuild after changes
+
+## v3.0 — Blog (In Progress)
+
+**Started:** 2026-03-25
+**Phases:** 8–10 (20 requirements)
+
+**Target:**
+- Blog data pipeline: posts stored as JSON/markdown in git, generated to static HTML at build time
+- Individual post pages at /blog/post-slug with rendered markdown, cover images, embedded photos
+- Markdown editor in admin panel with formatting toolbar, live preview, and photo insertion
+- Draft/publish workflow with auto-rebuild on publish
+- Blog listing page at /blog with post cards
+- Featured/recent post preview section on the main homepage

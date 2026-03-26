@@ -3,11 +3,11 @@ gsd_state_version: 1.0
 milestone: v3.0
 milestone_name: Blog
 status: in-progress
-stopped_at: Defining requirements
-last_updated: "2026-03-25T23:55:00Z"
-last_activity: 2026-03-25 -- Milestone v3.0 started
+stopped_at: Roadmap created, ready to plan Phase 8
+last_updated: "2026-03-25T24:00:00Z"
+last_activity: 2026-03-25 -- Roadmap created for v3.0 Blog (3 phases, 20 requirements)
 progress:
-  total_phases: 0
+  total_phases: 3
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-25)
 
 **Core value:** The portfolio must make David's photography the hero -- every design decision serves the images.
-**Current focus:** v3.0 Blog -- Defining requirements
+**Current focus:** v3.0 Blog -- Phase 8 ready to plan
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements for v3.0
-Last activity: 2026-03-25 -- Milestone v3.0 started
+Phase: 8 of 10 (Blog Data Pipeline & Post Pages)
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-03-25 -- Roadmap created for v3.0 Blog
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -62,31 +62,13 @@ Progress: [░░░░░░░░░░] 0%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- v2.0: Cloudinary for image storage (eliminates git bloat, provides CDN + transforms)
+- v2.0: Cloudinary for image storage (CDN + transforms)
 - v2.0: Netlify Identity for admin auth (free, integrated, JWT-based)
-- v2.0: Build-time data generation (preserves static gallery performance)
-- v2.0: Vanilla JS for admin (matches site stack, scope doesn't justify framework)
-- v2.0: No runtime Cloudinary SDK on public site (bundle stays under 80KB)
-- 05-01: Object form for Cloudinary context metadata (avoids pipe-delimiter issues)
-- 05-01: Node 20+ --env-file flag for .env loading (no dotenv dependency needed)
-- 05-01: Cloudinary cloud name: dl0atmtb7
-- 05-02: Auto-load .env in build script for seamless local/Netlify builds
-- 05-02: Support both context.custom.X and context.X paths for Cloudinary metadata
-- 05-03: w_800,c_limit transform for BTS/social images (smaller display size than gallery)
-- 05-03: Hero image stays local for LCP performance
-- 06-02: Lambda-compatible v1 syntax for Netlify Identity context.clientContext.user JWT pattern
-- 06-02: Separate upload and rebuild functions to prevent premature rebuilds during batch uploads
-- [Phase 06]: Netlify Identity with no signup option -- admin is invite-only
-- [Phase 06]: Separate Vite entry point keeps admin JS out of public bundle
-- 06-03: Direct Cloudinary upload with signed params removes 4MB serverless body limit
-- 06-03: Sequential batch upload with JWT refresh before each file prevents token expiry
-- 06-03: list-images function proxies Cloudinary search API to keep secrets server-side
-- [Phase 07]: Context merge pattern: fetch existing Cloudinary context before update to prevent data loss
-- [Phase 07]: Sequential processing in reorder-images to respect Cloudinary rate limits
-- [Phase 07]: Soft delete via hidden tag for image recoverability
-- 07-02: Modal overlay with full image preview for editing metadata
-- 07-02: Drag-and-drop reorder scoped to single category filter (not "all")
-- 07-02: Instant UI feedback on delete/restore before server confirms
+- v2.0: Build-time data generation (preserves static performance)
+- v2.0: Vanilla JS for admin (matches site stack)
+- v3.0: Blog posts stored as JSON/markdown in git, generated to static HTML at build time
+- v3.0: Multi-page support needed (currently single-page site + admin.html)
+- v3.0: Photos in posts use Cloudinary CDN URLs (same as gallery)
 
 ### Pending Todos
 
@@ -98,6 +80,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-25T23:50:52Z
-Stopped at: Completed 07-02-PLAN.md (FINAL PLAN -- milestone v2.0 complete)
+Last session: 2026-03-25
+Stopped at: Roadmap created for v3.0 Blog milestone
 Resume file: None

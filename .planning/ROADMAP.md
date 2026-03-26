@@ -3,7 +3,8 @@
 ## Milestones
 
 - v1.0 Portfolio Launch - Phases 1-4 (shipped 2026-03-16)
-- v2.0 Admin Panel & Image Pipeline - Phases 5-7 (in progress)
+- v2.0 Admin Panel & Image Pipeline - Phases 5-7 (shipped 2026-03-25)
+- v3.0 Blog - Phases 8-10 (in progress)
 
 ## Phases
 
@@ -91,15 +92,12 @@ Plans:
 
 </details>
 
-## v2.0 Admin Panel & Image Pipeline (In Progress)
-
-**Milestone Goal:** Let David upload photos, tag them with categories/captions, and have them appear in the gallery -- all through a browser-based admin panel with no CLI or git knowledge required.
+<details>
+<summary>v2.0 Admin Panel & Image Pipeline (Phases 5-7) - SHIPPED 2026-03-25</summary>
 
 - [x] **Phase 5: Cloudinary Storage & Build Pipeline** - Migrate images to Cloudinary CDN and generate gallery data at build time (completed 2026-03-16)
 - [x] **Phase 6: Admin Authentication & Upload** - Protected admin panel with drag-and-drop photo upload and metadata tagging (completed 2026-03-17)
 - [x] **Phase 7: Admin Image Management** - View, edit, delete, and reorder existing gallery images from the admin panel (completed 2026-03-25)
-
-## Phase Details
 
 ### Phase 5: Cloudinary Storage & Build Pipeline
 **Goal**: The public gallery loads all images from Cloudinary CDN with automatic format optimization, and the build pipeline generates gallery data without any manual steps
@@ -149,10 +147,58 @@ Plans:
 - [x] 07-01-PLAN.md -- Backend Netlify Functions (update, delete, restore, reorder) + build script updates
 - [x] 07-02-PLAN.md -- Frontend edit modal, gallery management UI, drag-and-drop reorder
 
+</details>
+
+## v3.0 Blog (In Progress)
+
+**Milestone Goal:** Let David publish blog posts about shoots directly from the admin panel -- with a markdown editor, photo attachments from the gallery or new uploads, and a dedicated /blog page with individual post pages. The main page shows a featured/recent post preview.
+
+- [ ] **Phase 8: Blog Data Pipeline & Post Pages** - Post storage in git, build-time HTML generation, and individual post page rendering
+- [ ] **Phase 9: Blog Admin Editor** - Markdown editor in admin with formatting toolbar, photo insertion, and publish workflow
+- [ ] **Phase 10: Blog Listing & Homepage Integration** - Blog index page with post cards and featured/recent preview on the main page
+
+## Phase Details
+
+### Phase 8: Blog Data Pipeline & Post Pages
+**Goal**: Blog posts stored as data files in git are transformed into fully styled static HTML pages at build time, viewable at /blog/post-slug
+**Depends on**: Phase 7 (v2.0 complete)
+**Requirements**: BDATA-01, BDATA-02, BDATA-03, BDATA-04, BLOG-02, BLOG-03, BLOG-05, BLOG-07
+**Success Criteria** (what must be TRUE):
+  1. A sample blog post committed as a JSON/markdown file in git is picked up by the build script and generates a static HTML page at /blog/post-slug
+  2. The generated post page displays the title, formatted date, cover image (from Cloudinary), and fully rendered markdown body with embedded photos
+  3. The post page shares the dark theme, Orbitron/Space Grotesk typography, and nav/footer from the main site -- it looks like it belongs
+  4. The post page is responsive and readable from 320px to 1440px+, with no runtime API calls (fully static)
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 9: Blog Admin Editor
+**Goal**: David can create, edit, and manage blog posts entirely from the admin panel -- writing in markdown with a live preview, inserting photos, and publishing with one click
+**Depends on**: Phase 8
+**Requirements**: EDITOR-01, EDITOR-02, EDITOR-03, EDITOR-04, EDITOR-05, EDITOR-06, EDITOR-07, EDITOR-08, BDATA-05
+**Success Criteria** (what must be TRUE):
+  1. A "Blog" tab in the admin panel lists all existing posts (drafts and published) with options to edit or delete each one
+  2. The blog editor provides a markdown editing area with a formatting toolbar (bold, italic, headings, links, blockquote, lists) and a live preview pane showing rendered output
+  3. David can insert photos into a post by picking from existing gallery images or uploading a new image (which is auto-added to Cloudinary)
+  4. David can fill in post metadata (title, slug, cover image, excerpt, tags), save as draft, or publish -- drafts are not visible on the public site
+  5. After publishing or editing a post, a site rebuild is triggered automatically and the changes appear on the public blog within 2-3 minutes
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 10: Blog Listing & Homepage Integration
+**Goal**: Visitors can discover blog content through a dedicated listing page and a preview section on the main homepage
+**Depends on**: Phase 9
+**Requirements**: BLOG-01, BLOG-04, BLOG-06
+**Success Criteria** (what must be TRUE):
+  1. Navigating to /blog shows a listing page with all published posts in reverse-chronological order, each displayed as a card with cover image, title, excerpt, and date
+  2. The main homepage includes a featured/recent post preview section (between existing sections) that links through to the full post
+  3. The blog listing page matches the site's dark theme and is responsive from 320px to 1440px+
+**Plans**: TBD
+**UI hint**: yes
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 5 -> 6 -> 7
+Phases execute in numeric order: 8 -> 9 -> 10
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -163,3 +209,6 @@ Phases execute in numeric order: 5 -> 6 -> 7
 | 5. Cloudinary Storage & Build Pipeline | v2.0 | 3/3 | Complete | 2026-03-16 |
 | 6. Admin Authentication & Upload | v2.0 | 3/3 | Complete | 2026-03-17 |
 | 7. Admin Image Management | v2.0 | 2/2 | Complete | 2026-03-25 |
+| 8. Blog Data Pipeline & Post Pages | v3.0 | 0/? | Not started | - |
+| 9. Blog Admin Editor | v3.0 | 0/? | Not started | - |
+| 10. Blog Listing & Homepage Integration | v3.0 | 0/? | Not started | - |

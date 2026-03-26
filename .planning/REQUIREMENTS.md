@@ -101,7 +101,7 @@
 - [x] **PERF-07**: Open Graph and Twitter Card meta tags
 - [x] **PERF-08**: Netlify deployment with git-based CI/CD
 
-## v2 Requirements
+## v2 Requirements (Complete)
 
 ### Image Storage
 
@@ -200,7 +200,6 @@
 | JavaScript framework for admin | Vanilla JS matches the site, scope doesn't justify React/Vue |
 | Image cropping in admin | Masonry layout handles any aspect ratio naturally |
 | E-commerce / print sales | Future milestone |
-| Blog | Not core to portfolio conversion |
 | Live Instagram API | API instability, static images sufficient |
 
 ## Traceability
@@ -230,13 +229,34 @@
 | MGMT-02 | Phase 7 | Complete |
 | MGMT-03 | Phase 7 | Complete |
 | MGMT-04 | Phase 7 | Complete |
+| BLOG-01 | Phase 10 | Pending |
+| BLOG-02 | Phase 8 | Pending |
+| BLOG-03 | Phase 8 | Pending |
+| BLOG-04 | Phase 10 | Pending |
+| BLOG-05 | Phase 8 | Pending |
+| BLOG-06 | Phase 10 | Pending |
+| BLOG-07 | Phase 8 | Pending |
+| EDITOR-01 | Phase 9 | Pending |
+| EDITOR-02 | Phase 9 | Pending |
+| EDITOR-03 | Phase 9 | Pending |
+| EDITOR-04 | Phase 9 | Pending |
+| EDITOR-05 | Phase 9 | Pending |
+| EDITOR-06 | Phase 9 | Pending |
+| EDITOR-07 | Phase 9 | Pending |
+| EDITOR-08 | Phase 9 | Pending |
+| BDATA-01 | Phase 8 | Pending |
+| BDATA-02 | Phase 8 | Pending |
+| BDATA-03 | Phase 8 | Pending |
+| BDATA-04 | Phase 8 | Pending |
+| BDATA-05 | Phase 9 | Pending |
 
 **Coverage:**
 - v1 requirements: 56 total (all complete)
-- v2 requirements: 22 total
-- Mapped to phases: 22
+- v2 requirements: 22 total (all complete)
+- v3 requirements: 20 total
+- Mapped to phases: 20
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-14*
-*Last updated: 2026-03-16 after v2.0 roadmap creation*
+*Last updated: 2026-03-25 after v3.0 roadmap creation*
