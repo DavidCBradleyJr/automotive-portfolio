@@ -185,7 +185,12 @@ Plans:
   3. David can insert photos into a post by picking from existing gallery images or uploading a new image (which is auto-added to Cloudinary)
   4. David can fill in post metadata (title, slug, cover image, excerpt, tags), save as draft, or publish -- drafts are not visible on the public site
   5. After publishing or editing a post, a site rebuild is triggered automatically and the changes appear on the public blog within 2-3 minutes
-**Plans**: TBD
+**Plans:** 3 plans
+
+Plans:
+- [ ] 09-01-PLAN.md -- Backend Netlify Functions (list-posts, save-post, delete-post via GitHub API) + Blog tab HTML and navigation
+- [ ] 09-02-PLAN.md -- Blog editor component (markdown toolbar, Write/Preview tabs, metadata) + blog manager (post card grid, CRUD workflow)
+- [ ] 09-03-PLAN.md -- Gallery sidebar (drag-to-insert photos, in-editor upload, cover image picker) + visual verification
 **UI hint**: yes
 
 ### Phase 10: Blog Listing & Homepage Integration
@@ -214,5 +219,5 @@ Phases execute in numeric order: 8 -> 9 -> 10
 | 6. Admin Authentication & Upload | v2.0 | 3/3 | Complete | 2026-03-17 |
 | 7. Admin Image Management | v2.0 | 2/2 | Complete | 2026-03-25 |
 | 8. Blog Data Pipeline & Post Pages | v3.0 | 2/2 | Complete   | 2026-03-26 |
-| 9. Blog Admin Editor | v3.0 | 0/? | Not started | - |
+| 9. Blog Admin Editor | v3.0 | 0/3 | Planned | - |
 | 10. Blog Listing & Homepage Integration | v3.0 | 0/? | Not started | - |
