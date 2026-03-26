@@ -190,7 +190,7 @@ Plans:
 Plans:
 - [x] 09-01-PLAN.md -- Backend Netlify Functions (list-posts, save-post, delete-post via GitHub API) + Blog tab HTML and navigation
 - [x] 09-02-PLAN.md -- Blog editor component (markdown toolbar, Write/Preview tabs, metadata) + blog manager (post card grid, CRUD workflow)
-- [ ] 09-03-PLAN.md -- Gallery sidebar (drag-to-insert photos, in-editor upload, cover image picker) + visual verification
+- [x] 09-03-PLAN.md -- Gallery sidebar (drag-to-insert photos, in-editor upload, cover image picker) + visual verification
 **UI hint**: yes
 
 ### Phase 10: Blog Listing & Homepage Integration
