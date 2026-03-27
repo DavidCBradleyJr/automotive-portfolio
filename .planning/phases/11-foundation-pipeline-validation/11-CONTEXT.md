@@ -26,6 +26,11 @@ Deliver a working Next.js 15 skeleton deployed to a new staging Netlify site. Th
 ### Deployment Strategy
 - **D-05:** Deploy to a new, separate Netlify site for staging. The existing site remains live at its current URL. DNS swap happens at launch (Phase 16).
 
+### 21st.dev Magic MCP Integration
+- **D-06:** 21st.dev Magic MCP server is installed (`@21st-dev/magic@latest`). Claude can search and install 21st.dev components directly into the project during Phase 12+.
+- **D-07:** Free plan has limited daily fetches — be strategic, batch component research, and prioritize hero/navbar/footer components.
+- **D-08:** Phase 11 does NOT use Magic MCP (infrastructure only). Phase 12 (Design System) is where component sourcing begins.
+
 ### Claude's Discretion
 - TypeScript configuration strictness level
 - ESLint + Prettier configuration specifics

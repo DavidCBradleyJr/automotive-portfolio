@@ -92,6 +92,7 @@ The portfolio must make David's photography the hero — every design decision s
 | Dark cinematic luxury aesthetic | Premium brand positioning (Porsche/McLaren caliber) | — Active |
 | UI UX Pro Max for design system | 161 reasoning rules, industry-specific design intelligence | — Active |
 | 21st.dev for React components | High-quality pre-built components, matches Next.js stack | — Active |
+| 21st.dev Magic MCP server | Claude can search/install 21st.dev components directly (free plan, limited daily fetches) | — Active |
 | Gemini for visual asset generation | User generates mockups/assets via Nano Banana 2, provides to Claude | — Active |
 | Cloudinary for v2 images | Eliminates git bloat, provides CDN + transforms | — Pending |
 | Netlify Identity for admin auth | Free, integrated with Netlify, JWT-based | — Pending |
