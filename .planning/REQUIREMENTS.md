@@ -174,9 +174,9 @@ Requirements for the complete redesign. Each maps to roadmap phases 11-16.
 
 ### Foundation (v4)
 
-- [ ] **V4-FOUND-01**: User can view a Next.js 15 site deployed on Netlify with App Router
+- [x] **V4-FOUND-01**: User can view a Next.js 15 site deployed on Netlify with App Router
 - [ ] **V4-FOUND-02**: User sees images loaded via Cloudinary CDN with blur placeholders (CldImage + LQIP)
-- [ ] **V4-FOUND-03**: Site JS bundle stays under 200KB gzipped (updated from 80KB for React)
+- [x] **V4-FOUND-03**: Site JS bundle stays under 200KB gzipped (updated from 80KB for React)
 
 ### Design System (v4)
 
@@ -270,9 +270,9 @@ Requirements for the complete redesign. Each maps to roadmap phases 11-16.
 | FOUND-01 through PERF-08 | Phases 1-4 (v1.0) | Complete |
 | STOR-01 through BUILD-04 | Phases 5-7 (v2.0) | Complete |
 | BLOG/EDITOR/BDATA (v3) | Phases 8-10 (v3.0) | Complete (partial) |
-| V4-FOUND-01 | Phase 11 | Pending |
+| V4-FOUND-01 | Phase 11 | Complete |
 | V4-FOUND-02 | Phase 11 | Pending |
-| V4-FOUND-03 | Phase 11 | Pending |
+| V4-FOUND-03 | Phase 11 | Complete |
 | V4-DESIGN-01 | Phase 12 | Pending |
 | V4-DESIGN-02 | Phase 12 | Pending |
 | V4-DESIGN-03 | Phase 12 | Pending |
