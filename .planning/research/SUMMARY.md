@@ -1,185 +1,273 @@
 # Project Research Summary
 
-**Project:** David Bradley Automotive Photography Portfolio
-**Domain:** Single-page photography portfolio website
-**Researched:** 2026-03-14
+**Project:** David Bradley Automotive Photography Portfolio v4.0
+**Domain:** Premium automotive photography portfolio — dark cinematic luxury aesthetic
+**Researched:** 2026-03-26
 **Confidence:** HIGH
 
 ## Executive Summary
 
-This project is a single-page automotive photography portfolio -- a static site built to showcase car photography, establish brand identity, and convert visitors into booking inquiries. The expert consensus is clear: avoid frameworks entirely. No React, no Astro, no Next.js. A vanilla HTML/CSS/JS stack powered by Vite delivers everything this project needs -- fast dev experience, optimized builds, zero abstraction tax -- without solving problems the project does not have. The only meaningful dependencies are GSAP for scroll-linked animations (now fully free), PhotoSwipe for lightbox, and Formspree for form handling.
+This is a full-stack rewrite of an existing vanilla JS + Vite portfolio into a Next.js 15 + React 19 multi-page site. The current single-page scroll architecture becomes a proper multi-page app (Home, Gallery, Blog, About, Contact) with a React admin panel. The recommended stack is unambiguous: Next.js 15 (not 16) on Netlify via the OpenNext adapter, Tailwind CSS v4, shadcn/ui + 21st.dev for component sourcing, Motion (Framer Motion) for UI animations, and GSAP for the cinematic hero. All existing infrastructure — Cloudinary, Netlify Identity, Formspree, and the build-time gallery data pipeline — carries over without modification.
 
-The recommended approach follows a storytelling-driven single-page architecture: Hero (hook) > Gallery (prove) > Video (deepen) > About (connect) > BTS (differentiate) > Contact (convert). Each section is an independent module with its own CSS and JS, communicating through DOM events. The dark theme with purple accent is the industry-standard aesthetic for automotive photography, and CSS custom properties make this trivial to implement. The gallery is the technical core -- it demands category filtering, progressive image loading (LQIP + lazy load), and a responsive grid that works on mobile where 60%+ of traffic arrives.
+The design target is McLaren/Porsche-caliber luxury: dark backgrounds (#0e0e12 range), full-bleed photography, purposeful motion (Porsche principle: "swift, subtle, purposeful"), and minimal UI chrome. The photography does the visual work; the site gets out of its way. Competitor research confirms dark-only is the industry standard at this tier and that custom-built sites are themselves a differentiator. The 21st.dev ecosystem provides 284 hero components, 79 card variants, 40+ shader/background components, and 15 testimonial layouts — all installable as owned source code via `npx shadcn`. This removes the need to build most UI components from scratch.
 
-The dominant risk is performance self-sabotage. Photography sites are uniquely vulnerable: the product (images) is also the primary performance liability. Unoptimized images, animation overkill, and heavy third-party embeds (YouTube, Instagram) can each individually destroy load times. The mitigation is straightforward -- establish image conventions and performance budgets in Phase 1 before a single gallery image is added. Secondary risks include dark-theme contrast failures (verify all color pairings against WCAG AA) and SEO neglect (single-page sites with only images rank for nothing). Both are preventable with upfront discipline.
+The primary risks are architectural, not visual. Four decisions made in Phase 1 determine everything else: (1) update the JS bundle budget from 80KB to 150-200KB gzip — the old budget was set for vanilla JS and is impossible with React; (2) hardcode dark styles in CSS at the HTML element level to prevent a white flash on first load; (3) validate the Netlify deployment pipeline with a hello-world Next.js app before writing any features; and (4) configure CldImage (not `next/image`) for all Cloudinary images from the first phase. These decisions front-loaded into Phase 1 prevent the four most critical production failures identified in research.
 
 ## Key Findings
 
 ### Recommended Stack
 
-The stack is deliberately minimal. Vite provides the build pipeline (HMR, Rollup optimization, ES modules). Everything else is vanilla HTML/CSS/JS with three targeted libraries.
+Next.js 15.3+ with React 19 is the correct framework choice. Next.js 16 is excluded because it introduces breaking changes around Request APIs and Netlify's OpenNext adapter has not reached stable 16.x support as of March 2026. The App Router with static generation (SSG) for all public pages and serverless API routes for admin operations is the right split: public pages have zero runtime cost, admin operations stay behind auth. Full details in `.planning/research/STACK.md`.
 
 **Core technologies:**
-- **Vite 6.x**: Build tool -- fastest dev experience for vanilla projects, no framework lock-in
-- **GSAP 3.14 + ScrollTrigger + ScrollSmoother**: Animation -- industry standard for scroll-linked motion, all plugins now free since 2025 Webflow acquisition
-- **PhotoSwipe 5.4**: Lightbox -- zero-dependency, ES module, spring-based gestures, CSS-variable theming
-- **Formspree**: Form handling -- platform-agnostic (avoids Netlify vendor lock-in), 50 free submissions/month
-- **Orbitron + Space Grotesk**: Typography -- geometric futuristic display font + clean technical body font, both from Google Fonts
-- **Netlify**: Hosting -- git-based deploys, global CDN, free SSL, preview deploys
+- **Next.js 15.3**: App Router, SSG for public pages, API routes for admin — mature Netlify support via OpenNext adapter
+- **React 19**: Server Components for page shells, Client Components for interactive widgets (gallery filter, lightbox, hero)
+- **TypeScript 5.7**: Non-negotiable — shadcn/ui and 21st.dev are TypeScript-first; catches integration errors at build time
+- **Tailwind CSS v4.1**: CSS-native `@theme` config (no `tailwind.config.js`), Rust engine, required by shadcn/ui and 21st.dev
+- **shadcn/ui + 21st.dev**: Components install as owned source code via `npx shadcn add [url]` — no vendor lock-in, full customization
+- **Motion v12.38**: Declarative React animations for page transitions, hover states, scroll-linked reveals; import from `motion/react`
+- **GSAP 3.14 + @gsap/react**: Reserved for the cinematic hero and scroll-scrubbed parallax sequences where Motion lacks timeline control
+- **next-cloudinary v7**: CldImage for all photography display, CldUploadWidget for admin uploads — bypasses Netlify Image CDN double-processing trap
+- **next-mdx-remote v6**: Blog post rendering (Contentlayer is abandoned and incompatible with Next.js 14+)
+- **yet-another-react-lightbox v3**: React-native lightbox with next/image integration and plugin architecture (thumbnails, zoom, captions)
+- **Netlify Identity**: Keep existing single-user auth — migration to NextAuth adds complexity for zero benefit
 
-**Critical version note:** Avoid Astro 6 (requires Node 22+, solves multi-page problems this project does not have). Avoid Tailwind (bespoke design needs bespoke CSS).
+**Updated budget constraint:** 80KB gzip is impossible with React. Realistic target is 150-200KB gzip. React + React DOM alone is ~40KB; GSAP core adds ~25KB, ScrollTrigger ~8KB. Track with `@next/bundle-analyzer` per-page from day one.
 
 ### Expected Features
 
-**Must have (table stakes):**
-- Full-bleed hero with name/tagline overlay and entrance animation
-- Gallery with category filtering (JDM, Euro, Muscle, Track), 8-12 images per category
-- Lightbox viewer with keyboard nav, swipe on mobile
-- Responsive design (mobile-first, touch-friendly)
-- Contact/inquiry form (4-5 fields max, Formspree integration)
-- About section with personality and passion
-- Dark theme with purple accent throughout
-- Image optimization (lazy load, WebP, responsive srcset)
-- Smooth scroll navigation with sticky nav and section anchors
-- Strategic CTAs after gallery, about, and in footer
+Full feature research with competitor analysis in `.planning/research/FEATURES.md`. McLaren, Porsche, and DW Burnett analysis validates dark-only aesthetic, purposeful motion, and full-bleed photography as non-negotiable table stakes at this tier.
 
-**Should have (competitive, add after core is solid):**
-- Video reel section (embedded YouTube/Vimeo with facade pattern)
-- Behind-the-scenes content section
-- Scroll-triggered animations (GSAP ScrollTrigger for section reveals)
-- Client logo bar and testimonials
+**Must have at v4.0 launch (P0):**
+- Multi-page Next.js architecture (Home, Gallery, About, Contact) — single-page scroll reads as hobby-level at this tier; each page gets its own SEO
+- Dark cinematic design system with luxury typography — the aesthetic IS the brand, must be correct from the first commit
+- Cinematic scroll-triggered hero — first 2 seconds determine if visitor stays; 21st.dev hero + GSAP for this "wow" moment
+- Gallery page with category filtering + lightbox — core portfolio function, Cloudinary-backed, build-time static data
+- Image optimization with blur-up placeholders — LCP under 2.5s; CldImage + LQIP base64 from build pipeline
+- About page as a standalone page — not a scroll section; builds trust and personal brand
+- Contact/booking page with Formspree form — the revenue conversion point; minimal friction
+- Mobile-first responsive design — 60%+ portfolio traffic is mobile
+- Per-page SEO + Open Graph — every shared link must look premium
 
-**Defer (v2+):**
-- Project-based storytelling (narrative photo series)
-- Before/after retouching slider
-- Booking with pricing tiers
-- Blog, CMS, print store integration
+**Should have for launch or immediately after (P1):**
+- Scroll-linked image reveal animations — clipPath tied to scrollYProgress, GPU-accelerated transforms only
+- Animated page transitions — Motion AnimatePresence in root layout, 200-300ms max
+- Video reel with scroll-triggered autoplay — muted autoplay on intersection, shows motion capability
+- Subtle ambient background effects — 21st.dev shader/background components for atmospheric depth
+
+**Defer to post-launch (P2/P3):**
+- Project/series showcase pages — requires content creation (shoot narratives); high brand value but time-intensive
+- Client testimonials section — requires collecting actual testimonials; 21st.dev has 15 ready components
+- Service/pricing page — strong conversion differentiator; Ted7 research confirms this converts well
+- Category landing pages with dedicated heroes — SEO and depth value; extend gallery routes
+- Before/after retouching slider — powerful differentiator per GFWilliams; needs raw + finished image pairs
+- Blog migration and admin React rewrite — existing vanilla JS admin works; defer until public site is stable
+
+**Anti-features to explicitly exclude:**
+- 3D WebGL/Three.js (150KB+ gzip — breaks budget; high-quality photography IS the 3D experience)
+- Live social API feeds (rate limits, performance impact; use static curated section with links to profiles)
+- E-commerce/print sales (premature; dilutes "hire me" messaging)
+- Excessive parallax/animation everywhere (Porsche principle: motion serves content, never competes with it)
 
 ### Architecture Approach
 
-The architecture is a three-layer stack: Presentation (9 HTML sections), Behavior (scroll management, gallery controller, animation orchestrator), and Performance (image loader, lazy load, LQIP). Sections are independent modules initialized from a central main.js, communicating via custom DOM events rather than direct imports. This keeps sections re-orderable and independently testable.
+The architecture splits cleanly into build-time (static public site) and runtime (admin panel). All public pages are statically generated at build time and served from Netlify CDN with zero serverless invocations. The build-time Cloudinary data pipeline (`scripts/build-gallery-data.mjs`) is preserved from v3, outputting JSON instead of a JS module. Admin operations run through Next.js API routes (which auto-deploy as Netlify Functions via the OpenNext adapter), all protected by JWT middleware at the edge using the `jose` library (required because Next.js middleware runs in Edge Runtime, which lacks Node.js `crypto`). Full structure and code patterns in `.planning/research/ARCHITECTURE.md`.
 
 **Major components:**
-1. **Nav** -- fixed header, scroll-spy via Intersection Observer, mobile menu toggle
-2. **Hero** -- full-viewport cinematic opener, single CTA, LCP image (never lazy-loaded)
-3. **Gallery** -- CSS Grid with filter buttons, data-attribute filtering, PhotoSwipe lightbox integration
-4. **Image Loader** -- Intersection Observer-based lazy loading, LQIP blur-up placeholders, srcset/WebP serving
-5. **Contact Form** -- client-side validation, Formspree POST via fetch, success/error states
-6. **Scroll Animations** -- Intersection Observer + CSS transitions for 80% of effects, GSAP ScrollTrigger for complex timeline animations
+1. **`app/(public)/`** — Static pages served from CDN; Server Component shells pass build-time data as props to Client Component interactive islands (gallery filter, lightbox, hero animations)
+2. **`app/(admin)/admin/`** — Admin panel as client-heavy SPA within Next.js shell; gallery management, blog editor, Cloudinary uploads; all 11 existing Netlify Functions consolidated into Route Handlers
+3. **`app/api/admin/`** — Typed Route Handlers protected by `middleware.ts`; Cloudinary SDK runs server-side only
+4. **`scripts/build-gallery-data.mjs`** — Prebuild: Cloudinary Search API → `data/gallery-images.json` with LQIP base64 strings baked in
+5. **`components/hero/`** — GSAP-powered cinematic section; isolated as `dynamic()` import with `ssr: false`
+6. **`components/gallery/`** — GalleryGrid (Client Component for filter state), CldImageWrapper, CategoryFilter, Lightbox
+7. **`middleware.ts`** — Edge-runtime JWT verification via `jose`; protects `/admin/*` and `/api/admin/*`
+
+**Key patterns:**
+- Server Components default; `"use client"` only for interactive widgets (never mark entire pages as client)
+- CldImage everywhere photography appears — never `next/image` directly for Cloudinary URLs
+- Build-time static gallery data — zero runtime Cloudinary API calls on public pages
+- Route groups `(public)` and `(admin)` create separate layout hierarchies without URL prefixes
+- GSAP isolated to `components/hero/` with `useGSAP()` hook; Motion handles all other UI animations
 
 ### Critical Pitfalls
 
-1. **Unoptimized images destroying load time** -- establish image pipeline in Phase 1: 72 DPI, max 2000px, under 400KB per image, WebP primary format, LQIP placeholders. Hero image under 200KB with `fetchpriority="high"`.
-2. **Animation overkill and scroll hijacking** -- never override native scroll. Limit to opacity fades and subtle translateY. Set a strict budget of 3-4 animation types site-wide. Respect `prefers-reduced-motion`. Test on mid-range mobile.
-3. **Dark theme contrast failures** -- use off-white (#E0E0E0-#F0F0F0) on off-black (#121212-#1A1A1A). Verify purple accent passes WCAG AA 4.5:1 for text. Never use purple for body copy smaller than 18px.
-4. **SEO black hole** -- descriptive image filenames, meaningful alt text on every image, proper heading hierarchy, structured data (LocalBusiness + ImageGallery schema), 500+ words of real text content.
-5. **Mobile gallery collapse** -- design mobile layout first. Full-width single-column for landscape images on mobile. Lightbox must support swipe, pinch-to-zoom, tap-to-close. Test on real devices.
+Full pitfall research with recovery strategies in `.planning/research/PITFALLS.md`.
+
+1. **GSAP hydration mismatches** — GSAP manipulates DOM directly, conflicts with React's virtual DOM during SSR hydration (ScrollTrigger specifically causes Next.js 15 hydration warnings by injecting styles into `<body>`). Prevention: mark all animation components `"use client"`, use `@gsap/react`'s `useGSAP()` hook (handles cleanup and scoping automatically), wrap hero with `dynamic(() => import(...), { ssr: false })`. Establish this pattern once in Phase 4 and reuse everywhere.
+
+2. **Cloudinary double-optimization trap** — Using `next/image` with Cloudinary URLs routes images through Netlify Image CDN AND Cloudinary, double-processing every image and potentially hitting free tier limits. Symptoms: 400 errors on images, slower loads, cache invalidation issues. Prevention: use `CldImage` from next-cloudinary from day one; do NOT add Cloudinary to `images.remotePatterns` in next.config.
+
+3. **Netlify + Next.js deployment runtime gaps** — Features that work locally may silently fail on Netlify (deployment skew, Edge Functions bundling failures, direct URL access 500s). Prevention: deploy a hello-world Next.js app to Netlify in Phase 1 before writing any features; test direct URL access (not just client navigation) after every deploy.
+
+4. **Flash of wrong theme (FOWT)** — Site briefly renders white background before dark CSS loads. On a cinematic luxury brand, this is brand-destroying. Prevention: set `background-color: #0e0e12` on `<html>` in a blocking `<style>` tag in `layout.tsx`'s `<head>` — hardcoded in CSS, not applied via JS. Since dark-only, no `next-themes` required.
+
+5. **80KB bundle budget is a zombie constraint** — The old budget was set for vanilla JS. React + React DOM alone is ~40KB gzip before any application code. Enforcing 80KB forces impossible tradeoffs. Prevention: formally update the budget to 150-200KB gzip before development begins; track with `@next/bundle-analyzer` per-page; use `dynamic()` imports for heavy components.
 
 ## Implications for Roadmap
 
-Based on research, suggested phase structure:
+Based on the dependency graph from FEATURES.md, the build order from ARCHITECTURE.md, and the phase mapping from PITFALLS.md, research strongly suggests a 6-phase structure. The ordering is driven by two constraints: (1) the design system must precede all visual components, and (2) the deployment pipeline must be validated before any features are built.
 
-### Phase 1: Foundation and Theme System
-**Rationale:** Everything depends on the HTML skeleton, CSS custom properties, and image conventions. The color system, typography scale, and image pipeline must be established before any visual component is built. This is where 3 of the 7 critical pitfalls are prevented (image optimization, animation constraints, dark theme contrast).
-**Delivers:** Project scaffolding (Vite config, file structure), HTML section shells, CSS custom properties (colors, typography, spacing), global reset/base styles, responsive breakpoints, image sizing conventions, motion design constraints document.
-**Addresses:** Dark theme + purple accent, responsive foundation, smooth scroll navigation
-**Avoids:** Unoptimized images (pipeline established), dark theme contrast failures (color tokens verified), animation overkill (constraints set)
+### Phase 1: Foundation and Pipeline Validation
 
-### Phase 2: Hero and Navigation
-**Rationale:** Hero is the first impression and establishes the visual language. Nav is needed for development navigation. Together they create a functional, visually complete starting point.
-**Delivers:** Full-bleed hero with image, overlay text (Orbitron heading), entrance animation, CTA button, sticky nav with section anchors, mobile hamburger menu, scroll-spy active states.
-**Uses:** GSAP (hero text animation), Intersection Observer (scroll-spy)
-**Avoids:** Hero video autoplay (use still image), nav that disappears without recall
+**Rationale:** Three critical architectural decisions must be locked in before anything else: updated bundle budget (150-200KB), dark-only CSS theme hardcoded at the HTML level, and a working Next.js deploy on Netlify. These are not features — they are preconditions. Building features on an unvalidated Netlify pipeline wastes work.
 
-### Phase 3: Gallery, Image Pipeline, and Lightbox
-**Rationale:** The gallery is the technical core and most complex component. Building it early surfaces design and performance issues. Image loading pipeline must be in place before adding volume. Lightbox extends gallery naturally.
-**Delivers:** CSS Grid gallery layout, category filter buttons (JDM, Euro, Muscle, Track), data-attribute filtering with smooth transitions, LQIP progressive image loading, responsive srcset, PhotoSwipe lightbox with keyboard and touch nav.
-**Addresses:** Gallery with filtering, lightbox viewer, image optimization, mobile gallery experience
-**Avoids:** Gallery as archive (8-12 images per category enforced), mobile gallery collapse (designed mobile-first), all gallery images loading at once (lazy load from day one)
+**Delivers:** Working Next.js 15 skeleton deployed to Netlify; dark theme root layout with zero FOWT; configured Cloudinary environment variables; `netlify.toml` updated for Next.js (publish: `.next`, remove functions directive); shadcn/ui initialized; `build-gallery-data.mjs` adapted to JSON output; TypeScript, Tailwind v4, ESLint, Prettier, prettier-plugin-tailwindcss configured.
 
-### Phase 4: Content Sections (About, Video, BTS)
-**Rationale:** These are simpler layout sections that reuse patterns established in Phases 1-3. They fill out the storytelling arc between Gallery and Contact.
-**Delivers:** About section (two-column: photo + text), video reel section (YouTube/Vimeo embed with facade pattern), behind-the-scenes grid with captions.
-**Uses:** lite-youtube-embed (facade pattern), CSS Grid (BTS layout)
-**Avoids:** Video autoplay with sound (muted by default, facade pattern), heavy third-party embeds (facade saves ~500KB per embed)
+**Addresses:** Multi-page architecture foundation, performance budget decision, deployment risk.
 
-### Phase 5: Contact Form and CTAs
-**Rationale:** Contact is the conversion endpoint. It should be built after the content funnel (hero > gallery > about) is complete so the full user journey can be tested.
-**Delivers:** Booking inquiry form (4-5 fields), Formspree integration, client-side validation with inline errors, success/error states, alternative email contact, CTA buttons placed after gallery, about, and in footer.
-**Avoids:** Form conversion killer (max 5 fields, phone optional, visible feedback), form that fails silently
+**Avoids:** Pitfall 3 (Netlify deployment gaps — validate before features), Pitfall 4 (FOWT — CSS-first dark theme), Pitfall 5 (80KB budget zombie — update before writing code).
 
-### Phase 6: Scroll Animations and Polish
-**Rationale:** Animations layer on top of working sections. Adding them too early makes debugging layout issues harder. This phase also covers responsive tuning, performance audit, and accessibility pass.
-**Delivers:** Intersection Observer scroll reveals (fade + translateY), GSAP ScrollTrigger for hero parallax and text split, staggered gallery item reveals, `prefers-reduced-motion` support, Lighthouse audit pass, accessibility review (contrast, focus indicators, alt text), social links, footer.
-**Addresses:** Scroll-triggered animations, social links, footer
-**Avoids:** Animation overkill (budget of 3-4 types enforced), scroll hijacking (native scroll preserved)
+**Research flag:** SKIP — well-documented patterns; all official docs verified.
 
-### Phase 7: SEO, Performance, and Launch
-**Rationale:** Final quality gate. SEO and structured data require all content to exist. Performance audit requires all features to be in place.
-**Delivers:** Meta tags (Open Graph, Twitter Cards), structured data (LocalBusiness, ImageGallery), descriptive image filenames and alt text audit, Netlify deployment config, performance budget verification (LCP < 2.5s, total JS < 80KB gzip, CLS < 0.1), 404 page, favicon/manifest.
-**Avoids:** SEO black hole (structured data, alt text, text content), EXIF data exposure (strip in pipeline)
+### Phase 2: Design System
+
+**Rationale:** Every visual component inherits from the design system. Typography scale, color tokens, spacing, and Tailwind CSS variables must be locked in before installing any 21st.dev components. Retrofitting a design system after components are built is a major rework.
+
+**Delivers:** Complete dark theme CSS token set (`@theme` in `globals.css`); custom font loading (self-hosted); Tailwind dark mode class setup; base shadcn/ui component set (Button, Card, Input, Dialog, Tabs); Navbar and Footer components (sourced from 21st.dev navigation category); mobile-first responsive breakpoints.
+
+**Addresses:** Dark cinematic design system (P0), mobile-first responsive design foundation.
+
+**Uses:** Tailwind CSS v4 `@theme` directive, shadcn/ui CLI v4, 21st.dev navigation components (browse first, install 2-3 candidates).
+
+**Avoids:** Pitfall 4 (FOWT prevention baked into CSS tokens), design drift from working without a system.
+
+**Research flag:** SKIP — standard Tailwind v4 + shadcn/ui CLI v4 patterns; well-documented.
+
+### Phase 3: Public Pages (Gallery, About, Contact, Home Shell)
+
+**Rationale:** Gallery is the core value proposition and must work before animations are layered on. Build all pages as functional, un-animated versions first. This validates the CldImage pipeline under real page conditions. Home page gets a placeholder hero at this stage.
+
+**Delivers:** Gallery page with category filtering, CldImage with LQIP blur-up, yet-another-react-lightbox (with back-button history support); About page (standalone, not a scroll section); Contact page with Formspree form; Home page shell (hero placeholder); static blog listing and individual post pages; per-page SEO metadata and Open Graph via Next.js Metadata API.
+
+**Addresses:** All P0 table stakes features — gallery, about, contact, image optimization, SEO/OG.
+
+**Uses:** next-cloudinary CldImage (Pitfall 2 fix from day one), build-time gallery JSON, yet-another-react-lightbox, gray-matter + next-mdx-remote.
+
+**Implements:** Architecture Patterns 1 (build-time static data) and 2 (CldImage with pre-generated LQIP).
+
+**Avoids:** Pitfall 2 (Cloudinary double-optimization — CldImage from day one, never retrofit), Trap 1 (masonry CLS — dimensions in build data), Gotcha 3 (runtime Cloudinary API calls), UX Pitfall 2 (lightbox back button — enable YARL history option from the start).
+
+**Research flag:** SKIP — next-cloudinary, YARL, and next-mdx-remote all have thorough official documentation.
+
+### Phase 4: Cinematic Hero and Animations
+
+**Rationale:** Animations layer onto working pages. Building animations before page structure is stable means rebuilding them when structure changes. The hero is isolated to `components/hero/` as a GSAP showpiece; all other animations use Motion. Establish the GSAP + React pattern once here and it propagates to all subsequent animation work.
+
+**Delivers:** Cinematic scroll-triggered hero (3D parallax, GSAP ScrollTrigger, sourced from 21st.dev hero components — browse first, install candidates); scroll-linked image reveal animations (Motion `useScroll` + `useTransform`, clipPath); animated page transitions (Motion `AnimatePresence` with `mode="wait"` in root layout); video reel with scroll-triggered autoplay (Intersection Observer + muted autoplay); optional ambient background effects (21st.dev shader/background components).
+
+**Addresses:** P0 cinematic hero, P1 scroll reveals, P1 page transitions, P1 video reel, P1 ambient effects.
+
+**Uses:** GSAP 3.14 + @gsap/react (hero only), Motion v12.38 (everything else), 21st.dev hero and background components.
+
+**Implements:** Architecture Pattern 3 (Motion for UI, GSAP for showpiece); hero isolated with `dynamic()` + `ssr: false`.
+
+**Avoids:** Pitfall 1 (GSAP hydration — `useGSAP()` hook, `"use client"`, dynamic import), Trap 3 (ScrollTrigger memory leaks — `gsap.context()` with cleanup), Trap 2 (route transition complexity — entrance animations only via Motion, not cross-page GSAP transitions), anti-feature of excessive animation everywhere.
+
+**Research flag:** NEEDS RESEARCH — GSAP ScrollTrigger behavior in Next.js 15 App Router on Netlify (not just local) should be validated with a proof-of-concept before full implementation. A quick test of `useGSAP()` + `ScrollTrigger` in a `dynamic()` wrapper on a deployed Netlify preview is the right first task in this phase.
+
+### Phase 5: Admin Panel React Rewrite
+
+**Rationale:** The existing vanilla JS admin panel works. Defer its rewrite until the public site is stable and deployed. This is a pure rewrite, not a migration — transliterating vanilla JS DOM manipulation into React produces unmaintainable code. Budget extra time: this is a rewrite in React idioms from scratch.
+
+**Delivers:** Admin layout with sidebar (`(admin)` route group); gallery management (CldUploadWidget upload, @dnd-kit/core drag-to-reorder replacing SortableJS, delete/restore); blog editor (markdown with preview); `middleware.ts` JWT verification via `jose` for all `/admin/*` and `/api/admin/*` routes; 11 existing Netlify Functions consolidated into Next.js Route Handlers.
+
+**Addresses:** Admin panel (P3 in FEATURES.md — defer until public site is stable).
+
+**Uses:** @dnd-kit/core (React-native, replaces SortableJS which conflicts with React's virtual DOM), netlify-identity-widget wrapped in React `useEffect`/context, Cloudinary SDK in API routes only (never client).
+
+**Implements:** Architecture Pattern 4 (API routes replace Netlify Functions — centralized auth via middleware removes per-route JWT checks).
+
+**Avoids:** Gotcha 1 (Netlify Identity widget lifecycle — wrap in `useEffect`, use `gotrue-js` for programmatic control), Security Mistake 2 (admin routes accessible without auth — `middleware.ts` from day one of this phase), Security Mistake 1 (Cloudinary API secret exposure — `NEXT_PUBLIC_` prefix never on secrets), Debt 2 (pick one: API routes only, not hybrid with Netlify Functions), Debt 3 (React idioms, not vanilla JS transliteration).
+
+**Research flag:** NEEDS RESEARCH — Netlify Identity JWT secret configuration (exact environment variable name, HMAC algorithm used) is MEDIUM confidence from research. Validate this before writing middleware. Consider `gotrue-js` documentation for programmatic React integration patterns.
+
+### Phase 6: Polish, Performance, and Launch
+
+**Rationale:** Performance work done before the site is feature-complete is premature optimization. Lighthouse audits and bundle analysis only reflect final reality after all features are present.
+
+**Delivers:** Lighthouse audit and bundle optimization to 150-200KB gzip target; `@next/bundle-analyzer` report with actionable fixes; WCAG AA color contrast verification (4.5:1 minimum for all text/background pairs); cross-browser testing (Safari desktop, Safari iOS, Chrome, Firefox); 404 and error boundary pages; `size-limit` CI check to catch future regressions; build-time gallery data freshness verification.
+
+**Addresses:** Fast page loads (LCP under 2.5s), all items in the PITFALLS.md "Looks Done But Isn't" checklist.
+
+**Avoids:** Mobile images served at desktop sizes (correct `sizes` prop on CldImage), Safari scroll animation bugs (test on real device), dark theme overridden by system light mode (verify CSS specificity), ad blocker conflicts with Netlify Identity widget (test with uBlock Origin).
+
+**Research flag:** SKIP — standard performance tooling; well-established Lighthouse + bundle analyzer patterns.
 
 ### Phase Ordering Rationale
 
-- **Foundation first** because 3 of 7 critical pitfalls are prevented at this stage (image conventions, color contrast, animation constraints). Getting these wrong requires expensive rework.
-- **Hero + Nav before Gallery** because the hero establishes the visual language and the nav enables development navigation. The gallery then inherits established patterns.
-- **Gallery is Phase 3** (not later) because it is the most complex component and the one most likely to surface architectural problems. Build the hard thing early.
-- **Animations last** because they are a layer on top of working sections. Debugging layout issues is significantly harder when animation transforms are in play.
-- **SEO and performance last** because they require all content and features to exist for meaningful measurement.
+- **Foundation before design system** because Netlify pipeline failures are catastrophic and cheap to find with a hello-world deploy; theme decisions propagate to every subsequent commit.
+- **Design system before all components** because 21st.dev component installation and customization requires Tailwind tokens and CSS variables to already exist.
+- **Public pages before animations** because animations layered onto unstable structure require rebuilding; gallery must prove the Cloudinary pipeline is correct before hero animation work begins.
+- **Animations as their own phase** because the GSAP + React integration pattern (useGSAP, dynamic import with ssr:false, gsap.context scoping) must be established once and reused — mixing into the page phase creates inconsistency and technical debt.
+- **Admin after public launch** because the existing admin works and blocking the public launch on a non-user-facing rewrite has no business justification.
+- **Polish last** because Lighthouse audits and bundle analysis only reflect final reality after all features are present.
 
 ### Research Flags
 
-Phases likely needing deeper research during planning:
-- **Phase 3 (Gallery + Image Pipeline):** Most complex component. PhotoSwipe integration, LQIP generation, responsive image markup, and CSS Grid masonry all need concrete implementation research.
-- **Phase 4 (Video Section):** lite-youtube-embed integration specifics, facade pattern implementation, and responsive video container sizing.
+Phases likely needing `/gsd:research-phase` during planning:
+
+- **Phase 4 (Animations):** Validate GSAP ScrollTrigger + `useGSAP()` in Next.js 15 App Router on Netlify (deployed, not just local) before full implementation. First task: deploy a proof-of-concept animation component and confirm no hydration errors or production-only issues.
+- **Phase 5 (Admin Panel):** Netlify Identity JWT secret — exact environment variable name and HMAC algorithm need confirmed before writing `middleware.ts`. Research `gotrue-js` React integration patterns (sparse documentation).
 
 Phases with standard patterns (skip research-phase):
-- **Phase 1 (Foundation):** Well-documented Vite setup, CSS custom properties, standard project scaffolding.
-- **Phase 2 (Hero + Nav):** Established patterns for sticky nav, scroll-spy, hero layout.
-- **Phase 5 (Contact Form):** Formspree has clear documentation. Form validation is a solved problem.
-- **Phase 6 (Animations):** GSAP documentation is excellent. Intersection Observer API is well-documented on MDN.
+
+- **Phase 1 (Foundation):** Next.js init + Netlify deployment is exhaustively documented via official guides; straightforward execution.
+- **Phase 2 (Design System):** Tailwind v4 + shadcn/ui CLI v4 setup is well-documented with official installation guides.
+- **Phase 3 (Public Pages):** next-cloudinary, YARL, and next-mdx-remote all have thorough official documentation with Next.js examples.
+- **Phase 6 (Polish):** Standard Lighthouse + bundle analyzer tooling; no novel patterns.
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | Every technology choice is verified against official sources and current releases. GSAP free license confirmed. Vite over Astro rationale is sound. |
-| Features | MEDIUM-HIGH | Based on analysis of 5+ real competitor sites (Larry Chen, Easton Chang, GFWilliams, Ted7, DW Burnett). Feature prioritization is well-grounded. |
-| Architecture | HIGH | Single-page static site architecture is a thoroughly documented pattern. Section-as-module approach is straightforward. Data flows are simple. |
-| Pitfalls | HIGH | Sourced from Nielsen Norman Group, Google Search Central, Format, and multiple photography-specific resources. All pitfalls are domain-validated. |
+| Stack | HIGH | All core technology choices verified against official docs; version compatibility matrix confirmed; 17 sources cited; alternatives explicitly ruled out with rationale |
+| Features | MEDIUM-HIGH | Competitor analysis from live sites (McLaren, Porsche, DW Burnett, GFWilliams, Ted7); 21st.dev component counts from live registry; feature prioritization is judgment-based but well-grounded |
+| Architecture | HIGH | All critical claims verified against official docs (Next.js on Netlify, next-cloudinary, Next.js Auth guide); code patterns are exact, not illustrative; build order validated against dependency graph |
+| Pitfalls | HIGH | Each pitfall verified across official docs, community forums, and multiple developer reports; recovery strategies included for each; phase mapping provided |
 
 **Overall confidence:** HIGH
 
 ### Gaps to Address
 
-- **Real image content:** v1 uses placeholder images. The image optimization pipeline (WebP/AVIF conversion, LQIP generation) should be validated with real photography to confirm the workflow works at actual file sizes.
-- **Instagram feed integration:** Instagram API requires auth and approval. The decision between embed widget, static screenshots, or skipping entirely should be made during Phase 4 planning. Consider deferring to v1.x.
-- **Icon approach:** Lucide Icons vs. hand-crafted inline SVGs is a minor decision to resolve during Phase 1. For the small icon set needed (social links, menu, close, arrow), either works.
-- **Analytics:** No analytics tool was deeply researched. Plausible (privacy-friendly, < 1KB) is mentioned as preferred over GA4. Decide during Phase 7.
-- **EXIF stripping:** The image pipeline needs a step to strip EXIF metadata (location data, camera serials) from published photos. Tool selection (sharp, squoosh CLI) should happen during Phase 3 planning.
+- **Netlify Identity JWT configuration:** The `jose`-based `middleware.ts` pattern is solid, but the specific environment variable name (`NETLIFY_JWT_SECRET`) and the HMAC algorithm Netlify Identity uses requires confirmation during Phase 5 setup. Risk is low — auth is admin-only, not public-facing. The admin panel continues working in the interim if this needs iteration.
+
+- **21st.dev component selection:** Research confirms component categories and counts but not which specific components best match the brand aesthetic. Recommendation: browse 21st.dev hero and background categories as the first task in Phase 4 — select 2-3 candidates, install, evaluate against brand before committing. Do not design around a specific component before seeing it in context.
+
+- **Tailwind v4 CSS-native config:** The `@theme` directive replacing `tailwind.config.js` is a real mental model shift. Flag for Phase 2: read the v4 migration guide before writing a single utility class to avoid fighting with the new config system.
+
+- **Next.js 16 timeline:** Research recommends Next.js 15 specifically because Netlify's OpenNext adapter for 16.x is still maturing as of March 2026. If 16.x Netlify support stabilizes during development, upgrading is straightforward — App Router patterns and API routes are compatible — but requires auditing middleware and caching behavior for the Request API breaking changes.
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- [GSAP Documentation and Free License](https://gsap.com/) -- animation library, ScrollTrigger, all plugins free
-- [PhotoSwipe v5](https://photoswipe.com/) -- lightbox library, ES module architecture
-- [Vite](https://vite.dev/) -- build tool, vanilla template
-- [MDN Lazy Loading](https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Lazy_loading) -- native image lazy loading
-- [Google Search Central: Image SEO](https://developers.google.com/search/docs/appearance/google-images) -- image optimization for search
-- [Nielsen Norman Group: Scrolljacking](https://www.nngroup.com/articles/scrolljacking-101/) -- scroll behavior anti-patterns
+- [Next.js Official Docs — App Router, Images, Auth](https://nextjs.org/docs) — Framework patterns, static generation, middleware
+- [Netlify Next.js Deployment Guide](https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/) — OpenNext adapter behavior, deployment configuration
+- [next-cloudinary Official Docs](https://next.cloudinary.dev/) — CldImage configuration, LQIP patterns, upload widget
+- [Tailwind CSS v4 Release](https://tailwindcss.com/blog/tailwindcss-v4) — CSS-native `@theme` config, Rust engine
+- [shadcn/ui Next.js Installation](https://ui.shadcn.com/docs/installation/next) — CLI v4 setup and dark mode scaffolding
+- [Motion (Framer Motion) Changelog](https://motion.dev/changelog) — v12.38.0, import path from `motion/react`
+- [GSAP React Guide](https://gsap.com/resources/React/) — useGSAP hook, ScrollTrigger cleanup patterns
+- [Yet Another React Lightbox — Next.js Examples](https://yet-another-react-lightbox.com/examples/nextjs) — Integration patterns
+- [Netlify Identity Documentation](https://docs.netlify.com/manage/security/secure-access-to-sites/identity/overview/) — Current support status confirmed Feb 2026
+- [Netlify Blog: Deploy Next.js 15](https://www.netlify.com/blog/deploy-nextjs-15/) — OpenNext adapter official guide
 
 ### Secondary (MEDIUM confidence)
-- [GFWilliams](https://gfwilliams.net/) -- competitor analysis benchmark (custom dark portfolio)
-- [Ted7](https://ted7.com/) -- competitor analysis (conversion-optimized portfolio)
-- [Larry Chen](https://www.larrychenphoto.com/), [Easton Chang](https://www.eastonchang.com), [DW Burnett](https://dwburnett.com/) -- competitor analysis
-- [Format: Portfolio Mistakes](https://www.format.com/magazine/resources/photography/8-mistakes-build-portfolio-website-photography) -- common photography portfolio pitfalls
-- [Formspree vs Netlify Forms](https://vanillawebsites.co.uk/blog/netlify-forms-vs-formspree/) -- form service comparison
-- [Netlify Forms Pricing Concerns](https://dev.to/allenarduino/netlify-forms-is-getting-expensive-here-are-the-best-alternatives-in-2026-3a7k) -- credit-based billing risks
+- [McLaren Automotive](https://cars.mclaren.com/gl_en) — Hero carousel pattern, dark aesthetic, progressive disclosure UX
+- [Porsche Design System — Motion](https://designsystem.porsche.com/v3/styles/motion/) — "Swift, subtle, purposeful" motion philosophy, cubic-bezier specs
+- [DW Burnett Photography](https://dwburnett.com/) — Premium automotive photographer portfolio, minimalist design, project-based organization
+- [GFWilliams](https://gfwilliams.net/) — Before/after slider reference, dark theme execution
+- [Ted7](https://ted7.com/) — Pricing page and conversion pattern reference
+- [21st.dev Component Registry](https://21st.dev) — Component counts and categories verified live
+- [GSAP Hydration Error in Next.js 15 — Community Forum](https://gsap.com/community/forums/topic/43281-hydration-error-in-nextjs-15/) — ScrollTrigger-specific hydration issue documented
+- [Netlify: How We Run Next.js](https://www.netlify.com/blog/how-we-run-nextjs/) — Deployment skew, runtime translation challenges
+- [Optimizing GSAP in Next.js 15 — Medium](https://medium.com/@thomasaugot/optimizing-gsap-animations-in-next-js-15-best-practices-for-initialization-and-cleanup-2ebaba7d0232) — useGSAP patterns
+- [Next.js Image Optimization Error on Netlify](https://www.meje.dev/blog/image-optimization-error-in-nextjs) — 400 error diagnosis and fix for double-optimization
 
-### Tertiary (needs validation)
-- [lite-youtube-embed](https://www.npmjs.com/package/@nicknisi/lite-youtube-embed) -- facade pattern implementation, verify package is current
-- [Cloudinary LQIP Best Practices](https://cloudinary.com/blog/cloudinary-lqip-and-lazy-loading-best-practices) -- LQIP implementation patterns
+### Tertiary (MEDIUM-LOW confidence — verify during implementation)
+- [Netlify Next.js 16 Support](https://www.netlify.com/changelog/next-js-16-deploy-on-netlify/) — Adapter maturity status as of March 2026; may have changed by time of implementation
+- [Netlify: API Routes vs Functions — Community Forum](https://answers.netlify.com/t/netlify-serverless-functions-vs-next-js-api-routes/76880) — Netlify staff responses confirm API routes auto-deploy as functions; confirm at time of admin phase
+- [CVE-2025-55182 — React/Next.js DoS Vulnerability](https://www.netlify.com/changelog/2026-01-26-react-nextjs-dos-vulnerability/) — Requires patched Next.js 15.x; verify pin is to a patched version
 
 ---
-*Research completed: 2026-03-14*
+*Research completed: 2026-03-26*
 *Ready for roadmap: yes*

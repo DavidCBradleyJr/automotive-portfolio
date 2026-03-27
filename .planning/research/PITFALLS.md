@@ -1,320 +1,465 @@
-# Pitfalls Research
+# Domain Pitfalls: Vanilla JS to Next.js Migration
 
-**Domain:** Automotive Photography Portfolio Website
-**Researched:** 2026-03-14
-**Confidence:** HIGH
+**Domain:** Automotive photography portfolio rebuild (Vite + vanilla JS to Next.js + React)
+**Researched:** 2026-03-26
+**Overall Confidence:** HIGH (verified across official docs, community reports, and multiple sources)
+
+---
 
 ## Critical Pitfalls
 
-### Pitfall 1: Unoptimized Images Destroying Load Time
+Mistakes that cause rewrites, major delays, or broken production deployments.
 
-**What goes wrong:**
-Photographers upload full-resolution files (5-20MB each) directly to the site. A gallery page with 20 images becomes 100MB+. The site takes 15-30 seconds to load on mobile. Visitors bounce before seeing a single photo. Google penalizes Core Web Vitals scores. The very photos meant to impress clients drive them away before they load.
+### Pitfall 1: Hydration Mismatches from GSAP Animations
 
-**Why it happens:**
-Photographers are trained to preserve maximum quality. "Downsizing" feels like degrading their work. They export at 300 DPI, full resolution, and upload directly. The site looks fine on their fast home connection with browser cache warm, so they never experience the real first-visit load time.
+**What goes wrong:** GSAP manipulates the DOM directly. When Next.js server-renders HTML and then hydrates on the client, any DOM changes GSAP makes before or during hydration create mismatches. The server-rendered HTML says one thing, GSAP on the client says another. React throws hydration errors, elements flash or disappear, and ScrollTrigger positions are wrong.
 
-**How to avoid:**
-- Export web images at 72 DPI, max 2000px on longest edge, under 400KB per image
-- Use modern formats: WebP as primary, AVIF where supported, JPEG as fallback
-- Implement responsive images with `srcset` and `sizes` attributes so mobile gets smaller files
-- Use `loading="lazy"` on all images below the fold
-- Serve placeholder/blur-up thumbnails (LQIP -- Low Quality Image Placeholder) while full images load
-- Consider a CDN or image optimization service for automatic format negotiation
-- For the hero section: preload the hero image, keep it under 200KB, use `fetchpriority="high"`
+**Why it happens:** Next.js App Router defaults to Server Components. GSAP requires a browser DOM (window, document). The fundamental mismatch is that GSAP was designed for direct DOM manipulation while React owns the virtual DOM. In Next.js 15+, ScrollTrigger specifically causes hydration warnings due to styles being injected into the `<body>` tag.
 
-**Warning signs:**
-- Lighthouse Performance score below 50
-- Largest Contentful Paint (LCP) over 2.5 seconds
-- Total page weight over 5MB
-- Any single image file over 500KB in the deployed site
+**Consequences:** Broken animations on first load, console floods with hydration errors, animations that "work on refresh but not on navigation," memory leaks from ScrollTrigger instances not being cleaned up on route changes.
 
-**Phase to address:**
-Phase 1 (Foundation) -- establish image pipeline and sizing conventions from day one. Retrofitting image optimization into a built site is painful because every image needs reprocessing and markup changes.
+**Prevention:**
+1. Mark ALL animation components with `"use client"` directive -- GSAP cannot run in Server Components
+2. Use the `@gsap/react` package and its `useGSAP()` hook instead of raw `useEffect` -- it handles cleanup and context scoping automatically
+3. Always register plugins explicitly with `gsap.registerPlugin(ScrollTrigger)` -- build tools will tree-shake them otherwise
+4. Scope animations to a container ref, never animate `document.body` or `window` directly
+5. Use `dynamic(() => import('./AnimatedComponent'), { ssr: false })` for heavy animation sections like the 3D parallax hero
+
+**Detection:** Hydration error warnings in console, animations that work on hard refresh but break on client-side navigation, growing memory consumption during navigation.
+
+**Phase mapping:** Must be addressed in the FIRST phase that introduces any animation. Establish the GSAP + React pattern once, reuse everywhere.
+
+**Confidence:** HIGH -- verified via GSAP community forums, Next.js docs, and multiple developer reports.
 
 ---
 
-### Pitfall 2: Gallery as Archive Instead of Curated Portfolio
+### Pitfall 2: Cloudinary Image Double-Optimization Trap
 
-**What goes wrong:**
-The gallery shows 100+ images across all categories. Weak images dilute the strong ones. Visitors form impressions in 3-5 seconds and the first images they see may not be the best. Potential clients can not quickly determine whether David is the right photographer for their project. The site feels like a photo dump rather than a premium portfolio.
+**What goes wrong:** Using `next/image` with Cloudinary images without a proper loader means Next.js runs its own image optimization (via Netlify Image CDN) ON TOP of Cloudinary's already-optimized images. You pay for optimization twice, get worse results, and may hit Netlify's image transformation limits on the free tier.
 
-**Why it happens:**
-Photographers are emotionally attached to their work and struggle to cut images. "More is more" feels like showcasing range. They also fear that a client might want exactly the style shown in image #87.
+**Why it happens:** The default `next/image` loader routes images through `/_next/image` which triggers server-side optimization. When images already live on Cloudinary's CDN with `f_auto,q_auto` transforms, this second pass is wasteful and can degrade quality. Many developers add Cloudinary as a "remote pattern" in `next.config.js` and think they're done -- but they're now bypassing Cloudinary's CDN and routing through Netlify's optimizer instead.
 
-**How to avoid:**
-- Cap each category (JDM, Euro, Muscle, Track) at 8-12 images maximum
-- Lead each category with the 2-3 absolute strongest images -- these appear first and set the impression
-- Curate ruthlessly: every image should either demonstrate range within the niche or showcase peak quality
-- Rotate images periodically rather than adding endlessly
-- The total portfolio should be 30-50 images, not 200
+**Consequences:** Slower image loads (double processing), hitting Netlify free tier image optimization limits, 400 errors on optimized images ("The requested resource isn't a valid image"), cache invalidation issues where Cloudinary updates don't propagate because Next.js caches the old version for 30 days.
 
-**Warning signs:**
-- More than 15 images in any single category
-- Images of inconsistent quality or style within a category
-- Gallery scroll depth is very long on mobile
-- Time-on-site is low despite high traffic (people leaving without engaging)
+**Prevention:**
+1. Use the `next-cloudinary` package and its `CldImage` component -- it wraps `next/image` but routes optimization through Cloudinary's CDN directly
+2. CldImage automatically applies `f_auto,q_auto` for format/quality optimization
+3. Do NOT add Cloudinary domains to `images.remotePatterns` in next.config.js when using CldImage -- this triggers the wrong optimization path
+4. Set `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` env var -- CldImage requires it
+5. For the gallery (50+ images), use the `sizes` prop correctly to avoid downloading desktop-sized images on mobile
 
-**Phase to address:**
-Phase 2 (Gallery) -- define the gallery data structure with explicit limits and ordering. The content model should enforce curation discipline.
+**Detection:** Check Network tab -- if image URLs contain `/_next/image?url=` wrapping a Cloudinary URL, you're double-optimizing. Images should load directly from `res.cloudinary.com`.
+
+**Phase mapping:** Must be correct from the first phase that displays images. Retrofitting is painful because CldImage and next/image have different prop APIs.
+
+**Confidence:** HIGH -- verified via Cloudinary official docs, Next Cloudinary package docs, and GitHub issues.
 
 ---
 
-### Pitfall 3: Scroll Hijacking and Animation Overkill
+### Pitfall 3: Netlify + Next.js Deployment Runtime Gaps
 
-**What goes wrong:**
-The developer implements parallax scrolling, scroll-triggered animations on every section, page transition effects, and custom scroll speeds to create a "cinematic" feel. The result: the site feels sluggish and unresponsive on mobile, scroll position becomes unpredictable, users lose orientation within the single-page layout, and older devices stutter. Conversion rates drop 6% for every additional second of load time caused by heavy JavaScript animation libraries.
+**What goes wrong:** Next.js features that work on Vercel may silently fail or behave differently on Netlify. The Netlify Next.js runtime (`@netlify/plugin-nextjs`) translates Next.js's Vercel-native output into Netlify primitives (Edge Functions, serverless functions, CDN). This translation is not always 1:1.
 
-**Why it happens:**
-"Futuristic" and "cinematic" in the brief gets interpreted as "maximum animation." Award-winning portfolio sites on Awwwards use heavy animation, so developers copy the pattern without realizing those sites sacrifice usability for visual awards. The developer tests on a high-end MacBook, not a 3-year-old Android phone.
+**Why it happens:** Next.js is built by Vercel, optimized for Vercel. Netlify reverse-engineers compatibility through their runtime adapter. Specific known issues:
+- **Deployment skew:** when a new deploy goes live while users are browsing, static asset URLs 404 because old bundles are gone
+- **Edge Functions bundling** can fail with certain Next.js 16 configurations
+- **App Router direct URL access** (not via client navigation) has historically caused 500 errors
+- **ISR behavior** differs from Vercel's implementation
+- **CVE-2025-55182:** Critical vulnerability in React Server Functions affecting Next.js 15 and 16 -- requires patched versions
 
-**How to avoid:**
-- Never hijack scroll speed or direction -- let the browser handle scrolling natively
-- Limit scroll-triggered animations to opacity fades and subtle translateY transforms
-- Use CSS animations and `transform`/`opacity` exclusively (GPU-accelerated, no layout thrashing)
-- Use `prefers-reduced-motion` media query to disable animations for users who request it
-- Set a strict animation budget: no more than 3-4 distinct animation types across the entire site
-- Test on a throttled connection and mid-range mobile device before shipping
-- The photography should create the "wow" factor, not the animations
+**Consequences:** Production 500 errors on direct page access, broken images/JS after deploys for active users, build failures that only appear in Netlify CI (not local).
 
-**Warning signs:**
-- Any use of a scroll-hijacking library (fullPage.js, ScrollMagic for scroll speed changes)
-- JavaScript bundle over 100KB for animations alone
-- Frame rate drops below 60fps during scroll on mobile (test with Chrome DevTools Performance panel)
-- Users complaining about "feeling stuck" or disorientation
+**Prevention:**
+1. Pin to a well-tested Next.js version (15.x is safer than 16.x on Netlify as of March 2026)
+2. Use `output: 'export'` for the public site if possible -- eliminates the runtime entirely, deploys as pure static files. Admin API routes would need Netlify Functions separately
+3. If using full Next.js server mode, add `output: 'standalone'` in next.config.js
+4. Test every deploy with direct URL access to each route, not just client-side navigation
+5. Use `netlify dev` locally to test the full Netlify runtime, not just `next dev`
+6. Monitor the [Netlify Next.js changelog](https://www.netlify.com/changelog/tag/next-js/) for breaking changes
 
-**Phase to address:**
-Phase 1 (Foundation) -- establish motion design principles and constraints before any animations are built. Phase 3 (Polish) can add subtle enhancements but within the established budget.
+**Detection:** Works locally but breaks on Netlify. 500 errors on direct page loads. Build succeeds but deploy fails during "Edge Functions bundling."
 
----
+**Phase mapping:** Address in the FIRST phase (project setup). Get a minimal Next.js app deployed to Netlify before writing any features. Validate the deployment pipeline early.
 
-### Pitfall 4: Contact/Booking Form That Kills Conversions
-
-**What goes wrong:**
-The contact form asks for too much information (full name, email, phone, address, event date, event type, budget range, how did you hear about us, detailed description). Visitors who are "just interested" feel the form is a commitment. Phone number fields cause 39% abandonment when mandatory. The form has no confirmation feedback, vague error messages, or silently fails. Premium clients move on to the next photographer.
-
-**Why it happens:**
-The photographer wants to qualify leads upfront and avoid back-and-forth emails. The developer builds a comprehensive form without understanding that every additional field reduces completion rates. The form "works" in testing but nobody checks abandonment analytics.
-
-**How to avoid:**
-- Maximum 4-5 fields: Name, Email, Event Type (dropdown), Tentative Date (not "confirmed date"), Brief Message
-- Make phone number optional or remove it entirely (58% of users refuse to provide phone numbers)
-- Show clear, inline validation errors -- not alerts or page-level error banners
-- Display a visible success state after submission (not just a console log)
-- Include a direct email link as an alternative for people who hate forms
-- Test the form on mobile -- input fields must be properly sized, keyboard types correct (email keyboard for email, date picker for date)
-
-**Warning signs:**
-- Form has more than 5 fields
-- Phone number is a required field
-- No visible success/error states
-- Form does not work without JavaScript
-- No alternative contact method visible near the form
-
-**Phase to address:**
-Phase 3 (Contact/Booking) -- but the contact section should be designed with these constraints from the start, not retrofitted.
+**Confidence:** HIGH -- verified via Netlify docs, support forums, and their engineering blog.
 
 ---
 
-### Pitfall 5: Dark Theme With Broken Contrast and Readability
+### Pitfall 4: Flash of Wrong Theme (FOWT) on Dark-Only Site
 
-**What goes wrong:**
-Pure white text (#FFFFFF) on pure black (#000000) causes "halation" -- a glowing/bleeding effect that makes body text painful to read for extended periods. Purple accent color on dark backgrounds fails WCAG contrast ratios for small text. Navigation links, form labels, and secondary text become invisible or straining. The site looks dramatic in a screenshot but is genuinely hard to use.
+**What goes wrong:** On first load, the site briefly flashes white/light background before the dark theme kicks in. For a "dark cinematic luxury" portfolio, this is devastating -- it breaks the mood instantly and looks amateurish.
 
-**Why it happens:**
-Dark themes "look cool" in design mockups viewed at 100% zoom on a calibrated monitor. Nobody checks WCAG contrast ratios for the accent color against the background. The developer uses the same text color for headings (large, fine at lower contrast) and body text (small, needs higher contrast).
+**Why it happens:** Next.js server-renders HTML without knowing the client's theme preference. If dark mode is applied via JavaScript (className toggle, CSS variables set in useEffect), there's a gap between HTML paint and JS execution where the browser's default white background shows. This is a variant of FOUC specific to themed sites.
 
-**How to avoid:**
-- Use off-white for body text (#E0E0E0 to #F0F0F0) on off-black (#121212 to #1A1A1A) -- not pure white on pure black
-- Verify purple accent meets 4.5:1 contrast ratio for normal text and 3:1 for large text using WebAIM contrast checker
-- If the purple accent fails contrast for small text, only use it for headings, buttons, and decorative elements -- never for body copy or form labels
-- Test readability at different screen brightness levels and in bright ambient lighting
-- Ensure focus indicators are visible on dark backgrounds (critical for keyboard navigation)
+**Consequences:** Unprofessional first impression. On slow connections, the flash can last 500ms+. Repeated on every hard navigation/page refresh.
 
-**Warning signs:**
-- Any text element with contrast ratio below 4.5:1 (check with browser DevTools accessibility audit)
-- Purple accent used for body text smaller than 18px
-- No visible focus outlines on interactive elements
-- Text appears to "glow" or bleed when viewed on lower-quality displays
+**Prevention:**
+1. Since this is a dark-ONLY site (no light mode toggle needed), hardcode dark styles in CSS -- no JS theme switching required
+2. Set `background-color` on `<html>` and `<body>` in a `<style>` tag inside `layout.tsx`'s `<head>` -- this paints before any JS loads
+3. If using Tailwind's `darkMode: 'class'`, set the `dark` class in a blocking `<script>` in `layout.tsx`, not in useEffect
+4. Use `next-themes` with `forcedTheme="dark"` and `defaultTheme="dark"` if you want infrastructure for future light mode
+5. Add `suppressHydrationWarning` to the `<html>` element when using next-themes (it modifies the element before hydration)
+6. In Tailwind config: set `darkMode: 'class'` and ensure all color values use dark-appropriate defaults
 
-**Phase to address:**
-Phase 1 (Foundation) -- define the color system with contrast-verified tokens before building any components. Every color pairing should be validated at design-system level.
+**Detection:** Load the site on a throttled (Slow 3G) connection. Any white flash = broken.
+
+**Phase mapping:** Must be correct in phase 1 (layout/design system setup). Every subsequent phase inherits the theme structure.
+
+**Confidence:** HIGH -- well-documented issue with established solutions.
 
 ---
 
-### Pitfall 6: SEO Black Hole -- Beautiful Site Nobody Finds
+### Pitfall 5: 80KB Bundle Budget is Impossible with React
 
-**What goes wrong:**
-The entire site is a single page with no meaningful text content, just images. Search engines cannot index images alone effectively. Image filenames are "DSC_0834.jpg" instead of "red-nissan-gtr-r35-rolling-shot.jpg." No alt text on images. No heading hierarchy. No structured data. No meta descriptions. The site ranks for nothing. The photographer relies entirely on social media and word-of-mouth, missing the 60%+ of potential clients who search "automotive photographer [city]."
+**What goes wrong:** The PROJECT.md constraint says "Public site JS must stay under 80KB gzip." React + React DOM alone is ~40KB gzipped. Add Next.js runtime, GSAP core (~25KB), ScrollTrigger (~8KB), and any UI components -- you're at 120KB+ minimum before writing a single line of application code.
 
-**Why it happens:**
-Photography portfolio sites prioritize visual impact and minimize text. "Clean design" gets interpreted as "no words anywhere." Single-page architecture means no distinct URLs for different content sections. The developer focuses on how the site looks, not how it gets discovered.
+**Why it happens:** The 80KB budget was set for the vanilla JS + Vite site, where the entire app (GSAP, PhotoSwipe, custom JS) fit comfortably. React fundamentally changes the baseline.
 
-**How to avoid:**
-- Descriptive filenames for every image: `genre-car-make-model-shot-type.webp`
-- Meaningful alt text on every image that describes the shot, not keyword-stuffed but genuinely descriptive
-- Include enough text content: short descriptions per category, an about section with real paragraphs, location/service area mentions
-- Use proper heading hierarchy (single H1, logical H2/H3 structure)
-- Add structured data: `LocalBusiness` and `ImageGallery` schema markup
-- Include Open Graph and Twitter Card meta tags for social sharing
-- For single-page sites: use anchor links with descriptive fragment identifiers and consider `<section>` elements with proper landmarks
+**Consequences:** If enforced strictly, the budget forces impossible tradeoffs -- either no animations (drop GSAP), no React (defeats the purpose), or broken functionality. If ignored without updating, it becomes a zombie constraint that nobody trusts.
 
-**Warning signs:**
-- Image filenames still contain camera-generated names (DSC_, IMG_)
-- Alt text is empty, missing, or identical across images
-- Total visible text content on the page is under 300 words
-- Site does not appear in Google search results for "[name] photographer" within 4 weeks of launch
+**Prevention:**
+1. **Update the budget** to 150-200KB gzipped for a Next.js site -- this is realistic for React + GSAP + application code
+2. Use modular GSAP imports: `import { gsap } from "gsap"` and `import { ScrollTrigger } from "gsap/ScrollTrigger"` -- only import what you use
+3. Lazy-load heavy animation components with `dynamic()` import
+4. Consider CSS animations + Intersection Observer for simple scroll reveals instead of GSAP ScrollTrigger for basic fade-ins
+5. Install `@next/bundle-analyzer` from day one and track budget per-page, not globally
+6. Use `size-limit` in CI to catch regressions
 
-**Phase to address:**
-Phase 2 (Gallery) for image SEO, Phase 4 (Polish/Launch) for structured data and meta tags. But filename conventions should be established in Phase 1.
+**Detection:** Run `next build` and check the output size report. Each route shows its JS size.
 
----
+**Phase mapping:** Budget decision must be revisited in phase 1 before any development begins.
 
-### Pitfall 7: Mobile Gallery That Falls Apart
-
-**What goes wrong:**
-The desktop gallery uses a masonry or multi-column grid that collapses poorly on mobile. Images become tiny thumbnails in a 2-column grid where detail is lost. Lightbox/modal viewers don't work with touch gestures (no swipe navigation, pinch-to-zoom broken). The gallery filter buttons overflow horizontally and become unreachable. Landscape automotive images -- which are the majority of car photography -- get letterboxed into awkward portrait-oriented mobile cards.
-
-**Why it happens:**
-Gallery is designed desktop-first. The responsive breakpoint just stacks columns without rethinking the experience. Nobody tests the lightbox on actual mobile devices (only browser device emulation, which misses touch gesture issues). Automotive photography is overwhelmingly landscape-oriented, which is inherently challenging on portrait-oriented mobile screens.
-
-**How to avoid:**
-- Design mobile gallery layout first, then enhance for desktop
-- On mobile, use full-width single-column for landscape images -- they deserve the whole screen width
-- Lightbox must support: swipe left/right to navigate, pinch-to-zoom, tap to close, landscape orientation
-- Filter buttons: use a horizontally scrollable chip bar, not wrapped buttons
-- Test on real devices, not just Chrome DevTools emulation
-- Consider a dedicated mobile gallery interaction (vertical scroll feed) rather than adapting desktop grid
-
-**Warning signs:**
-- Gallery images smaller than 300px wide on any mobile viewport
-- No swipe gesture support in lightbox
-- Filter UI requires horizontal scrolling that is not indicated visually
-- Landscape images have large black bars above/below on mobile
-
-**Phase to address:**
-Phase 2 (Gallery) -- mobile layout must be a first-class design target, not an afterthought.
+**Confidence:** HIGH -- React/Next.js bundle sizes are well-documented and verifiable.
 
 ---
 
 ## Technical Debt Patterns
 
-Shortcuts that seem reasonable but create long-term problems.
+Shortcuts that seem reasonable but create compounding problems.
 
-| Shortcut | Immediate Benefit | Long-term Cost | When Acceptable |
-|----------|-------------------|----------------|-----------------|
-| Using full-size images with CSS `width: 100%` | Quick to implement, images look sharp | Massive bandwidth waste, terrible mobile performance, poor Core Web Vitals | Never -- always serve appropriately sized images |
-| Hardcoding image paths instead of a data structure | Faster initial build | Adding/removing/reordering images requires HTML surgery | Only in proof-of-concept, must refactor before v1 launch |
-| Embedding Instagram feed via third-party widget | Instant social proof | Widget loads 500KB+ of external JS, breaks layout when Instagram changes API, adds third-party tracking | MVP only -- replace with static screenshots or server-side fetch |
-| Using a heavy animation library (GSAP, Framer Motion) for simple fades | Developer familiarity, nice defaults | 30-80KB bundle size for effects achievable with CSS transitions | Only if complex timeline animations are truly needed |
-| Skipping `srcset` and serving single image size | Simpler image markup | Desktop images served to mobile (3x bandwidth waste), poor Lighthouse scores | Never for a photography site |
+### Debt 1: Over-Engineering Server Components for a Static Portfolio
+
+**What goes wrong:** Developers maximize Server Component usage because "it's best practice." For a portfolio with build-time static data, this adds complexity without benefit. You end up with complex server/client component boundaries, prop drilling across the boundary, and confusion about where code runs.
+
+**Why it matters:** This site has ~50 gallery images loaded at build time, a blog with a handful of posts, and a single-user admin panel. There are no dynamic data requirements for the public site. Server Components add value for data-heavy apps -- for a static portfolio, they add unnecessary cognitive overhead.
+
+**Prevention:**
+1. Strongly consider `output: 'export'` for the public site -- pure static HTML, no server runtime needed
+2. If using Server Components, keep the boundary simple: page-level layouts are Server Components, interactive widgets (animations, filters, lightbox) are Client Components
+3. Don't fetch Cloudinary data in Server Components at runtime -- generate it at build time like the current `build-gallery-data.js` approach
+4. The admin panel WILL need server-side logic (API routes) but keep it isolated from the public site architecture
+
+**Phase mapping:** Architecture decision in phase 1. Extremely hard to change later.
+
+---
+
+### Debt 2: Netlify Functions vs API Routes -- Pick One
+
+**What goes wrong:** The existing 11 Netlify Functions (sign-upload, list-images, delete-image, save-post, etc.) each handle one operation. Developers either: (a) copy them as-is alongside Next.js, creating a hybrid routing mess, or (b) convert them all to Next.js API routes without considering that API routes require the Next.js server runtime on Netlify (incompatible with `output: 'export'`).
+
+**Why it matters:** The current functions use Cloudinary SDK server-side and are authenticated via Netlify Identity JWT tokens. Migration requires deciding the routing AND rethinking the auth mechanism.
+
+**Prevention:**
+1. If using `output: 'export'` (recommended for public site), keep admin functions as Netlify Functions in `netlify/functions/` -- they run independently of the static site
+2. If using full Next.js server mode, convert functions to Route Handlers in `app/api/`
+3. Don't try to do both -- pick one approach for the admin API layer
+4. Group related operations: one `app/api/images/route.ts` handles GET (list), POST (upload), DELETE (delete) instead of 11 separate files
+
+**Phase mapping:** Decide the approach in phase 1, implement during the admin panel phase.
+
+---
+
+### Debt 3: Porting Vanilla JS DOM Manipulation Patterns Into React
+
+**What goes wrong:** The current admin panel (`admin.js`) uses direct DOM manipulation: `document.getElementById()`, `innerHTML`, event delegation. Developers "port" this to React by using refs for everything and unsafe HTML injection instead of learning proper React patterns. The code works but is unmaintainable and fragile.
+
+**Prevention:**
+1. Rewrite admin components from scratch in React idioms -- don't transliterate vanilla JS line by line
+2. Use state for UI, not DOM queries
+3. Replace innerHTML with JSX and proper component composition
+4. SortableJS (used for image reordering) has a React wrapper (`react-sortablejs`) -- use it instead of raw SortableJS with refs
+
+**Phase mapping:** Admin panel phase. Budget extra time -- this is a rewrite, not a port.
+
+---
 
 ## Integration Gotchas
 
-Common mistakes when connecting to external services.
+### Gotcha 1: Netlify Identity Widget in React
 
-| Integration | Common Mistake | Correct Approach |
-|-------------|----------------|------------------|
-| Formspree/Netlify Forms | Form works in dev but fails in production because the form action URL is wrong or the service is not configured for the deployed domain | Test form submission on the deployed URL, not just localhost. Verify the service allows submissions from your domain. |
-| Instagram Embed/Feed | Using deprecated Instagram API or oEmbed without proper tokens. Feed widget loads slowly and shifts layout during load. | Use static screenshots of Instagram posts or a lightweight server-side proxy. Reserve layout space to prevent CLS. |
-| YouTube/Vimeo Embed (Video Reel) | Embedding with default `<iframe>` loads 1-3MB of resources even when video is not playing. Multiple embeds on one page compound the problem. | Use `loading="lazy"` on iframes. Better: use a facade pattern -- show a thumbnail with play button, load the actual player only on click. `lite-youtube-embed` is ~10KB vs YouTube's ~800KB default. |
-| Google Fonts | Loading multiple weights/styles blocks rendering. Flash of unstyled text (FOUT) or invisible text (FOIT) during load. | Use `font-display: swap`. Preload the primary font weight. Limit to 2 font families and 3-4 weights total. Self-host fonts for faster loading. |
-| Analytics (Google Analytics) | GA4 script blocks rendering or loads synchronously. Cookie consent banner not implemented for GDPR visitors. | Load analytics `async` or `defer`. Implement basic cookie consent if targeting international audience. |
+**What goes wrong:** The `netlify-identity-widget` package (currently used) is a vanilla JS widget that injects itself into the DOM. In React, it conflicts with React's DOM ownership. The widget's modal, event listeners, and DOM nodes exist outside React's component tree.
+
+**Current status:** Netlify Identity is still supported as of February 2026 despite earlier deprecation signals. The Auth0 extension is the new recommended path but adds complexity and potential cost.
+
+**Prevention:**
+1. For the rebuild, keep Netlify Identity but wrap it properly: initialize in a `useEffect`, listen for `login`/`logout` events, store user state in React context
+2. Use `netlify-identity-widget` only for login/logout modal -- don't let it manage UI beyond that
+3. Alternatively, use `gotrue-js` (the underlying library) for programmatic control without the widget's DOM injection
+4. Verify JWT tokens server-side in Netlify Functions using the `jsonwebtoken` package -- don't trust client-side auth state alone
+
+**Phase mapping:** Admin panel phase. Don't migrate auth until the admin UI is being rebuilt.
+
+---
+
+### Gotcha 2: PhotoSwipe Lightbox Lifecycle in React
+
+**What goes wrong:** PhotoSwipe 5.x manages its own DOM, event listeners, and animation loop. In React, mounting/unmounting PhotoSwipe without proper cleanup causes memory leaks, duplicate lightboxes stacking up, and broken swipe gestures.
+
+**Prevention:**
+1. Initialize PhotoSwipe in `useEffect` with `return () => lightbox.destroy()` for cleanup
+2. Use a ref for the gallery container, pass it to PhotoSwipe's `gallery` option
+3. Consider `react-photoswipe-gallery` wrapper which handles React lifecycle correctly
+4. Re-initialize when gallery filter changes -- stale references cause ghost clicks
+
+**Phase mapping:** Gallery phase. Test on mobile devices -- gesture conflicts are common.
+
+---
+
+### Gotcha 3: Build-Time Data Generation Pipeline
+
+**What goes wrong:** The current site runs `scripts/build-gallery-data.js` in the `prebuild` npm script to fetch Cloudinary metadata and generate a static data file. In Next.js, developers are tempted to replace this with `getStaticProps` or Server Component data fetching, adding runtime Cloudinary API calls. This works but violates the "gallery must remain static build-time data" constraint, is slower, and counts against Cloudinary API rate limits.
+
+**Prevention:**
+1. Keep the `prebuild` script approach -- run it before `next build`
+2. Output data as a `.ts` or `.json` file that components import directly
+3. Do NOT call the Cloudinary API at request time for the public gallery
+4. The admin panel can call Cloudinary at runtime (it's behind auth, low-traffic)
+5. Update the script to output TypeScript types alongside the data for type safety
+
+**Phase mapping:** Early phase, before building gallery components. The data shape determines component props.
+
+---
+
+### Gotcha 4: lite-youtube-embed in React/Next.js
+
+**What goes wrong:** The current site uses `lite-youtube-embed` which is a Web Component (custom element). Custom elements work differently in React -- they don't get React's synthetic events, and Next.js SSR doesn't know how to render them.
+
+**Prevention:**
+1. Use `@next/third-parties` for YouTube embeds (official Next.js package) or a React-native lite embed solution
+2. If keeping `lite-youtube-embed`, wrap it in a `"use client"` component with `dynamic(() => ..., { ssr: false })`
+3. Register the custom element in `useEffect` on the client side only
+
+**Phase mapping:** Video reel section. Low risk but easy to overlook.
+
+---
 
 ## Performance Traps
 
-Patterns that work at small scale but fail as usage grows.
+### Trap 1: Gallery Masonry Layout Causing Layout Shifts (CLS)
 
-| Trap | Symptoms | Prevention | When It Breaks |
-|------|----------|------------|----------------|
-| Loading all gallery images on page load (no lazy loading) | Page load time increases linearly with gallery size | Implement `loading="lazy"`, consider virtual scrolling for 50+ images | Immediately -- even 20 full-res images is too many for initial load |
-| CSS background images for gallery (instead of `<img>` tags) | Images not lazy-loadable by browser, not accessible, not indexable by search engines | Use semantic `<img>` elements with proper `alt`, `srcset`, `loading` attributes | Immediately -- this is an anti-pattern for photography content |
-| Single-page DOM with all sections always rendered | Scroll performance degrades, memory usage grows, initial paint delayed | Use Intersection Observer to defer rendering off-screen sections. Keep initial DOM light. | When total image count exceeds 30-40 or when video embeds are added |
-| Uncompressed video background in hero | Hero section alone is 20-50MB | Use compressed MP4 (H.264, 1-3MB), poster image fallback, `prefers-reduced-data` consideration | Immediately if video hero is chosen |
+**What goes wrong:** Masonry layouts require knowing image dimensions before render. If dimensions aren't available from the data pipeline, the layout shifts as images load, destroying CLS scores and creating a janky user experience.
+
+**Prevention:**
+1. Store image dimensions (width, height) in the build-time gallery data
+2. Use `CldImage` with explicit `width` and `height` props -- they reserve space before load
+3. Use CSS `aspect-ratio` as a fallback for consistent placeholders
+4. For masonry specifically, CSS Grid with `grid-auto-rows` and known aspect ratios avoids JS-based layout calculations
+
+**Phase mapping:** Gallery phase. Get dimensions into the data pipeline first.
+
+---
+
+### Trap 2: Route Transition Animation Complexity
+
+**What goes wrong:** Page transitions with GSAP between Next.js routes are notoriously difficult. The outgoing page needs to animate out before the incoming page loads, but Next.js's router unmounts the old page immediately.
+
+**Prevention:**
+1. Use Framer Motion's `AnimatePresence` with `mode="wait"` for page transitions if needed -- it's designed for React's component lifecycle
+2. Better option: skip full page transitions. Use entrance animations only. Premium automotive sites (Porsche, McLaren, BMW) use subtle entrance animations, not complex cross-page transitions
+3. If GSAP page transitions are essential, you need a custom router wrapper that delays unmounting -- this is complex, fragile, and not worth the engineering cost for a portfolio site
+
+**Phase mapping:** Final polish phase. Get pages working first, add transitions last. Never build page transitions before the pages themselves are stable.
+
+---
+
+### Trap 3: ScrollTrigger Memory Leaks on Route Change
+
+**What goes wrong:** ScrollTrigger instances persist after navigating away from a page. Each revisit creates new instances without killing old ones. Memory grows linearly with navigation, animations stack and conflict, and eventually the browser tab becomes sluggish.
+
+**Prevention:**
+1. The `useGSAP()` hook from `@gsap/react` handles cleanup automatically -- use it instead of manual `useEffect`
+2. If using `useEffect` manually, always call `ScrollTrigger.getAll().forEach(t => t.kill())` in the cleanup function
+3. Use `gsap.context()` to scope all animations -- calling `context.revert()` in cleanup kills everything in scope
+4. Test by rapidly navigating between pages 20+ times and checking memory in DevTools
+
+**Phase mapping:** Any phase with scroll animations. Establish the pattern once in the first animation phase.
+
+---
 
 ## Security Mistakes
 
-Domain-specific security issues beyond general web security.
+### Mistake 1: Exposing Cloudinary API Secret in Client Bundle
 
-| Mistake | Risk | Prevention |
-|---------|------|------------|
-| Contact form without honeypot or rate limiting | Spam floods inbox, form service quota exhausted, photographer misses real inquiries in spam | Add a hidden honeypot field. Use Formspree/Netlify built-in spam filtering. Add basic rate limiting. |
-| Exposing email address in plain text on page | Scraped by bots, leads to spam | Use a contact form as primary method. If showing email, obfuscate with CSS direction tricks or load via JavaScript. |
-| Image hotlink protection not configured | Other sites embed your images, consuming your bandwidth and CDN quota | Configure referrer-based hotlink protection in CDN/hosting settings. |
-| EXIF data not stripped from images | Location data, camera serial numbers, and personal metadata exposed in published photos | Strip EXIF data during the image optimization pipeline. Keep only copyright info if desired. |
+**What goes wrong:** The Cloudinary upload signature requires the API secret. If this leaks into client-side code, anyone can upload, delete, or modify images in the Cloudinary account.
+
+**Prevention:**
+1. ALL Cloudinary operations requiring the API secret (upload, delete, reorder) must happen in API routes or Netlify Functions -- NEVER in client components
+2. Use `CLOUDINARY_API_SECRET` (without `NEXT_PUBLIC_` prefix) -- Next.js only exposes `NEXT_PUBLIC_*` env vars to the client
+3. The existing `sign-upload.mjs` function pattern is correct -- keep server-side signing
+4. `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` is safe to expose (it's public information anyway)
+
+**Detection:** Search the client bundle output for the API secret string. Check Network tab for any client-side requests containing the secret.
+
+**Phase mapping:** Set up env var conventions in phase 1. Enforce in admin panel phase.
+
+---
+
+### Mistake 2: Admin Routes Accessible Without Auth
+
+**What goes wrong:** In the current vanilla JS site, the admin is a separate HTML page with Netlify Identity gating access. In Next.js, `/admin` is just another route. Without middleware or server-side auth checks, anyone can access admin page HTML and see the admin UI (even if API calls fail without auth).
+
+**Prevention:**
+1. If using full Next.js server mode: use `middleware.ts` to check auth on `/admin/*` routes before serving any HTML
+2. Verify Netlify Identity JWT tokens server-side in API routes / Netlify Functions
+3. Don't rely on client-side auth checks alone -- the page HTML still gets served even if you redirect in `useEffect`
+4. For `output: 'export'`: middleware doesn't exist. Use Netlify's `_redirects` rules with role-based access control, or accept that admin HTML is publicly accessible but all mutating API routes are protected server-side (the admin UI is useless without working API calls)
+
+**Phase mapping:** Admin panel phase. Establish auth middleware early in that phase.
+
+---
 
 ## UX Pitfalls
 
-Common user experience mistakes in this domain.
+### Pitfall 1: Gallery Filter Animation vs React Re-render
 
-| Pitfall | User Impact | Better Approach |
-|---------|-------------|-----------------|
-| Auto-playing video with sound | Visitors are startled, immediately close the tab, never return | Video hero should autoplay muted with visible unmute button, or better yet, use a cinematic still with a play button |
-| No clear call-to-action visible above the fold | Visitors admire photos but don't know what to do next -- they leave without contacting | Include a subtle but persistent CTA ("Book a Shoot" button) in the navigation or hero section |
-| Category filtering causes full page reload or jarring layout shift | Users lose scroll position, experience disorientation, abandon exploration | Filter in-place with smooth CSS transitions. Maintain scroll position. Animate items in/out. |
-| Lightbox with no visible close button or escape hatch | Users feel trapped, especially on mobile where gestures may not be obvious | Visible X button, close on backdrop click, close on Escape key, swipe down to dismiss on mobile |
-| Navigation disappears on scroll (auto-hiding header) without reliable way to recall it | Users cannot access other sections or CTA without scrolling back to top | Sticky navigation that hides on scroll-down but reappears on any scroll-up. Always accessible. |
-| Social media links open in same tab | Users leave the portfolio site entirely and may not return | All external links (Instagram, YouTube, social) open in new tab with `target="_blank" rel="noopener noreferrer"` |
+**What goes wrong:** The current site filters gallery images with GSAP animations (fade out filtered items, rearrange remaining). In React, filtering changes state, which triggers a re-render, which unmounts filtered-out DOM elements BEFORE the exit animation can play. Items just vanish instead of animating out.
+
+**Prevention:**
+1. Don't remove filtered items from the DOM -- keep all items rendered, hide them with opacity/transform
+2. Use GSAP's `autoAlpha` (visibility + opacity combined) instead of conditional rendering
+3. Alternative: use Framer Motion's `AnimatePresence` which delays unmount until exit animation completes
+4. Set `layout` prop on items to animate the masonry rearrangement smoothly
+
+**Phase mapping:** Gallery phase. Plan the animation strategy BEFORE implementing the filter logic.
+
+---
+
+### Pitfall 2: Lightbox Breaking Browser Back Button
+
+**What goes wrong:** Opening a lightbox (PhotoSwipe) doesn't push to browser history. Users press Back expecting to close the lightbox, but instead navigate away from the gallery entirely. On mobile this is especially frustrating.
+
+**Prevention:**
+1. Push a hash or query param when lightbox opens (`/gallery?image=5`)
+2. Listen for `popstate` to close lightbox when Back is pressed
+3. PhotoSwipe 5 has a `history` option -- enable it
+4. Test the full sequence: open lightbox, press Back, verify lightbox closes and gallery is still visible
+
+**Phase mapping:** Gallery phase. Easy to add during lightbox implementation, painful to retrofit.
+
+---
 
 ## "Looks Done But Isn't" Checklist
 
-Things that appear complete but are missing critical pieces.
+Items that appear complete during development but fail in production or on real devices.
 
-- [ ] **Gallery:** Images display but have no alt text -- verify every image has descriptive alt text for accessibility and SEO
-- [ ] **Contact Form:** Form submits but has no success/error feedback -- verify visible confirmation message appears after submission
-- [ ] **Contact Form:** Form works on desktop but inputs are too small on mobile -- verify all inputs are at least 44px tap targets
-- [ ] **Hero Section:** Looks great on 16:9 screens but crops awkwardly on ultra-wide or mobile -- verify hero at 320px, 768px, 1440px, and 2560px widths
-- [ ] **Navigation:** Smooth scroll works for anchor links but browser back button is broken -- verify browser history is not corrupted by scroll behavior
-- [ ] **Video Embed:** Video plays but blocks the entire page load -- verify page loads acceptably with video connection throttled to 0
-- [ ] **Dark Theme:** Colors look right in dark room but text becomes unreadable in bright sunlight -- verify readability in high-brightness conditions
-- [ ] **Fonts:** Custom fonts load but cause layout shift when they swap in -- verify no CLS from font loading by measuring with Lighthouse
-- [ ] **Social Links:** Icons display but links go to placeholder URLs (#) -- verify every link points to actual social profiles
-- [ ] **Responsive:** Site "works" on mobile but horizontal scrolling appears on certain sections -- verify no horizontal overflow at any viewport width from 320px up
+| Item | Why It Fails | How to Verify |
+|------|-------------|---------------|
+| Gallery images on mobile | CldImage serves desktop-sized images without correct `sizes` prop | Test on real phone, check Network tab for actual image file sizes downloaded |
+| Scroll animations in Safari | Safari handles IntersectionObserver and scroll events differently; ScrollTrigger pin behavior is buggy | Test in desktop Safari AND Safari on iOS -- they have different rendering engines |
+| Admin uploads on slow connection | No progress indicator, request timeouts on large files, no retry | Upload a 10MB image on throttled (Slow 3G) connection |
+| Dark theme with system light mode | Some browsers/extensions inject light mode overrides | Test with OS set to light mode, verify dark styles still apply |
+| Admin panel with ad blocker | Netlify Identity widget may be blocked by uBlock Origin or similar | Test login flow with uBlock Origin and Privacy Badger enabled |
+| SEO meta tags per page | Server-rendered meta tags may have dynamic content causing hydration mismatches | Check with `curl` or View Source, not browser DevTools (which shows post-hydration DOM) |
+| 3D parallax hero on low-end mobile | GPU-intensive animations drop to <30fps, drain battery | Test on a budget Android phone -- if it stutters, add `prefers-reduced-motion` fallback |
+| Contact form after client navigation | Formspree or form handlers may need re-initialization after SPA navigation | Navigate to Contact page via a link from Gallery, don't just hard-load the URL |
+| Blog post rendering | Markdown rendering on client may differ from expected output | Test with markdown that includes code blocks, images, links, and edge-case formatting |
+| Build-time gallery data freshness | If prebuild script fails silently, stale data is bundled | Verify build output includes recently added images after each deploy |
+
+---
 
 ## Recovery Strategies
 
-When pitfalls occur despite prevention, how to recover.
+When pitfalls are hit despite prevention, here's how to recover without starting over.
 
-| Pitfall | Recovery Cost | Recovery Steps |
-|---------|---------------|----------------|
-| Unoptimized images shipped | MEDIUM | Batch-process all images through an optimization pipeline (squoosh, sharp). Update markup to add srcset. Can be done without redesigning. |
-| Scroll hijacking baked into architecture | HIGH | Rip out scroll library, rewrite section transitions to use native scroll + Intersection Observer. May require significant refactoring of section structure. |
-| No SEO foundation | MEDIUM | Add alt text to all images, rename files, add meta tags and structured data. Content changes are additive but require touching every image reference. |
-| Contact form has high abandonment | LOW | Reduce fields, make phone optional, add inline validation. Form service usually does not need changing. |
-| Dark theme contrast failures | LOW | Update CSS custom properties for text and accent colors. If design tokens are centralized, this is a one-file change. |
-| Mobile gallery broken | MEDIUM-HIGH | Requires rethinking grid layout, adding touch gesture support to lightbox, possibly swapping lightbox library. Harder if desktop layout assumptions are baked into HTML structure. |
-| Animation performance issues | MEDIUM | Replace JS animations with CSS transitions, remove heavy libraries, add `prefers-reduced-motion` support. Effort depends on how deeply animations are coupled to layout. |
+### Recovery 1: Hydration Errors Flooding Production
+
+**Symptom:** Console full of hydration warnings, animations broken on first load but work on refresh.
+**Immediate fix:** Wrap problematic components in `dynamic(() => import('./Component'), { ssr: false })` to suppress SSR entirely.
+**Proper fix:** Audit all `"use client"` components -- ensure they produce identical HTML on server and client. Move all DOM-dependent code into `useGSAP()` or `useEffect`. Remove any `window`/`document` access outside of effects.
+
+### Recovery 2: Cloudinary Images 404 or 400 on Netlify
+
+**Symptom:** Images work locally but return 400/404 on Netlify deploys.
+**Immediate fix:** Check if `next/image` is wrapping Cloudinary URLs through Netlify's image optimizer. Switch to `CldImage`.
+**Proper fix:** Remove Cloudinary from `images.remotePatterns`, use `CldImage` exclusively, set `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` in Netlify environment variables (not just `.env.local`).
+
+### Recovery 3: Build Succeeds but Deploy Fails on Netlify
+
+**Symptom:** `next build` works locally, Netlify build log shows success, but deploy fails at "Edge Functions bundling."
+**Immediate fix:** Check Next.js version compatibility with current Netlify runtime. Try downgrading to latest Next.js 15.x.
+**Proper fix:** Pin `@netlify/plugin-nextjs` version explicitly in `package.json`. Use `netlify.toml` to configure the build. Consider `output: 'export'` to eliminate the server runtime entirely.
+
+### Recovery 4: Bundle Size Blows Past Budget
+
+**Symptom:** First-load JS exceeds budget, Lighthouse performance drops.
+**Immediate fix:** Run `@next/bundle-analyzer`, identify the largest dependencies and which pages pull them in.
+**Proper fix:** Dynamic-import heavy components (GSAP animations, PhotoSwipe lightbox, admin panel). Replace simple GSAP animations with CSS animations. Move static data from JS bundles into JSON files imported at build time.
+
+### Recovery 5: Admin Auth Completely Broken After Migration
+
+**Symptom:** Netlify Identity widget doesn't load, JWT verification fails, admin panel is inaccessible.
+**Immediate fix:** Deploy the admin as a separate static HTML page (like current approach) while fixing the React integration.
+**Proper fix:** Switch to `gotrue-js` for programmatic auth control. Initialize in a React context provider. Verify JWTs in server-side functions using the Netlify Identity JWT secret.
+
+---
 
 ## Pitfall-to-Phase Mapping
 
-How roadmap phases should address these pitfalls.
+| Phase Topic | Likely Pitfall | Severity | Mitigation |
+|-------------|---------------|----------|------------|
+| Project Setup / Netlify Deploy | Deployment runtime gaps (Pitfall 3) | CRITICAL | Deploy hello-world Next.js app to Netlify first, validate full pipeline |
+| Project Setup / Architecture | Over-engineering Server Components (Debt 1) | HIGH | Decide `output: 'export'` vs full server mode up front |
+| Project Setup / Budget | 80KB budget impossible (Pitfall 5) | HIGH | Update budget to 150-200KB before development starts |
+| Design System / Theme | Flash of wrong theme (Pitfall 4) | CRITICAL | Hardcode dark styles in CSS, blocking inline styles in layout |
+| Design System / Colors | Dark theme contrast failures | MEDIUM | Verify all color pairings pass WCAG AA (4.5:1 ratio) |
+| Gallery / Images | Cloudinary double-optimization (Pitfall 2) | CRITICAL | Use CldImage from day one, never next/image for Cloudinary URLs |
+| Gallery / Layout | Masonry CLS shifts (Trap 1) | HIGH | Include dimensions in build-time gallery data |
+| Gallery / Filters | Filter animation vs React re-render (UX 1) | MEDIUM | Hide filtered items with CSS, don't unmount them |
+| Gallery / Lightbox | PhotoSwipe lifecycle in React (Gotcha 2) | MEDIUM | Proper useEffect cleanup, destroy on unmount |
+| Gallery / Lightbox | Back button breaks (UX 2) | LOW | Enable PhotoSwipe history option |
+| Hero / Animations | GSAP hydration mismatches (Pitfall 1) | CRITICAL | useGSAP hook, "use client", dynamic import with ssr:false |
+| Hero / Animations | ScrollTrigger memory leaks (Trap 3) | HIGH | gsap.context() scoping with cleanup |
+| Hero / Animations | Route transition complexity (Trap 2) | MEDIUM | Skip page transitions, use entrance animations only |
+| Video Section | lite-youtube-embed in React (Gotcha 4) | LOW | Client-only dynamic import or @next/third-parties |
+| Admin Panel / Auth | Netlify Identity widget in React (Gotcha 1) | MEDIUM | Wrap in useEffect, use gotrue-js for programmatic control |
+| Admin Panel / Auth | Admin routes accessible without auth (Security 2) | HIGH | Middleware or Netlify redirect rules, server-side JWT verification |
+| Admin Panel / API | Cloudinary secret exposure (Security 1) | CRITICAL | Server-only env vars, no NEXT_PUBLIC_ prefix for secrets |
+| Admin Panel / API | Function migration confusion (Debt 2) | MEDIUM | Pick one approach: Netlify Functions OR Next.js API routes, not both |
+| Admin Panel / UI | Porting vanilla JS DOM patterns (Debt 3) | MEDIUM | Rewrite from scratch in React idioms, don't transliterate |
+| Data Pipeline | Gallery data fetch confusion (Gotcha 3) | MEDIUM | Keep prebuild script, import static data, no runtime API calls |
+| Blog | Markdown rendering differences | LOW | Test edge-case markdown, use consistent rendering library |
 
-| Pitfall | Prevention Phase | Verification |
-|---------|------------------|--------------|
-| Unoptimized images | Phase 1 (Foundation) | Lighthouse Performance score above 90. No image over 400KB. LCP under 2.5s. |
-| Gallery overcrowding | Phase 2 (Gallery) | Each category has 8-12 images max. Data structure enforces limits. |
-| Scroll hijacking / animation overkill | Phase 1 (Foundation) | Motion design constraints documented. No scroll speed modification. FPS stays at 60 during scroll on mid-range mobile. |
-| Contact form conversion killer | Phase 3 (Contact) | Form has 4-5 fields max. Phone is optional. Success/error states visible. Form tested on mobile. |
-| Dark theme contrast failures | Phase 1 (Foundation) | All color pairings pass WCAG AA (4.5:1 normal text, 3:1 large text). Verified with automated accessibility audit. |
-| SEO black hole | Phase 2 (Gallery) + Phase 4 (Launch) | All images have descriptive filenames and alt text. Structured data validates in Google Rich Results Test. Page has 500+ words of real text content. |
-| Mobile gallery breakdown | Phase 2 (Gallery) | Gallery tested on real iOS and Android devices. Lightbox supports swipe. No image smaller than 300px on mobile. |
-| Auto-playing video with sound | Phase 2 (Video Reel) | Video is muted by default. Play button visible. Facade pattern used for embeds. |
+---
 
 ## Sources
 
-- [The 8 Biggest Mistakes on Your Portfolio](https://www.format.com/magazine/resources/photography/8-mistakes-build-portfolio-website-photography) -- Format
-- [Avoid These 14 Mistakes On Your Photography Portfolio Website](https://foodphotographyblog.com/mistakes-photography-portfolio-website/) -- Food Photography Blog
-- [60+ Photography Website Mistakes](https://www.foregroundweb.com/photography-website-mistakes/) -- ForegroundWeb
-- [How to Fix the Top 7 Site Speed Issues on Photography Sites](https://flothemes.com/top-speed-issues-photography-sites/) -- Flothemes
-- [Image Optimization Guide for Photographers](https://dev.to/biancarus/the-ultimate-image-optimization-guide-for-photographers-how-to-deliver-high-quality-photos-without-458k) -- DEV Community
-- [Scrolljacking 101](https://www.nngroup.com/articles/scrolljacking-101/) -- Nielsen Norman Group
-- [4 SEO Mistakes Photographers Make](https://zenfolio.com/blog/4-seo-mistakes-photographers-make/) -- Zenfolio
-- [5 Critical SEO Mistakes Photographers Make](https://pictureperfectrankings.com/seo-mistakes-photographers-make/) -- Picture Perfect Rankings
-- [Building an Effective Photography Contact Page](https://www.foregroundweb.com/photography-contact-pages/) -- ForegroundWeb
-- [15 Form Conversion Best Practices](https://wpforms.com/research-based-tips-to-improve-contact-form-conversions/) -- WPForms
-- [Image SEO Best Practices](https://developers.google.com/search/docs/appearance/google-images) -- Google Search Central
-- [Dark Mode in Website Design](https://www.trevnetmedia.com/blog/3627/dark-mode-in-website-design/) -- TrevNet Media
+### Official Documentation
+- [Next.js on Netlify -- Overview](https://docs.netlify.com/build/frameworks/framework-setup-guides/nextjs/overview/) -- Netlify official setup guide
+- [Next.js Hydration Error Reference](https://nextjs.org/docs/messages/react-hydration-error) -- official error documentation
+- [Next Cloudinary -- CldImage Basic Usage](https://next.cloudinary.dev/cldimage/basic-usage) -- official CldImage component docs
+- [Next Cloudinary -- CldImage Configuration](https://next.cloudinary.dev/cldimage/configuration) -- configuration options
+- [Cloudinary Next.js Integration Guide](https://cloudinary.com/guides/front-end-development/integrating-cloudinary-with-next-js) -- official integration guide
+- [Cloudinary: Custom Loaders for next/image](https://cloudinary.com/blog/optimize-images-in-a-next-js-app-using-nextimage-and-custom-loaders) -- loader approach comparison
+- [Netlify Identity Documentation](https://docs.netlify.com/manage/security/secure-access-to-sites/identity/overview/) -- current status and usage
+- [Netlify + Auth0 Platform Changes](https://www.netlify.com/blog/auth0-extension-identity-changes/) -- Identity future roadmap
+- [GSAP Installation & Import Guide](https://gsap.com/docs/v3/Installation/) -- official tree-shaking and registration guidance
+- [Next.js Package Bundling Guide](https://nextjs.org/docs/app/guides/package-bundling) -- official bundle optimization docs
+
+### Community / Verified Sources
+- [Netlify: How We Run Next.js](https://www.netlify.com/blog/how-we-run-nextjs/) -- deployment skew, runtime translation challenges
+- [GSAP Hydration Error in Next.js 15](https://gsap.com/community/forums/topic/43281-hydration-error-in-nextjs-15/) -- ScrollTrigger-specific hydration issue
+- [Optimizing GSAP in Next.js 15: Best Practices](https://medium.com/@thomasaugot/optimizing-gsap-animations-in-next-js-15-best-practices-for-initialization-and-cleanup-2ebaba7d0232) -- useGSAP patterns, memory leak prevention
+- [Setting Up GSAP with Next.js: 2025 Edition](https://javascript.plainenglish.io/setting-up-gsap-with-next-js-2025-edition-bcb86e48eab6) -- current best practices
+- [GSAP & Next.js Setup: The BSMNT Way](https://basement.studio/post/gsap-and-nextjs-setup-the-bsmnt-way) -- production-grade animation patterns
+- [Fixing Dark Mode Flickering (FOUC) in React and Next.js](https://notanumber.in/blog/fixing-react-dark-mode-flickering) -- comprehensive FOUC analysis
+- [Understanding & Fixing FOUC in Next.js App Router (2025 Guide)](https://dev.to/amritapadhy/understanding-fixing-fouc-in-nextjs-app-router-2025-guide-ojk) -- App Router specific solutions
+- [Next.js Dark Mode Implementation: Complete next-themes Guide](https://eastondev.com/blog/en/posts/dev/20251220-nextjs-dark-mode-guide/) -- next-themes setup
+- [Next.js Image Optimization Error on Netlify](https://www.meje.dev/blog/image-optimization-error-in-nextjs) -- 400 error diagnosis and fix
+- [GSAP Tree Shaking Discussion](https://gsap.com/community/forums/topic/28599-gsap-imports-tree-shaking-reduce-bundle-size/) -- bundle optimization strategies
+- [Next.js Server Components Broke Our App Twice](https://medium.com/lets-code-future/next-js-server-components-broke-our-app-twice-worth-it-e511335eed22) -- over-engineering cautionary tale
+- [Next.js App Router: Common Mistakes](https://upsun.com/blog/avoid-common-mistakes-with-next-js-app-router/) -- routing and data fetching anti-patterns
+- [React/Next.js DoS Vulnerability (CVE-2025-55182)](https://www.netlify.com/changelog/2026-01-26-react-nextjs-dos-vulnerability/) -- security advisory, patch required
 
 ---
-*Pitfalls research for: Automotive Photography Portfolio Website*
-*Researched: 2026-03-14*
+*Pitfalls research for: Automotive Portfolio v4.0 -- Vanilla JS to Next.js Migration*
+*Researched: 2026-03-26*

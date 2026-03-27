@@ -1,207 +1,261 @@
-# Feature Research
+# Feature Landscape: v4.0 Redesign
 
-**Domain:** Automotive Photography Portfolio Website
-**Researched:** 2026-03-14
+**Domain:** Premium Automotive Photography Portfolio (Dark Cinematic Luxury)
+**Researched:** 2026-03-26
+**Focus:** NEW or significantly redesigned features for v4.0. Existing v3.0 features noted as baseline.
 **Confidence:** MEDIUM-HIGH
 
-## Feature Landscape
+## Competitor Analysis
 
-### Table Stakes (Users Expect These)
+### McLaren (cars.mclaren.com)
+- **Hero:** Carousel/slider with multiple featured content blocks, dual desktop/mobile responsive images
+- **Navigation:** Minimal top nav, discovery-oriented CTAs ("Discover", "Configure", "Enquire")
+- **Color:** Dark backgrounds (#0e0e12 range), vibrant accent colors from the cars themselves -- the product provides the color
+- **Interaction:** Progressive disclosure -- hero imagery leads to deeper exploration paths
+- **Image treatment:** Full-bleed contextual photography (cars on mountain roads, in factories, frozen landscapes)
+- **Motion:** Smooth transitions, scroll-linked reveals
 
-Features users assume exist. Missing these = site feels amateur, visitor bounces.
+### Porsche (porsche.com)
+- **Design system:** Custom "Porsche Next" typeface, modular grid layout
+- **Motion philosophy:** "Swift, subtle, and purposeful" -- CSS cubic-bezier(0.25, 0.1, 0.25, 1) easing, durations from 0.25s to 1.2s. Never gratuitous
+- **Color:** Dark-light contrast palette (#0e0e12 base), high contrast for readability
+- **Layout:** 16:9 aspect ratio product tiles, intersection observer lazy-loading
+- **CTAs:** Action-oriented verbs -- "Explore", "Build your own" -- not passive descriptions
+- **Image:** High-res with consistent framing, metadata-rich alt text for accessibility
 
-| Feature | Why Expected | Complexity | Notes |
-|---------|--------------|------------|-------|
-| Full-bleed hero image/slideshow | Every top auto photographer (Larry Chen, Easton Chang, GFWilliams) leads with cinematic imagery. Visitors decide in 2-3 seconds | MEDIUM | Needs smooth transitions, responsive sizing. Easton Chang uses fade slideshow cycling every 3s. GFWilliams uses a bold hero with text overlay |
-| Curated gallery with category filtering | Clients need to see relevant work fast. Ted7 organizes by shoot type (inventory, auction, private). GFWilliams by project/client | MEDIUM | 15-25 best images per category beats 100 mixed shots. Organize by genre (JDM, Euro, Muscle, Track) per project scope |
-| Lightbox/fullscreen image viewing | Standard on all portfolio sites surveyed. Users expect click-to-enlarge with distraction-free viewing | LOW-MEDIUM | Must preserve image quality. Include keyboard navigation (arrow keys, escape). Dark overlay background |
-| Responsive design (mobile-first) | 60%+ traffic is mobile. Photography sites that fail mobile lose the majority of visitors | MEDIUM | Images must resize intelligently. Navigation must collapse cleanly. Touch-friendly gallery interactions |
-| Contact/inquiry form | Every surveyed site has one (Ted7, GFWilliams, DW Burnett, Easton Chang). No form = dead end for interested clients | LOW | Use form service (Formspree, Netlify Forms). Keep fields minimal: name, email, vehicle/project, message |
-| About/bio section | Clients want to know who they're hiring. Every top photographer has a personality-driven about section | LOW | Show personality and passion, not just credentials. GFWilliams does this well with "who is GFWilliams?" approach |
-| Social media links | Standard across all surveyed sites. Larry Chen links FB, Twitter, IG, YouTube. Ted7 embeds IG feed | LOW | Instagram is primary for auto photographers. Link prominently in header/footer |
-| Dark theme | Dominant pattern across automotive photography sites. GFWilliams uses near-black backgrounds. Industry standard for photo presentation | LOW | Dark backgrounds make photos pop. White text on dark. Aligns with project's purple accent direction |
-| Fast image loading | Photography sites live or die by load time (per project constraints). Users won't wait for large images | MEDIUM | Lazy loading, WebP/AVIF formats, responsive srcset, progressive loading. Images are 50-80% of page weight |
-| Clear navigation | All top sites use minimal, clean navigation. GFWilliams: Photography, Retouching, Blog, Contact. DW Burnett: Home, About, Contact, Blog | LOW | For single-page scroll: sticky nav with section anchors. Keep to 5-7 items max |
+### DW Burnett (dwburnett.com) -- Top Automotive Photographer
+- **Layout:** Minimalist, full-width hero images per project, maximum visual impact
+- **Color:** Black-and-white palette with blue accent (#3eade9). The photography provides the color
+- **Typography:** Montserrat + Objektiv MK1, generous whitespace -- restraint signals luxury
+- **Organization:** Project-based (by client/brand: Ferrari, McLaren, Chevrolet) rather than category-based
+- **Performance:** Lazy-loading with base64 blur placeholders
+- **Pages:** Home (portfolio), About, Contact, Blog (external link)
+- **Key lesson:** Let images do the talking. Minimal UI chrome = premium feel
 
-### Differentiators (Competitive Advantage)
+### Competitor Synthesis
+1. Dark backgrounds are standard in luxury automotive -- the cars provide the color
+2. Motion must be purposeful, not decorative (Porsche principle)
+3. Full-bleed imagery with minimal UI chrome creates the premium feel
+4. Progressive disclosure keeps visitors exploring deeper
+5. Typography restraint signals luxury -- one or two families, generous spacing
+6. Custom-built site is itself a differentiator (most auto photographers use SmugMug/Squarespace)
 
-Features that separate elite automotive photographers' sites from average ones.
+---
 
-| Feature | Value Proposition | Complexity | Notes |
-|---------|-------------------|------------|-------|
-| Cinematic video reel section | 2025-2026 trend: photographers are now expected to deliver both stills and motion. Short-form cinematic content (15-60s) converts browsers to followers. Platforms like TikTok/Reels/Shorts dominate content consumption | MEDIUM | Embed YouTube/Vimeo. Auto-play muted on scroll is engaging but must respect data/performance. Ted7 has a dedicated studio videos section |
-| Behind-the-scenes content section | BTS content humanizes the photographer and builds trust. Mobile-first BTS clips, process photos, and gear shots create authenticity that polished work alone cannot | LOW-MEDIUM | Can be simple: grid of BTS photos with captions, or embedded short clips. Shows process, builds connection |
-| Scroll-triggered animations and transitions | GFWilliams uses hover animations (0.6s transitions), fade effects, and parallax. Creates premium, immersive feel that matches automotive luxury | HIGH | GSAP ScrollTrigger is the standard tool. Must be performant -- janky animations are worse than none. Subtle > flashy |
-| Interactive before/after retouching slider | GFWilliams features this prominently -- demonstrates post-production value visually. Unique differentiator that shows craft beyond clicking the shutter | MEDIUM | Drag slider to compare raw vs retouched. Powerful proof of skill. Few auto photographers do this |
-| Project-based storytelling (visual stories) | Rather than a flat gallery, organize work into narrative projects. GFWilliams shows "GET LOST," "The Prius Got Cool," etc. Each project tells a story | MEDIUM | Group related images into cohesive stories. Add brief context/narrative for each. Clients see you think in campaigns, not just single shots |
-| Embedded Instagram feed | Ted7 embeds 28+ recent IG images on homepage. Shows active, current work without manual updates. Social proof in real-time | LOW-MEDIUM | Use Instagram embed or API. Keeps site feeling fresh and alive. Risk: API changes can break it |
-| Booking/pricing transparency | Ted7 has dedicated "PRICING & BOOKING" page. Sites with clear next steps convert 2-3x better than "contact for pricing" | LOW | Even tiered packages (e.g., "Starter Shoot," "Full Feature," "Commercial") reduce friction. Inquiry form with shoot-type selection |
-| Strategic CTA placement | Place "Book a Shoot" or "Let's Work Together" CTAs after gallery sections, testimonials, and at page end. Each CTA at a decision point | LOW | Use contrasting accent color (purple) for CTA buttons. Start with verb: "Book Your Shoot," "See My Work," "Get In Touch" |
-| Client logo bar / testimonials | DW Burnett and GFWilliams list major clients (Ferrari, McLaren, Bugatti). Ted7 features detailed testimonials. Social proof converts | LOW | Logo strip of past clients/publications. 2-3 short testimonials. Even for newer photographers, event/venue names work |
+## Table Stakes
 
-### Anti-Features (Commonly Requested, Often Problematic)
+Features visitors expect from any premium photography portfolio in 2026. Missing any of these makes the site feel incomplete or amateur. Several exist in v3 but need significant redesign for multi-page architecture.
 
-Features that seem good but create problems for a v1 static portfolio.
+| Feature | Why Expected | Complexity | Dependencies | Existing in v3? |
+|---------|--------------|------------|--------------|-----------------|
+| Multi-page routing (Home, Gallery, About, Contact) | Every premium portfolio separates concerns. Single-page scroll feels hobby-level at this tier. Each page gets its own SEO | Low | Next.js App Router | NO -- v3 is single-page scroll |
+| Dark cinematic design system with luxury typography | McLaren, Porsche, DW Burnett all use dark backgrounds. Industry standard. v3 dark+purple is a starting point but needs refined type scale and custom font pairing | Med | Tailwind CSS, custom font loading (Google Fonts or self-hosted) | PARTIAL -- v3 has dark+purple but no design system |
+| Gallery page with category filtering | Visitors expect to filter by genre (JDM, Euro, Muscle, Track, Supercar). Core portfolio function | Med | Existing Cloudinary data, build-time static generation | PARTIAL -- v3 has masonry+filtering but needs page-level redesign |
+| Full-screen lightbox with image context | Standard for photo portfolios. Must show EXIF data or shoot context (car, location, event) | Low | React-compatible lightbox (PhotoSwipe or yet-another-react-lightbox) | YES -- v3 has PhotoSwipe, but needs React wrapper or replacement |
+| Image optimization with blur-up placeholders | Next.js standard practice. DW Burnett uses base64 blur-up. Prevents CLS (layout shift) | Low | Next.js Image component, Cloudinary loader | NO -- v3 uses manual optimization, no blur placeholders |
+| About page (standalone) | Every competitor has one. Builds trust and personal brand. Must stand alone, not be a scroll section | Low | None | PARTIAL -- v3 has about section, needs standalone page |
+| Contact page with booking form | Must exist and be frictionless. The revenue conversion point | Low | Formspree (existing integration) | PARTIAL -- v3 has contact form, needs standalone page with better UX |
+| Mobile-first responsive design | 60%+ portfolio traffic is mobile. Touch-friendly galleries, thumb-zone navigation | Med | Tailwind breakpoints, responsive image sizes | PARTIAL -- v3 is responsive but not mobile-first |
+| Fast page loads (LCP under 2.5s) | Core Web Vitals. Users abandon slow photography sites. 80KB JS budget constraint helps | Med | Next.js static generation, Cloudinary CDN, code splitting | PARTIAL -- needs measurement and optimization |
+| SEO meta tags + Open Graph per page | Sharing portfolio links must look premium on social. Each page needs unique OG image | Low | Next.js Metadata API, per-page OG images | PARTIAL -- v3 has basic SEO, no per-page OG |
 
-| Feature | Why Requested | Why Problematic | Alternative |
-|---------|---------------|-----------------|-------------|
-| CMS / Admin panel | "I want to update my own photos easily" | Massive complexity increase for v1. Requires backend, auth, database. Delays launch by weeks/months | Swap placeholder images in code directly. Content changes are infrequent. Add CMS in v2 if update frequency justifies it |
-| E-commerce / print sales | Larry Chen has larrychenprints.com. Seems like revenue | Separate concern, separate UX. Mixing shopping cart with portfolio muddies the brand. Payment processing adds complexity | Link to external print store (Society6, SmugMug prints). Keep portfolio focused on booking, not transactions |
-| Blog | DW Burnett and GFWilliams have blogs | Requires ongoing content commitment. Empty/stale blog is worse than no blog. Adds pages, routing, CMS needs | Social media IS the blog. Link to Instagram/YouTube for ongoing content. Blog can be v2+ if content cadence exists |
-| Music/audio auto-play | "Cinematic feel needs a soundtrack" | Users hate auto-play audio. Increases bounce rate. Accessibility nightmare | Let video reels carry audio (muted by default, unmute on interaction). Ambient motion/animation creates cinematic feel without sound |
-| Infinite scroll gallery | "Show everything, let them scroll forever" | Overwhelms visitors. Dilutes strongest work. Hurts performance. 15 exceptional images > 100 mixed ones | Curated, filtered gallery with "View More" for each category. Quality over quantity always |
-| Real-time chat widget | "Instant communication with potential clients" | Requires monitoring or feels abandoned. Adds third-party dependency. Distracts from portfolio experience | Contact form with auto-reply confirmation. Response time expectation ("I'll get back within 24hrs"). Email/phone for urgency |
-| Heavy parallax everywhere | "Make every section have depth effects" | Performance killer, especially on mobile. Motion sickness issues. Distracts from photography | Use sparingly: hero section parallax, subtle scroll reveals. Let photos be the visual spectacle, not the UI |
-| Client gallery / proofing portal | "Clients can review and select photos" | Completely different product. Requires auth, permissions, selection tools | Use dedicated proofing service (Pic-Time, ShootProof, Pixieset). Link from portfolio but don't build in-house |
+## Differentiators
+
+Features that elevate beyond "functional portfolio" into "premium brand experience." Not expected by visitors, but create the "this is different" reaction that converts.
+
+| Feature | Value Proposition | Complexity | Dependencies | Notes |
+|---------|-------------------|------------|--------------|-------|
+| Cinematic scroll-triggered hero showcase | First impression defines the brand. Parallax depth layers, image reveals tied to scroll, Ken Burns at rest. Like entering a showroom | High | Motion (Framer Motion v12+), 21st.dev hero components (284 available) | McLaren uses carousel hero. Porsche uses modular hero. v3 Ken Burns was effective -- evolve with scroll-linked parallax and motion transforms |
+| Scroll-linked image reveal animations | Images "unveil" as user scrolls via clipPath tied to scrollYProgress. Creates cinematic storytelling without video weight | Med | Motion useScroll + useTransform, GPU-accelerated transforms only | Porsche principle applies: swift, subtle, purposeful. Transform-only animations maintain 60fps. Layout property animations kill performance |
+| Project/series showcase pages | Individual shoot pages with narrative: the car, the location, the story behind the shoot. Client sees you think in campaigns, not single shots | Med | Dynamic routes ([slug]), MDX or structured JSON data | DW Burnett organizes by project/client. Differentiates from grid-only galleries. Requires content creation effort |
+| Video reel with scroll-triggered autoplay | Embedded video plays muted when scrolled into view, pauses when out. Cinematic crop. Shows motion capability | Med | Intersection Observer, Cloudinary video hosting, Next.js video | v3 has video section. v4 should trigger on scroll, not require click. Must not autoplay with sound |
+| Client testimonials section | Social proof converts browsers to clients. 2-3 short quotes create trust. Most auto photographers skip this entirely | Low | 21st.dev testimonial components (15 variants available) | Competitive advantage precisely because most photographers don't do it. Even event/venue testimonials work early on |
+| Animated page transitions | Smooth crossfade or slide between pages creates app-like premium feel | Med | Motion AnimatePresence in Next.js layout, shared layout animations | Must not feel slow. 200-300ms max. Exit animation must not block navigation |
+| Subtle ambient background effects | Particle fields, gradient shifts, or shader backgrounds that add atmosphere without competing with photography | Med | 21st.dev shader/background components (40+ available), CSS animations | Porsche rule: motion serves content, never competes. These must be barely perceptible |
+| Category landing pages with dedicated hero | Each genre (JDM, Euro, Muscle, Track) gets its own hero image, description, and curated grid. Adds depth and SEO value | Med | Dynamic routes, Cloudinary image tags, per-category metadata | Feels significantly more premium than a single page with filter tabs |
+| Service packages / pricing page | Clear offerings (car meets, private shoots, dealer packages) with pricing tiers. Transparency is a differentiator | Low | 21st.dev pricing components (17 variants available) | Most auto photographers hide pricing. Ted7 has a dedicated pricing page and converts better for it |
+| Behind-the-scenes storytelling format | BTS content shown as process narrative, not just image grid. Shows the craft behind the final product | Low | Restructure of v3 BTS grid into scroll-based storytelling | Humanizes the photographer. Builds authenticity that polished work alone cannot |
+| Before/after retouching showcase | Drag slider comparing raw capture to final edit. Visual proof of post-production skill | Med | Custom slider component or 21st.dev variant | GFWilliams features this prominently. Powerful differentiator. Requires raw+finished image pairs |
+
+## Anti-Features
+
+Features to explicitly NOT build. Either out of scope, premature, or actively harmful to the brand.
+
+| Anti-Feature | Why Avoid | What to Do Instead |
+|--------------|-----------|-------------------|
+| E-commerce / print sales | Premature complexity. Dilutes "hire me" messaging with shopping cart UX. No proven demand yet | "Prints coming soon" teaser at most. Add via external service (Society6, SmugMug) if demand emerges post-launch |
+| Live Instagram/TikTok API feed | API rate limits, authentication complexity, third-party content you don't control on your own site. External embeds kill page performance | Static curated social proof section with 6-8 best posts as images. Link to profiles for live content |
+| Full blog CMS | v3 blog editor is partial. Full CMS is a separate project. Empty/stale blog is worse than no blog | Ship portfolio first. Blog can migrate v3 work in a post-launch phase. Instagram/TikTok IS the blog for now |
+| Client galleries / proofing portal | Enterprise feature. Pixieset, ShootProof, and Pic-Time do this far better as dedicated services | Link to external proofing service from the site if needed |
+| Multi-user admin | Single photographer, single owner. YAGNI principle. Auth complexity for zero benefit | Keep single-user auth via Netlify Identity |
+| Excessive parallax / animation everywhere | "Gratuitous motion is the hallmark of amateur design." Performance killer on mobile. Causes motion sickness | Follow Porsche principle: swift, subtle, purposeful. Animate only hero, page transitions, and image reveals. Photography IS the spectacle |
+| Horizontal scroll galleries | Trendy but accessibility nightmare. Confusing on mobile. Fights native browser scroll behavior | Vertical masonry or responsive grid with lightbox. Horizontal only for small, contained carousels (max 5-6 items) |
+| Auto-playing music/audio | Universally despised. Instant bounce. Accessibility violation | Zero audio without explicit user action. Video reels play muted with unmute button |
+| 3D WebGL car viewers / configurators | Massive bundle size (Three.js is 150KB+ gzipped). Breaks 80KB constraint. This is a portfolio, not a car configurator | High-quality static photography with subtle CSS parallax depth illusion. The photos ARE the 3D experience |
+| Chat widget / AI chatbot | Feels corporate, not artisan. Breaks the cinematic mood. Requires monitoring or feels abandoned | Clean contact form with clear response time commitment ("I respond within 24 hours") |
+| Infinite scroll gallery | Overwhelms visitors. Dilutes strongest work. Hurts performance | Curated grid (15-25 per category) with "View more" progressive loading if needed |
 
 ## Feature Dependencies
 
 ```
-[Hero Section]
-    └──enhances──> [Gallery] (hero sets visual tone, gallery continues it)
+Next.js App Router Setup
+  |-> Multi-page routing (Home, Gallery, About, Contact)
+  |-> Dynamic routes (project pages, category landing pages)
+  |-> Next.js Image component
+  |     |-> Cloudinary loader configuration
+  |     |-> Blur placeholder generation (blurDataURL)
+  |-> Metadata API (per-page SEO + OG images)
+  |-> Root layout component
+        |-> Shared navigation + footer
+        |-> Animated page transitions (Motion AnimatePresence)
 
-[Gallery with Filtering]
-    └──requires──> [Image Optimization] (lazy load, WebP, responsive images)
-    └──enhances──> [Lightbox Viewer] (click from gallery opens lightbox)
+Tailwind CSS + Design System
+  |-> Dark theme CSS custom properties / tokens
+  |-> Typography scale (custom font loading)
+  |-> All component styling (21st.dev components are Tailwind-based)
+  |-> Responsive breakpoints (mobile-first)
 
-[Video Reel Section]
-    └──requires──> [Performance Optimization] (video embeds are heavy)
+Motion (Framer Motion v12+)
+  |-> Cinematic scroll-triggered hero (useScroll, useTransform)
+  |-> Image reveal animations (clipPath + scrollYProgress)
+  |-> Page transitions (AnimatePresence in layout)
+  |-> Video autoplay on scroll (Intersection Observer can also handle this)
 
-[Contact/Booking Form]
-    └──requires──> [Form Service Integration] (Formspree, Netlify Forms)
-    └──enhances──> [CTA Buttons] (CTAs point to booking form)
+Gallery Data Pipeline (build-time, preserving v3 constraint)
+  |-> Cloudinary API at build time (getStaticProps / generateStaticParams)
+  |-> Static JSON generation with image metadata
+  |-> Client-side category filtering (no runtime API calls)
+  |-> Lightbox integration (React-compatible)
+  |-> Gallery page
+        |-> Category landing pages (extends gallery routes)
+        |-> Project showcase pages (extends with narrative data)
 
-[Instagram Embed]
-    └──requires──> [Social Links] (IG link must exist first)
-    └──conflicts──> [Performance Goals] (external embeds slow page load)
+21st.dev Component Integration
+  |-> Install via npx shadcn (source code in project, fully customizable)
+  |-> Requires: Tailwind CSS, shadcn/ui base setup
+  |-> Hero section components
+  |-> Navigation components
+  |-> Card components (gallery cards, project cards)
+  |-> CTA / button components
+  |-> Background/shader effects
+  |-> Testimonial components (post-launch)
+  |-> Pricing section components (post-launch)
 
-[Scroll Animations]
-    └──requires──> [Performance Optimization] (GSAP must not degrade experience)
-    └──conflicts──> [Fast Load Time] (animation library adds bundle weight)
-
-[BTS Section]
-    └──enhances──> [About Section] (BTS shows personality, about tells story)
-    └──enhances──> [Video Reel] (BTS clips complement polished reels)
+Admin Panel (redesigned for React)
+  |-> Cloudinary upload/manage (existing functionality, React rewrite)
+  |-> Gallery ordering/metadata (existing, React rewrite)
+  |-> Blog editor (v3 partial work, defer migration to post-launch)
 ```
 
-### Dependency Notes
+### Key Dependency Notes
 
-- **Gallery requires Image Optimization:** Without lazy loading and modern formats, a photography gallery will be painfully slow. Must be solved before gallery is functional.
-- **Scroll Animations conflict with Performance:** GSAP adds ~30-50KB. ScrollTrigger adds more. Must be strategic -- use only where it elevates the experience, not everywhere.
-- **Instagram Embed conflicts with Performance:** External IG embeds load slowly and add third-party scripts. Consider static screenshot approach or defer loading until user scrolls to that section.
-- **Contact Form requires Form Service:** Since this is a static site with no backend, a third-party form service is mandatory. Choose one early.
+- **Design system must come first.** Every visual component depends on theme tokens, typography, and Tailwind config. This is Phase 0.
+- **Gallery depends on Cloudinary integration.** The Next.js Image loader for Cloudinary must be configured before gallery work begins.
+- **21st.dev components require shadcn/ui setup.** The base shadcn config (tailwind.config, CSS variables, utils) must exist before installing any 21st.dev components.
+- **Page transitions depend on layout architecture.** The AnimatePresence wrapper must live in the root layout, which means routing architecture must be settled first.
+- **Admin panel is independent.** Can be built or deferred without blocking the public site.
 
-## MVP Definition
+## MVP Recommendation
 
-### Launch With (v1)
+### P0: Ship at v4.0 Launch
 
-Minimum viable portfolio -- what's needed to impress a visitor and convert to inquiry.
+The minimum set to create a premium brand impression and convert visitors to inquiries.
 
-- [ ] **Hero section** -- full-bleed image with name/tagline overlay, smooth entrance animation. This is the 2-second hook
-- [ ] **Gallery with category filtering** -- JDM, Euro, Muscle, Track tabs. 10-15 curated images per category with placeholder images
-- [ ] **Lightbox viewer** -- click any gallery image for fullscreen distraction-free view. Keyboard navigation, swipe on mobile
-- [ ] **About section** -- photographer story, personality, passion. Short, punchy, authentic
-- [ ] **Contact/inquiry form** -- minimal fields (name, email, shoot type, message). Form service integration
-- [ ] **Social links** -- Instagram, YouTube prominently placed. Header + footer
-- [ ] **Dark theme with purple accent** -- per design direction. Consistent throughout
-- [ ] **Responsive design** -- mobile-first. Touch-friendly gallery, collapsible nav
-- [ ] **Image optimization** -- lazy loading, responsive srcset, WebP with JPEG fallback
-- [ ] **Smooth scroll navigation** -- sticky nav with section anchors for single-page layout
-- [ ] **Strategic CTAs** -- "Book a Shoot" after gallery, after about, in footer. Purple accent buttons
+1. **Next.js multi-page architecture** -- Foundation everything else depends on
+2. **Dark cinematic design system** -- Tailwind tokens, custom fonts, color palette. The aesthetic IS the brand
+3. **Cinematic scroll-triggered hero** -- The "wow" moment. Use 21st.dev hero + Motion. First 2 seconds determine if visitor stays
+4. **Gallery page with category filtering + lightbox** -- Core portfolio function. Cloudinary-backed, build-time static data
+5. **About page** -- Photographer story, personality, passion. Standalone page, not a scroll section
+6. **Contact page with booking form** -- The conversion point. Formspree integration, clear CTA, minimal friction
+7. **Image optimization pipeline** -- Next.js Image + Cloudinary loader + blur-up placeholders. Performance is brand
+8. **Responsive mobile-first design** -- Non-negotiable in 2026. Thumb-zone nav, touch-friendly gallery
+9. **SEO + Open Graph per page** -- Every shared link must look premium
 
-### Add After Validation (v1.x)
+### P1: Add if Time Permits at Launch, Otherwise Immediately After
 
-Features to add once the core portfolio is live and working.
+10. **Scroll-linked image reveal animations** -- Elevates gallery from static to cinematic
+11. **Animated page transitions** -- App-like feel, 200-300ms crossfades
+12. **Video reel with scroll-triggered autoplay** -- Shows motion capability
+13. **Subtle ambient background effects** -- Atmospheric depth via 21st.dev shader components
 
-- [ ] **Video reel section** -- embedded cinematic content. Add when real video content exists
-- [ ] **BTS section** -- behind-the-scenes grid. Add when BTS photos/clips are ready
-- [ ] **Scroll-triggered animations** -- GSAP ScrollTrigger for section reveals, parallax hero. Add once core layout is solid
-- [ ] **Instagram feed embed** -- live feed section. Add once IG presence is active and performance is verified
-- [ ] **Client logo bar** -- brand logos or event names for social proof. Add when portfolio of client work grows
-- [ ] **Testimonials** -- 2-3 client quotes. Add when real testimonials are collected
+### P2: Post-Launch Enhancements
 
-### Future Consideration (v2+)
+14. **Project/series showcase pages** -- Requires content creation (shoot narratives, not just images)
+15. **Client testimonials section** -- Requires collecting actual testimonials
+16. **Service/pricing page** -- Requires defining service tiers and pricing
+17. **Category landing pages** -- Enhancement to gallery with per-genre heroes
+18. **BTS storytelling section** -- Redesign of v3 BTS grid into narrative format
+19. **Before/after retouching showcase** -- Needs raw+finished image pairs
 
-Features to defer until the portfolio proves its value.
+### P3: Future Phases
 
-- [ ] **Project-based storytelling** -- narrative photo series with context. Requires enough cohesive projects to tell stories
-- [ ] **Before/after retouching slider** -- powerful differentiator, but needs raw + finished pairs
-- [ ] **Booking with pricing tiers** -- structured packages. Needs market validation on pricing approach
-- [ ] **Blog** -- only if content cadence is sustainable (minimum 2 posts/month)
-- [ ] **Print store integration** -- link to external store. Only when demand exists
-- [ ] **CMS integration** -- headless CMS for easy content updates. Only when update frequency justifies complexity
+20. **Blog migration** -- Incorporate v3 blog editor work into Next.js when content cadence is established
+21. **Admin panel React rewrite** -- Existing vanilla JS admin works. Rewrite when public site is stable
 
 ## Feature Prioritization Matrix
 
-| Feature | User Value | Implementation Cost | Priority |
-|---------|------------|---------------------|----------|
-| Hero section (full-bleed, animated) | HIGH | MEDIUM | P1 |
-| Gallery with category filtering | HIGH | MEDIUM | P1 |
-| Lightbox viewer | HIGH | LOW-MEDIUM | P1 |
-| Dark theme + purple accent | HIGH | LOW | P1 |
-| Responsive design | HIGH | MEDIUM | P1 |
-| Contact/inquiry form | HIGH | LOW | P1 |
-| Image optimization (lazy load, WebP) | HIGH | MEDIUM | P1 |
-| Smooth scroll navigation | MEDIUM | LOW | P1 |
-| About section | MEDIUM | LOW | P1 |
-| Social links | MEDIUM | LOW | P1 |
-| Strategic CTA placement | HIGH | LOW | P1 |
-| Video reel section | HIGH | LOW-MEDIUM | P2 |
-| BTS content section | MEDIUM | LOW | P2 |
-| Scroll-triggered animations (GSAP) | MEDIUM | HIGH | P2 |
-| Instagram feed embed | MEDIUM | MEDIUM | P2 |
-| Client logos / testimonials | MEDIUM | LOW | P2 |
-| Project-based storytelling | MEDIUM | MEDIUM | P3 |
-| Before/after retouching slider | MEDIUM | MEDIUM | P3 |
-| Booking with pricing tiers | MEDIUM | LOW | P3 |
-| Blog | LOW | HIGH (ongoing) | P3 |
-| Print store (external link) | LOW | LOW | P3 |
-| CMS integration | LOW (for v1) | HIGH | P3 |
+| Feature | User Impact | Brand Impact | Complexity | Priority |
+|---------|------------|--------------|------------|----------|
+| Multi-page Next.js architecture | Critical | High | Med | P0 |
+| Dark cinematic design system | High | Critical | Med | P0 |
+| Cinematic scroll-triggered hero | High | Critical | High | P0 |
+| Gallery + filtering + lightbox | Critical | High | Med | P0 |
+| Contact/booking page | Critical | Med | Low | P0 |
+| Image optimization (blur-up) | High | Med | Low | P0 |
+| About page | Med | High | Low | P0 |
+| Per-page SEO + Open Graph | Med | Med | Low | P0 |
+| Scroll-linked image reveals | Med | High | Med | P1 |
+| Animated page transitions | Med | High | Med | P1 |
+| Video reel (scroll autoplay) | Med | Med | Med | P1 |
+| Ambient background effects | Low | Med | Med | P1 |
+| Project showcase pages | Med | High | Med | P2 |
+| Client testimonials | Med | Med | Low | P2 |
+| Service/pricing page | Med | Med | Low | P2 |
+| Category landing pages | Med | Med | Med | P2 |
+| BTS storytelling | Low | Med | Low | P2 |
+| Before/after showcase | Med | High | Med | P2 |
+| Blog migration | Low | Med | High | P3 |
+| Admin panel rewrite | Low (owner only) | None | High | P3 |
 
-**Priority key:**
-- P1: Must have for launch -- core portfolio experience
-- P2: Should have, adds polish and differentiation
-- P3: Nice to have, defer until validated
+## 21st.dev Component Categories Worth Exploring
 
-## Competitor Feature Analysis
+These categories map directly to v4.0 needs. Components install via `npx shadcn` as source code -- fully customizable, no vendor lock-in.
 
-| Feature | Larry Chen | Easton Chang | GFWilliams | Ted7 | DW Burnett | Our Approach |
-|---------|-----------|--------------|------------|------|------------|--------------|
-| Platform | SmugMug | SmugMug | Custom (Breakdance) | Squarespace | Custom (WordPress) | Custom static site -- maximum control over design and performance |
-| Theme | Light/neutral | Dark slideshow | Dark, premium | Light with purple accents | Light, clean | Dark with purple accent -- premium auto feel |
-| Gallery | Organic row layout | Hierarchical albums | Project cards with hover | Categorized samples | Client/project grid | Category-filtered grid with lightbox |
-| Video | Via YouTube/Hoonigan | "MOTION" section | Not prominent | Studio videos page | Not prominent | Embedded reel section (v1.x) |
-| Booking | Contact only | Contact page | Contact page | Dedicated pricing/booking page | Contact only | Contact form with shoot-type dropdown. Pricing page in v2 |
-| Social | FB, Twitter, IG, YT | IG, FB | Not prominent on site | FB, Twitter, IG, YT + embedded feed | IG, Twitter | IG + YT links prominent. Embedded feed in v1.x |
-| Animations | None (SmugMug) | Slideshow transitions | Hover reveals, parallax, fade | Minimal | Minimal | Scroll-triggered reveals, subtle parallax (v1.x) |
-| BTS content | Via Hoonigan AutoFocus | Tutorial section | Equipment/passion section | FAQ, rally blog | Blog | Dedicated BTS section (v1.x) |
-| Print sales | Separate prints site | Password-protected downloads | Not visible | Art prints page | Not visible | External link only, if at all (v2+) |
+| Category | Available Count | v4.0 Use Case | Priority |
+|----------|----------------|---------------|----------|
+| **Hero sections** | 284 | Cinematic landing hero with parallax/animation effects | P0 -- browse first |
+| **Navigation menus** | 11 | Minimal luxury top nav with scroll-aware behavior | P0 |
+| **Buttons** | 130 | CTAs ("Book a Shoot", "View Gallery", "Get in Touch") | P0 |
+| **Calls to Action** | Various | Conversion sections between content blocks on each page | P0 |
+| **Cards** | 79 | Gallery image cards, project preview cards | P0 |
+| **Backgrounds / Shaders** | 40+ | Subtle ambient effects for dark theme atmospheric depth | P1 |
+| **Text components** | Various | Animated headings, text reveal effects for section titles | P1 |
+| **Testimonials** | 15 | Client social proof carousel or staggered layout | P2 |
+| **Pricing sections** | 17 | Service tier presentation with clear CTAs | P2 |
+| **Features sections** | Various | "Why work with me" or service highlights on About page | P2 |
 
-## Key Insights from Competitor Analysis
-
-1. **Most top auto photographers use template platforms** (SmugMug, Squarespace). A custom-built site with intentional design is itself a differentiator.
-
-2. **GFWilliams is the gold standard** for custom automotive portfolio sites: dark theme, hover interactions, before/after slider, project storytelling, minimal navigation. This is the benchmark to aim for.
-
-3. **Ted7 is the best at conversion**: dedicated pricing/booking page, embedded IG feed, testimonials, clear service tiers. Best model for the business side.
-
-4. **Video content is the emerging standard**: Easton Chang has a dedicated MOTION section. Ted7 has studio videos. The market expects photographers to also produce motion content.
-
-5. **15-25 curated images per category** beats exhaustive galleries. Focus on best work, not volume.
+**Recommendation:** Start by browsing the Hero and Backgrounds categories on 21st.dev. Filter for dark-theme variants. The shader/background components can add cinematic atmosphere without custom development. Install a few candidates early and evaluate which match the brand aesthetic before committing.
 
 ## Sources
 
-- [Larry Chen Photo](https://www.larrychenphoto.com/) - SmugMug portfolio, organic row layout
-- [Easton Chang](https://www.eastonchang.com) - SmugMug portfolio with MOTION section
-- [GFWilliams](https://gfwilliams.net/) - Custom site, dark theme, hover animations, before/after slider
-- [Ted7](https://ted7.com/) - Squarespace, pricing/booking, embedded IG, testimonials
-- [DW Burnett](https://dwburnett.com/) - WordPress, project-based organization
-- [Format - Automotive Portfolio Examples](https://www.format.com/customers/photography/automotive) - Portfolio strategy advice
-- [DesignRush - Best Photography Portfolio Websites 2026](https://www.designrush.com/best-designs/websites/trends/best-photography-portfolio-websites) - Current design trends
-- [Adorama - Photography Trends 2025](https://www.adorama.com/alc/whats-the-next-trend-in-photography-and-content-creation/) - Cinematic and social media trends
-- [FrontendTools - Image Optimization 2025](https://www.frontendtools.tech/blog/modern-image-optimization-techniques-2025) - WebP/AVIF best practices
-- [GSAP ScrollTrigger](https://gsap.com/) - Animation library for scroll effects
+- [McLaren Automotive](https://cars.mclaren.com/gl_en) -- Hero carousel pattern, dark aesthetic, progressive disclosure UX
+- [Porsche Design System - Motion](https://designsystem.porsche.com/v3/styles/motion/) -- "Swift, subtle, and purposeful" motion philosophy
+- [Porsche USA](https://www.porsche.com/usa/) -- Dark-light contrast, modular grid, intersection observer patterns, cubic-bezier easing
+- [DW Burnett Photography](https://dwburnett.com/) -- Premium auto photographer portfolio, minimalist design, project-based organization, base64 blur placeholders
+- [21st.dev Hero Components](https://21st.dev/s/hero) -- 284 hero components for React/Tailwind/Next.js
+- [21st.dev Card Components](https://21st.dev/s/card) -- 79 card component variants
+- [21st.dev GitHub](https://github.com/serafimcloud/21st) -- shadcn/ui-based marketplace, npx install workflow
+- [Motion Scroll Animations](https://motion.dev/docs/react-scroll-animations) -- useScroll, useTransform, scroll-linked parallax documentation
+- [Motion Parallax Tutorial](https://motion.dev/tutorials/react-parallax) -- GPU-accelerated transform-only animation patterns
+- [Next.js Image Optimization](https://nextjs.org/docs/app/getting-started/images) -- Blur placeholders, lazy loading, responsive sizes (updated 2026-03-25)
+- [Next.js Image Component API](https://nextjs.org/docs/app/api-reference/components/image) -- blurDataURL, fill mode, priority loading, Cloudinary loader
+- [Flothemes Dark Photography Websites](https://flothemes.com/dark-photography-websites/) -- Dark theme patterns and industry examples
+- [Creative Corner Scroll Animations](https://www.creativecorner.studio/blog/website-scroll-animations) -- 2025 scroll animation patterns and examples
+- [Parallax in 2026](https://www.webbb.ai/blog/parallax-scrolling-still-cool-in-2026) -- GPU-accelerated parallax still effective when purposeful
+- [Format Automotive Portfolios](https://www.format.com/customers/photography/automotive) -- 15 focused images outperform 100 mixed shots
+- [GFWilliams](https://gfwilliams.net/) -- Gold standard custom auto photography site: dark theme, hover animations, before/after slider
+- [Ted7](https://ted7.com/) -- Best conversion patterns: dedicated pricing/booking, testimonials, embedded social proof
 
 ---
-*Feature research for: Automotive Photography Portfolio Website*
-*Researched: 2026-03-14*
+*Feature research for: v4.0 Automotive Photography Portfolio Redesign*
+*Researched: 2026-03-26*
