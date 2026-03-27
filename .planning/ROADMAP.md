@@ -5,6 +5,7 @@
 - v1.0 Portfolio Launch - Phases 1-4 (shipped 2026-03-16)
 - v2.0 Admin Panel & Image Pipeline - Phases 5-7 (shipped 2026-03-25)
 - v3.0 Blog - Phases 8-10 (in progress)
+- v4.0 Complete Redesign - Phases 11-16 (planned)
 
 ## Phases
 
@@ -149,15 +150,12 @@ Plans:
 
 </details>
 
-## v3.0 Blog (In Progress)
-
-**Milestone Goal:** Let David publish blog posts about shoots directly from the admin panel -- with a markdown editor, photo attachments from the gallery or new uploads, and a dedicated /blog page with individual post pages. The main page shows a featured/recent post preview.
+<details>
+<summary>v3.0 Blog (Phases 8-10) - IN PROGRESS</summary>
 
 - [x] **Phase 8: Blog Data Pipeline & Post Pages** - Post storage in git, build-time HTML generation, and individual post page rendering (completed 2026-03-26)
 - [ ] **Phase 9: Blog Admin Editor** - Markdown editor in admin with formatting toolbar, photo insertion, and publish workflow
 - [ ] **Phase 10: Blog Listing & Homepage Integration** - Blog index page with post cards and featured/recent preview on the main page
-
-## Phase Details
 
 ### Phase 8: Blog Data Pipeline & Post Pages
 **Goal**: Blog posts stored as data files in git are transformed into fully styled static HTML pages at build time, viewable at /blog/post-slug
@@ -185,7 +183,7 @@ Plans:
   3. David can insert photos into a post by picking from existing gallery images or uploading a new image (which is auto-added to Cloudinary)
   4. David can fill in post metadata (title, slug, cover image, excerpt, tags), save as draft, or publish -- drafts are not visible on the public site
   5. After publishing or editing a post, a site rebuild is triggered automatically and the changes appear on the public blog within 2-3 minutes
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans complete
 
 Plans:
 - [x] 09-01-PLAN.md -- Backend Netlify Functions (list-posts, save-post, delete-post via GitHub API) + Blog tab HTML and navigation
@@ -204,10 +202,96 @@ Plans:
 **Plans**: TBD
 **UI hint**: yes
 
+</details>
+
+## v4.0 Complete Redesign (Phases 11-16)
+
+**Milestone Goal:** Rebuild the entire portfolio as a multi-page Next.js site with a dark cinematic luxury automotive aesthetic (Porsche/McLaren caliber), premium polish, better conversion flow, and redesigned admin panel -- using UI UX Pro Max for design system, 21st.dev for React components, and Gemini for visual asset generation.
+
+- [ ] **Phase 11: Foundation & Pipeline Validation** - Next.js 15 project scaffolded and deployed to Netlify with Cloudinary pipeline adapted for React
+- [ ] **Phase 12: Design System & Asset Generation** - Dark cinematic design tokens, component library, navbar/footer, and collaborative visual asset workflow
+- [ ] **Phase 13: Public Pages** - Gallery, blog, about/contact, and home page shell with all content pages functional (no hero animation yet)
+- [ ] **Phase 14: Cinematic Hero & Animations** - Interactive 3D parallax hero, GSAP scroll effects, Motion page transitions and scroll reveals
+- [ ] **Phase 15: Admin Panel** - React rewrite of gallery management, blog editor, and site settings with JWT-protected API routes
+- [ ] **Phase 16: Polish, Performance & Launch** - Lighthouse optimization, cross-browser testing, accessibility audit, and production launch
+
+## Phase Details
+
+### Phase 11: Foundation & Pipeline Validation
+**Goal**: A working Next.js 15 skeleton is deployed to Netlify with dark theme, Cloudinary integration, and zero flash of wrong theme -- proving the deployment pipeline before any features are built
+**Depends on**: Phase 10 (v3.0 complete)
+**Requirements**: V4-FOUND-01, V4-FOUND-02, V4-FOUND-03
+**Success Criteria** (what must be TRUE):
+  1. Visiting the deployed Netlify URL shows a Next.js 15 App Router page with dark background (#0e0e12) and no flash of white on initial load
+  2. A test image renders via CldImage with a blur-up LQIP placeholder, confirming the Cloudinary pipeline works in the Next.js environment
+  3. The build-time gallery data script outputs JSON that Next.js can consume as static props, and the deployed bundle is under 200KB gzipped
+  4. Direct URL access (not just client-side navigation) works correctly on the deployed Netlify site -- no 404s or 500s on any route
+**Plans**: TBD
+
+### Phase 12: Design System & Asset Generation
+**Goal**: The complete visual identity is defined -- dark cinematic luxury tokens, reusable components, responsive navbar/footer, and visual assets generated through the collaborative Claude/Gemini workflow -- so all subsequent pages build from a consistent foundation
+**Depends on**: Phase 11
+**Requirements**: V4-DESIGN-01, V4-DESIGN-02, V4-DESIGN-03, V4-DESIGN-04, V4-DESIGN-05
+**Success Criteria** (what must be TRUE):
+  1. Tailwind v4 theme tokens define a complete dark cinematic color palette, custom typography scale, and spacing system via the CSS-native @theme directive
+  2. A set of base shadcn/ui components (Button, Card, Input, Dialog, Tabs) and 21st.dev components are installed, customized to the dark theme, and render consistently
+  3. A responsive frosted-glass navbar with page links (Home, Gallery, Blog, About) collapses to a mobile menu, and a branded footer with social links and copyright is visible on all pages
+  4. Claude has provided 21st.dev component URLs for review and Gemini prompts for mockup generation, and David has generated and provided visual assets (color palette mockups, layout references) that inform the design direction
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 13: Public Pages
+**Goal**: All content pages are functional and styled -- visitors can browse the gallery with filtering and lightbox, read blog posts, learn about David, submit a booking inquiry, and navigate a home page with featured work, video reel, and CTAs (hero section uses a placeholder pending Phase 14)
+**Depends on**: Phase 12
+**Requirements**: V4-HOME-02, V4-HOME-03, V4-HOME-04, V4-HOME-05, V4-GAL-01, V4-GAL-02, V4-GAL-03, V4-BLOG-01, V4-BLOG-02, V4-BLOG-03, V4-ABOUT-01, V4-ABOUT-02, V4-ABOUT-03
+**Success Criteria** (what must be TRUE):
+  1. The gallery page displays photos from Cloudinary in a responsive grid with category filter buttons, and clicking any photo opens a React lightbox with navigation and smooth staggered loading animations
+  2. Blog listing at /blog shows published post cards, and individual posts at /blog/[slug] render full markdown content with cover images -- blog data is static at build time
+  3. The About page tells David's photographer story, the Contact section has a working Formspree booking form, and social media links are accessible
+  4. The Home page displays a featured work section, embedded video reel, about preview with link to full About page, and clear CTAs driving to booking/contact (hero area has a static placeholder image)
+  5. A featured/recent blog post appears on the home page linking through to the full post
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 14: Cinematic Hero & Animations
+**Goal**: The site comes alive -- visitors experience an interactive 3D parallax hero on the home page, smooth page transitions between routes, and scroll-triggered reveal animations throughout all pages
+**Depends on**: Phase 13
+**Requirements**: V4-HOME-01, V4-ANIM-01, V4-ANIM-02, V4-ANIM-03
+**Success Criteria** (what must be TRUE):
+  1. The home page hero is an interactive 3D parallax showcase (sourced from 21st.dev hero components, powered by GSAP ScrollTrigger) that creates a cinematic first impression with scroll-triggered effects
+  2. Navigating between pages triggers smooth Motion-powered transitions (AnimatePresence with mode="wait") that feel premium and fast (under 300ms)
+  3. Page sections across all routes reveal with Motion scroll-triggered animations as the user scrolls, adding depth without competing with the photography
+  4. All animations respect prefers-reduced-motion and the GSAP hero loads via dynamic import with ssr:false (no hydration mismatches)
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 15: Admin Panel
+**Goal**: David can manage his entire portfolio from a React-based admin panel -- uploading and organizing gallery photos, writing and publishing blog posts, and configuring hero images and site settings -- all protected by authentication
+**Depends on**: Phase 14
+**Requirements**: V4-ADMIN-01, V4-ADMIN-02, V4-ADMIN-03, V4-ADMIN-04
+**Success Criteria** (what must be TRUE):
+  1. Navigating to /admin requires Netlify Identity login -- unauthenticated users cannot access any admin page or API route (JWT verification via jose middleware)
+  2. David can upload new photos (CldUploadWidget), edit metadata, delete images, and drag-to-reorder gallery items within categories -- changes reflect on the public site after rebuild
+  3. David can create, edit, and publish blog posts with the markdown editor (formatting toolbar, live preview, photo insertion from gallery) -- drafts stay hidden from the public site
+  4. David can select hero images and manage site settings from a dedicated settings area in the admin panel
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 16: Polish, Performance & Launch
+**Goal**: The site is production-ready -- fast, accessible, cross-browser tested, and SEO-optimized with no rough edges
+**Depends on**: Phase 15
+**Requirements**: V4-PERF-01, V4-PERF-02, V4-PERF-03, V4-PERF-04
+**Success Criteria** (what must be TRUE):
+  1. All public pages score 90+ on Lighthouse across Performance, Accessibility, SEO, and Best Practices categories
+  2. Every page has unique SEO metadata, an Open Graph image, and is included in the sitemap -- shared links render rich previews on social platforms
+  3. The site meets WCAG AA accessibility standards: 4.5:1 contrast ratios, visible focus states, keyboard navigation, and animations disabled when prefers-reduced-motion is set
+  4. The site works correctly across Safari (desktop and iOS), Firefox, Chrome, and mobile browsers with no layout breaks or JavaScript errors
+**Plans**: TBD
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 8 -> 9 -> 10
+Phases execute in numeric order: 11 -> 12 -> 13 -> 14 -> 15 -> 16
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
@@ -218,6 +302,12 @@ Phases execute in numeric order: 8 -> 9 -> 10
 | 5. Cloudinary Storage & Build Pipeline | v2.0 | 3/3 | Complete | 2026-03-16 |
 | 6. Admin Authentication & Upload | v2.0 | 3/3 | Complete | 2026-03-17 |
 | 7. Admin Image Management | v2.0 | 2/2 | Complete | 2026-03-25 |
-| 8. Blog Data Pipeline & Post Pages | v3.0 | 2/2 | Complete   | 2026-03-26 |
-| 9. Blog Admin Editor | v3.0 | 2/3 | In Progress|  |
+| 8. Blog Data Pipeline & Post Pages | v3.0 | 2/2 | Complete | 2026-03-26 |
+| 9. Blog Admin Editor | v3.0 | 3/3 | Complete | - |
 | 10. Blog Listing & Homepage Integration | v3.0 | 0/? | Not started | - |
+| 11. Foundation & Pipeline Validation | v4.0 | 0/? | Not started | - |
+| 12. Design System & Asset Generation | v4.0 | 0/? | Not started | - |
+| 13. Public Pages | v4.0 | 0/? | Not started | - |
+| 14. Cinematic Hero & Animations | v4.0 | 0/? | Not started | - |
+| 15. Admin Panel | v4.0 | 0/? | Not started | - |
+| 16. Polish, Performance & Launch | v4.0 | 0/? | Not started | - |

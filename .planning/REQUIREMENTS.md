@@ -170,7 +170,7 @@
 
 ## v4.0 Requirements
 
-Requirements for the complete redesign. Each maps to roadmap phases.
+Requirements for the complete redesign. Each maps to roadmap phases 11-16.
 
 ### Foundation (v4)
 
@@ -269,16 +269,48 @@ Requirements for the complete redesign. Each maps to roadmap phases.
 |-------------|-------|--------|
 | FOUND-01 through PERF-08 | Phases 1-4 (v1.0) | Complete |
 | STOR-01 through BUILD-04 | Phases 5-7 (v2.0) | Complete |
-| BLOG/EDITOR/BDATA (v3) | Phases 8-9 (v3.0) | Complete (partial) |
-| V4-FOUND-01 through V4-PERF-04 | Pending roadmap | Pending |
+| BLOG/EDITOR/BDATA (v3) | Phases 8-10 (v3.0) | Complete (partial) |
+| V4-FOUND-01 | Phase 11 | Pending |
+| V4-FOUND-02 | Phase 11 | Pending |
+| V4-FOUND-03 | Phase 11 | Pending |
+| V4-DESIGN-01 | Phase 12 | Pending |
+| V4-DESIGN-02 | Phase 12 | Pending |
+| V4-DESIGN-03 | Phase 12 | Pending |
+| V4-DESIGN-04 | Phase 12 | Pending |
+| V4-DESIGN-05 | Phase 12 | Pending |
+| V4-HOME-02 | Phase 13 | Pending |
+| V4-HOME-03 | Phase 13 | Pending |
+| V4-HOME-04 | Phase 13 | Pending |
+| V4-HOME-05 | Phase 13 | Pending |
+| V4-GAL-01 | Phase 13 | Pending |
+| V4-GAL-02 | Phase 13 | Pending |
+| V4-GAL-03 | Phase 13 | Pending |
+| V4-BLOG-01 | Phase 13 | Pending |
+| V4-BLOG-02 | Phase 13 | Pending |
+| V4-BLOG-03 | Phase 13 | Pending |
+| V4-ABOUT-01 | Phase 13 | Pending |
+| V4-ABOUT-02 | Phase 13 | Pending |
+| V4-ABOUT-03 | Phase 13 | Pending |
+| V4-HOME-01 | Phase 14 | Pending |
+| V4-ANIM-01 | Phase 14 | Pending |
+| V4-ANIM-02 | Phase 14 | Pending |
+| V4-ANIM-03 | Phase 14 | Pending |
+| V4-ADMIN-01 | Phase 15 | Pending |
+| V4-ADMIN-02 | Phase 15 | Pending |
+| V4-ADMIN-03 | Phase 15 | Pending |
+| V4-ADMIN-04 | Phase 15 | Pending |
+| V4-PERF-01 | Phase 16 | Pending |
+| V4-PERF-02 | Phase 16 | Pending |
+| V4-PERF-03 | Phase 16 | Pending |
+| V4-PERF-04 | Phase 16 | Pending |
 
 **Coverage:**
 - v1 requirements: 56 total (all complete)
 - v2 requirements: 22 total (all complete)
 - v3 requirements: 20 total (17 complete, 3 superseded by v4)
-- v4 requirements: 30 total (pending roadmap)
-- Unmapped: 30 (v4.0)
+- v4 requirements: 33 total (all mapped to phases 11-16)
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-14*
-*Last updated: 2026-03-26 after v4.0 requirements definition*
+*Last updated: 2026-03-26 after v4.0 roadmap creation*
